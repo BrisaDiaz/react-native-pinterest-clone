@@ -25,11 +25,25 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
 >;
 
 export type RootTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  Search: undefined;
+  Account: undefined;
+  Home: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<
   BottomTabScreenProps<RootTabParamList, Screen>,
   NativeStackScreenProps<RootStackParamList>
 >;
+
+export interface Pin {
+  id: number;
+  pin: string;
+  title?: string;
+  tags?: string[];
+  collection: string;
+  author: {
+    userName: string;
+    accountName: string;
+    avatar: string;
+  };
+};
