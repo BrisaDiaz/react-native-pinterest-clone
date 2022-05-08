@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 import Login from "../components/Login";
-import { Text, View } from "../components/Themed";
+import { View } from "../components/Themed";
 import { RootTabScreenProps } from "../types";
 
-export default function TabOneScreen({
+export default function AccontScreen({
   navigation,
 }: RootTabScreenProps<"Home">) {
   return (

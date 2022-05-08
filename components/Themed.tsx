@@ -7,6 +7,7 @@ import {
   Text as DefaultText,
   View as DefaultView,
   ScrollView as DefaultScrollView,
+  FlatList as DefaultFlatList,
 } from "react-native";
 
 import Colors from "../constants/Colors";
@@ -34,6 +35,7 @@ type ThemeProps = {
 export type TextProps = ThemeProps & DefaultText["props"];
 export type ViewProps = ThemeProps & DefaultView["props"];
 export type ScrollViewProps = ThemeProps & DefaultScrollView["props"];
+export type FlatListProps = ThemeProps & DefaultFlatList["props"];
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor(
@@ -50,7 +52,10 @@ export function Text(props: TextProps) {
 export function View(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor(
-    { light: lightColor, dark: darkColor },
+    {
+      light: lightColor || Colors.light.background,
+      dark: darkColor || Colors.dark.background,
+    },
     "background",
   );
 
@@ -59,11 +64,28 @@ export function View(props: ViewProps) {
 export function ScrollView(props: ScrollViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor(
-    { light: lightColor, dark: darkColor },
+    {
+      light: lightColor || Colors.light.background,
+      dark: darkColor || Colors.dark.background,
+    },
     "background",
   );
 
   return (
     <DefaultScrollView style={[{ backgroundColor }, style]} {...otherProps} />
+  );
+}
+export function FlatList(props: FlatListProps) {
+  const { style, lightColor, darkColor, ...otherProps } = props;
+  const backgroundColor = useThemeColor(
+    {
+      light: lightColor || Colors.light.background,
+      dark: darkColor || Colors.dark.background,
+    },
+    "background",
+  );
+
+  return (
+    <DefaultFlatList style={[{ backgroundColor }, style]} {...otherProps} />
   );
 }

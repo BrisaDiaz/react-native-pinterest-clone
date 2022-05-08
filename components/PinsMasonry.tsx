@@ -1,6 +1,6 @@
 import PinComponent from "./Pin";
-import { View, ScrollView } from "./Themed";
-import { StyleSheet, FlatList } from "react-native";
+import { View, ScrollView, FlatList } from "./Themed";
+import { StyleSheet } from "react-native";
 import { Pin } from "../types";
 export default function PinsMasonry({
   pins,
@@ -32,15 +32,15 @@ export default function PinsMasonry({
     return masonry;
   };
   const masonry = generateMasonryColumns(pins, columns);
+
   const generatePin = ({ item }: { item: Pin }) => (
     <PinComponent key={item.id} data={item} style={{ marginBottom: 4 }} />
   );
   return (
     <View style={styles.masonry}>
       {masonry.map((column, index) => (
-        <ScrollView key={index}>
+        <ScrollView key={index} style={[styles.masonryColumn]}>
           <FlatList
-            style={styles.masonryColumn}
             data={column}
             renderItem={generatePin}
             keyExtractor={(pin) => pin.id.toString()}
@@ -61,5 +61,6 @@ const styles = StyleSheet.create({
   masonryColumn: {
     width: "100%",
     flex: 1,
+    maxWidth: "50%",
   },
 });

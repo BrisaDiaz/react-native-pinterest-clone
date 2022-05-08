@@ -1,13 +1,12 @@
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
 
 import { Text } from "./Themed";
-export default function PinCollection({
-  data,
-}: {
+type Props = TouchableOpacity["props"] & {
   data: { id: number; name: string; thumbnail: string };
-}) {
+};
+export default function PinCollection({ data, ...others }: Props) {
   return (
-    <TouchableOpacity activeOpacity={0.8}>
+    <TouchableOpacity activeOpacity={0.8} {...others}>
       <Image
         style={styles.image}
         resizeMethod="resize"

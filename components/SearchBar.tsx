@@ -12,37 +12,32 @@ import { FontAwesome, AntDesign } from "@expo/vector-icons";
 
 type CustomProps = {
   onSearch: (value: string) => void;
-  onChangeText?: (value: string) => void;
+
   onClear?: () => void;
   loading?: boolean;
   rounded?: boolean;
-  defaultValue?: string;
+  value: string;
   inputStyle?: TextStyle;
 };
 type Props = TextInput["props"] & CustomProps;
 export default function SearchBar({
-  onSearch,
-  onChangeText,
   onClear,
   loading,
   rounded,
   inputStyle,
+
+  onSearch,
+  value,
   defaultValue,
   ...other
 }: Props) {
-  const [value, setValue] = React.useState(defaultValue || "");
-  const handleChange = (text: string) => {
-    onChangeText && onChangeText(text);
-    setValue(text);
-  };
   const handleClear = () => {
-    setValue("");
     onClear && onClear();
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={() => onSearch(value)}>
+      <TouchableOpacity onPress={() => onSearch && onSearch(value)}>
         <FontAwesome
           name="search"
           size={15}
@@ -55,9 +50,7 @@ export default function SearchBar({
         {...other}
         style={[styles.input, inputStyle, rounded && styles.rounded]}
         autoFocus={true}
-        onSubmitEditing={() => onSearch(value)}
         placeholder="Search"
-        onChangeText={handleChange}
         placeholderTextColor={Colors.gray}
         value={value}
       />

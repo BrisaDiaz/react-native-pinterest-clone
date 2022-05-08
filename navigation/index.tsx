@@ -15,9 +15,10 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import TabOneScreen from "../screens/TabOneScreen";
-import TabTwoScreen from "../screens/TabTwoScreen";
-import PinDetails from "../screens/PinDetails";
+import AccontScreen from "../screens/AccontScreen";
+import SearchScreen from "../screens/SearchScreen";
+import PinScreen from "../screens/PinScreen";
+import Home from "../screens/Home";
 import {
   RootStackParamList,
   RootTabParamList,
@@ -47,15 +48,28 @@ export default function Navigation({
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
-  const theme = useColorScheme()
+  const theme = useColorScheme();
   return (
-    <Stack.Navigator screenOptions={{headerStyle:{
-      backgroundColor:Colors[theme].background
-    }}}>
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: Colors[theme].background,
+        },
+      }}
+    >
       <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Pin"
+        component={PinScreen}
+        options={{
+          headerShown: true,
+
+          headerTitle: "",
+        }}
       />
       <Stack.Screen
         name="NotFound"
@@ -92,11 +106,12 @@ function BottomTabNavigator() {
     >
       <BottomTab.Screen
         name="Home"
-        component={PinDetails}
+        component={Home}
         options={({ navigation }: RootTabScreenProps<"Home">) => ({
           headerTitleStyle: { display: "none" },
           tabBarIconStyle: { width: 40, marginHorizontal: 5 },
           tabBarShowLabel: false,
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="pinterest" color={color} />
           ),
@@ -105,7 +120,7 @@ function BottomTabNavigator() {
 
       <BottomTab.Screen
         name="Search"
-        component={TabTwoScreen}
+        component={SearchScreen}
         options={{
           title: "Search",
           headerShown: false,
@@ -116,7 +131,7 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Account"
-        component={TabOneScreen}
+        component={AccontScreen}
         options={{
           headerShown: false,
           title: "Account",

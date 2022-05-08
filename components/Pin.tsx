@@ -8,12 +8,21 @@ type Props = TouchableOpacity["props"] & {
   data: Pin;
   style?: ViewStyle;
 };
+import { useLinkProps } from "@react-navigation/native";
+
 export default function PinComponent({ data, style, ...other }: Props) {
+  const { onPress } = useLinkProps({
+    to: { screen: "Pin", params: { id: data.id } },
+  });
   return (
     <TouchableOpacity
       style={[styles.container, style]}
       activeOpacity={0.7}
       {...other}
+      onPress={(event) => {
+        onPress();
+        other.onPress && other.onPress(event);
+      }}
     >
       <Image
         resizeMode="cover"

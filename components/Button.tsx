@@ -1,4 +1,10 @@
-import { TouchableOpacity, Text, StyleSheet, View } from "react-native";
+import {
+  TouchableOpacity,
+  Text,
+  StyleSheet,
+  View,
+  TextStyle,
+} from "react-native";
 import React from "react";
 import Colors from "../constants/Colors";
 type CustomButtonProps = {
@@ -11,6 +17,7 @@ type CustomButtonProps = {
   color?: string;
   backgroundColor?: string;
   size?: "small" | "medium" | "large";
+  fontStyle?: TextStyle;
 };
 export type ButtonProps = TouchableOpacity["props"] & CustomButtonProps;
 export default function Button({
@@ -24,6 +31,7 @@ export default function Button({
   backgroundColor,
   color,
   size,
+  fontStyle,
   ...others
 }: ButtonProps) {
   return (
@@ -39,9 +47,8 @@ export default function Button({
           : undefined,
         fullWidth && styles.fullWidth,
         rounded && styles.rounded,
-
-        style,
         { ...(backgroundColor && { backgroundColor: backgroundColor }) },
+        style,
       ]}
       {...others}
     >
@@ -63,15 +70,16 @@ export default function Button({
         )}
       {text && (
         <Text
-          style={
+          style={[
             color
               ? { color: color }
               : type === "secondary"
               ? styles.textDark
               : text
               ? styles.textLight
-              : undefined
-          }
+              : undefined,
+            fontStyle,
+          ]}
         >
           {text}
         </Text>
