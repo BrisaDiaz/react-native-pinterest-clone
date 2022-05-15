@@ -5,19 +5,20 @@ import {
   GestureResponderEvent,
   TouchableHighlight,
 } from "react-native";
-import { View } from "./Themed";
+import { View, Text } from "./Themed";
 import Colors from "../constants/Colors";
 import { ReactNode } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import useColorScheme from "../hooks/useColorScheme";
 import IconButton from "./IconButton";
-type Props = Modal["props"] & {
+export type Props = Modal["props"] & {
   background?: string;
   menuStyles?: ViewStyle;
   onOuterClick?: (event: GestureResponderEvent) => void;
   children?: ReactNode;
   closeButtonVisible?: boolean;
   closeButtonProps?: TouchableHighlight["props"];
+  title?: string;
 };
 function CloseButton(props: TouchableHighlight["props"]) {
   const theme = useColorScheme();
@@ -33,6 +34,7 @@ export default function MenuModal({
   menuStyles,
   onOuterClick,
   children,
+  title,
   closeButtonVisible,
   closeButtonProps,
   ...modalProps
@@ -70,8 +72,24 @@ export default function MenuModal({
           ]}
         >
           {closeButtonVisible && (
-            <View style={{ padding: 5 }}>
+            <View
+              style={{ padding: 5, flexDirection: "row", alignItems: "center" }}
+            >
               <CloseButton {...closeButtonProps} />
+              {title && (
+                <Text
+                  style={{
+                    textAlign: "center",
+                    width: "100%",
+                    textTransform: "capitalize",
+                    fontWeight: "700",
+                    marginLeft: -30,
+                    letterSpacing: 0.5,
+                  }}
+                >
+                  {title}
+                </Text>
+              )}
             </View>
           )}
           {children}

@@ -1,55 +1,66 @@
 import { View, Text } from "./Themed";
 import { Image, StyleSheet, ViewStyle, TouchableOpacity } from "react-native";
+
 import { Feather } from "@expo/vector-icons";
 import Button from "./Button";
 import Colors from "../constants/Colors";
 import { Pin } from "../types";
+
 type Props = TouchableOpacity["props"] & {
   data: Pin;
   style?: ViewStyle;
+  onMenuClick?: (data: Pin) => void;
 };
 import { useLinkProps } from "@react-navigation/native";
 
-export default function PinComponent({ data, style, ...other }: Props) {
+export default function PinComponent({
+  data,
+  style,
+  onMenuClick,
+  ...other
+}: Props) {
   const { onPress } = useLinkProps({
     to: { screen: "Pin", params: { id: data.id } },
   });
   return (
-    <TouchableOpacity
-      style={[styles.container, style]}
-      activeOpacity={0.7}
-      {...other}
-      onPress={(event) => {
-        onPress();
-        other.onPress && other.onPress(event);
-      }}
-    >
-      <Image
-        resizeMode="cover"
-        style={styles.pin}
-        source={{
-          uri: data.pin,
+    <>
+      <TouchableOpacity
+        style={[styles.container, style]}
+        activeOpacity={0.7}
+        {...other}
+        onPress={(event) => {
+          onPress();
+          other.onPress && other.onPress(event);
         }}
-      />
-      <View style={styles.footer}>
-        <Text style={styles.title} numberOfLines={3}>
-          {data.title}
-        </Text>
-        <Button
-          style={styles.iconButton}
-          iconPosition="left"
-          type="secondary"
-          backgroundColor="transparent"
-          Icon={
-            <Feather
-              name="more-horizontal"
-              size={18}
-              color={Colors.light.tabIconSelected}
-            />
-          }
+      >
+        <Image
+          resizeMode="cover"
+          style={styles.pin}
+          source={{
+            uri: data.pin,
+          }}
         />
-      </View>
-    </TouchableOpacity>
+        <View style={styles.footer}>
+          <Text style={styles.title} numberOfLines={3}>
+            {data.title}
+          </Text>
+          <Button
+            style={styles.iconButton}
+            iconPosition="left"
+            type="secondary"
+            backgroundColor="transparent"
+            onPress={() => onMenuClick && onMenuClick(data)}
+            Icon={
+              <Feather
+                name="more-horizontal"
+                size={18}
+                color={Colors.light.tabIconSelected}
+              />
+            }
+          />
+        </View>
+      </TouchableOpacity>
+    </>
   );
 }
 const styles = StyleSheet.create({

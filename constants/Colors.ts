@@ -1,6 +1,6 @@
 const primary = "#AD2626";
 const gray = "#B2B2B2";
-const tintColorLight = "#4D4D4D";
+const tintColorLight = "#202020";
 const tintColorDark = "#fff";
 
 export default {

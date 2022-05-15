@@ -16,7 +16,7 @@ import PinsMasonry from "../components/PinsMasonry";
 import CheckButton from "../components/CheckButton";
 import { NavigationProp } from "@react-navigation/native";
 import MenuModal from "../components/MenuModal";
-import IconButton from "../components/IconButton";
+
 import { relatedPins as otherPins, pin as data } from "../mocks";
 export default function PinDetails({
   navigation,
@@ -127,15 +127,6 @@ export default function PinDetails({
         <Avatar source={pin.author.avatar} size="small" />
 
         <Link text={pin.author.userName} />
-        <IconButton
-          icon={
-            <Feather
-              name="more-horizontal"
-              size={20}
-              color={Colors.light.tabIconSelected}
-            />
-          }
-        />
 
         <CheckButton
           checkedText="Unfollow"
@@ -158,11 +149,10 @@ export default function PinDetails({
       <PinsMasonry pins={relatedPins} columns={2} />
       <MenuModal
         visible={isPinMenuOpen}
-        onOuterClick={togglePinMenu}
         closeButtonVisible={true}
         closeButtonProps={{ onPress: togglePinMenu }}
       >
-        <View style={{ paddingHorizontal: "0.5rem", paddingBottom: "1rem" }}>
+        <View style={{ paddingHorizontal: "0.6rem", paddingBottom: "1rem" }}>
           {PIN_MENU_BUTTONS.map((button) => (
             <TouchableHighlight
               key={button.label}

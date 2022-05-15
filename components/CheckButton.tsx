@@ -27,12 +27,12 @@ export default function CheckButton({
     dark: {
       color: checked ? Colors.light.tint : Colors.dark.tint,
       backgroundColor: checked ? "#fff" : Colors.primary,
-      text: checked ? uncheckedText : checkedText || uncheckedText,
+      text: checked ? checkedText || uncheckedText : uncheckedText,
     },
     light: {
       color: checked ? Colors.dark.tint : Colors.dark.tint,
       backgroundColor: checked ? "#000" : Colors.primary,
-      text: checked ? uncheckedText : checkedText || uncheckedText,
+      text: checked ? checkedText || uncheckedText : uncheckedText,
     },
   };
   const toggleFollow = (event: GestureResponderEvent) => {

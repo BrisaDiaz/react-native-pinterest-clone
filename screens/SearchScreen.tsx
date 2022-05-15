@@ -49,14 +49,17 @@ export default function SearchScreen({
         onClear={() => setSearchQuery("")}
         onChangeText={(currentValue) => setSearchQuery(currentValue)}
       />
-      <ScrollView horizontal={true} style={styles.tagList}>
-        <FlatList
-          horizontal={true}
-          data={filterTags}
-          renderItem={renderTag}
-          keyExtractor={(item) => item}
-        />
-      </ScrollView>
+
+      <FlatList
+        horizontal={true}
+        contentContainerStyle={styles.tagList}
+        showsHorizontalScrollIndicator={false}
+        data={filterTags}
+        renderItem={renderTag}
+        keyExtractor={(item) => item}
+        scrollEnabled={true}
+      />
+
       <PinsMasonry pins={pins} columns={2} />
     </ScrollView>
   );

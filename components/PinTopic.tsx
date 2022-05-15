@@ -33,9 +33,9 @@ export default function PinTopic({ data, style, children, ...others }: Props) {
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    height: 104,
+    height: 70,
     width: "100%",
-    maxWidth: 240,
+
     borderRadius: 16,
     overflow: "hidden",
   },
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: "700",
     textTransform: "capitalize",
-    fontSize: 20,
+    fontSize: 18,
     color: "#fff",
   },
 });
