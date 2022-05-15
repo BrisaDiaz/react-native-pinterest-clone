@@ -235,3 +235,23 @@ export const topics = [
       "https://i.pinimg.com/474x/94/46/5b/94465b775810df37966a57e1e819c2b5.jpg",
   },
 ];
+  export const collections = [
+    {
+      id: 1,
+      name: "shipping container house",
+      thumbnail:
+        "https://i.pinimg.com/474x/60/fc/62/60fc6202626da99e466c61d08b938848.jpg",
+    },
+    {
+      id: 2,
+      name: "nail stamping",
+      thumbnail:
+        "https://i.pinimg.com/474x/cd/cd/81/cdcd81c42e7b527b800c42253b0cc505.jpg",
+    },
+    {
+      id: 3,
+      name: "hanging plants",
+      thumbnail:
+        "https://i.pinimg.com/474x/d6/96/e5/d696e572c5c04b64f67c929f46f8f7de.jpg",
+    },
+  ];

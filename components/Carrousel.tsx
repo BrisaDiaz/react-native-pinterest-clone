@@ -1,46 +1,60 @@
 
-import { FlatList, ViewStyle } from "react-native";
+import {
+  FlatList,
+  ViewStyle,
+  NativeSyntheticEvent,
+  NativeScrollEvent,
+} from "react-native";
+import { RefObject, useRef } from "react";
+
 import { View } from "./Themed";
 import Animated, {
   useSharedValue,
-  useAnimatedScrollHandler,
   useAnimatedStyle,
 } from "react-native-reanimated";
 import { v4 as uuid } from "uuid";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-export default function Carrousel({
+const Carrousel = ({
   itemWidth,
   itemsContainerProps,
   spacing = 0,
   threshold = 0,
+  dotIndicatorsVisible = false,
 }: {
   itemWidth: number;
   itemsContainerProps: FlatList["props"];
   spacing?: number;
   threshold?: number;
-}) {
+  dotIndicatorsVisible?: boolean;
+}) => {
   const theme = useColorScheme();
   const scrollOffset = useSharedValue(0);
   const displayItemIndex = useSharedValue(0);
-  let flatListRef;
-  const scrollHandler = useAnimatedScrollHandler({
-    onScroll: (event) => {
-      const offsetX = event.contentOffset.x;
-      // const itemIndex = Math.floor(offsetX / itemWidth);
+  let listRef: RefObject<FlatList<any>> = useRef(null);
+  const scrollHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    const offsetX = event.nativeEvent?.contentOffset.x;
 
-      const maxThreshold =
-        itemWidth * displayItemIndex.value + itemWidth * threshold;
-      const minThreshold =
-        itemWidth * displayItemIndex.value - itemWidth * threshold;
-      if (offsetX > maxThreshold) {
-        displayItemIndex.value = displayItemIndex.value + 1;
-      }
-      if (offsetX < minThreshold && displayItemIndex.value !== 0) {
-        displayItemIndex.value = displayItemIndex.value - 1;
-      }
-    },
-  });
+    const maxThreshold =
+      itemWidth * displayItemIndex.value + itemWidth * threshold;
+    const minThreshold =
+      itemWidth * displayItemIndex.value - itemWidth * threshold;
+
+    function scrollToOffset() {
+      if (listRef && listRef.current)
+        listRef.current?.scrollToOffset({
+          offset: displayItemIndex.value * (itemWidth + spacing),
+          animated: true,
+        });
+    }
+    if (offsetX > maxThreshold) {
+      displayItemIndex.value = displayItemIndex.value + 1;
+      scrollToOffset();
+    } else if (offsetX < minThreshold && displayItemIndex.value !== 0) {
+      displayItemIndex.value = displayItemIndex.value - 1;
+      scrollToOffset();
+    }
+  };
 
   const dotAnimatedStyles = (index: number) =>
     useAnimatedStyle(() => {
@@ -58,9 +72,10 @@ export default function Carrousel({
 
   return (
     <>
-      <Animated.FlatList
+      <FlatList
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
+        ref={listRef}
         horizontal={true}
         bounces={false}
         keyExtractor={() => uuid()}
@@ -74,7 +89,7 @@ export default function Carrousel({
           } as ViewStyle,
           flatListAnimatedStyle,
         ]}
-      ></Animated.FlatList>
+      ></FlatList>
       <View
         style={[
           {
@@ -82,27 +97,29 @@ export default function Carrousel({
             width: "100%",
             justifyContent: "center",
             gap: 6,
-            marginVertical: "1rem",
+            marginVertical: "0.5rem",
           } as ViewStyle,
         ]}
       >
-        {new Array(itemsContainerProps.data?.length)
-          .fill(1)
-          .map((dot, index) => (
-            <Animated.View
-              key={uuid()}
-              style={[
-                {
-                  width: 6,
-                  height: 6,
-                  borderRadius: 100,
-                  backgroundColor: Colors.gray,
-                },
-                dotAnimatedStyles(index),
-              ]}
-            />
-          ))}
+        {dotIndicatorsVisible &&
+          new Array(itemsContainerProps.data?.length)
+            .fill(1)
+            .map((dot, index) => (
+              <Animated.View
+                key={uuid()}
+                style={[
+                  {
+                    width: 6,
+                    height: 6,
+                    borderRadius: 100,
+                    backgroundColor: Colors.gray,
+                  },
+                  dotAnimatedStyles(index),
+                ]}
+              />
+            ))}
       </View>
     </>
   );
-}
+};
+export default Carrousel;
