@@ -42,14 +42,14 @@ export default function MenuModal({
   return (
     <Modal
       transparent={true}
-      animationType="fade"
+      animationType="slide"
       presentationStyle="formSheet"
       {...modalProps}
     >
       <Pressable
         onPress={(e) => onOuterClick && onOuterClick(e)}
         style={{
-          backgroundColor: background || "#00000066",
+          backgroundColor: background || "transparent",
           height: "100%",
           width: "100%",
         }}
@@ -67,6 +67,7 @@ export default function MenuModal({
               borderTopLeftRadius: 20,
               minHeight: "20%",
               overflow: "hidden",
+              
             },
             menuStyles,
           ]}

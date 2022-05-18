@@ -48,6 +48,8 @@ export default function SearchScreen({
         value={searchQuery}
         onClear={() => setSearchQuery("")}
         onChangeText={(currentValue) => setSearchQuery(currentValue)}
+        outlined={true}
+        rounded={true}
       />
 
       <FlatList
@@ -68,8 +70,9 @@ export default function SearchScreen({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 6,
-    paddingHorizontal: 16,
+
+    padding: 6,
+    paddingBottom: 20,
   },
   tagList: {
     maxHeight: "fit-content",

@@ -8,6 +8,7 @@ import {
   TextStyle,
 } from "react-native";
 import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
 import { FontAwesome, AntDesign } from "@expo/vector-icons";
 
 type CustomProps = {
@@ -16,6 +17,7 @@ type CustomProps = {
   onClear?: () => void;
   loading?: boolean;
   rounded?: boolean;
+  outlined?: boolean;
   value: string;
   inputStyle?: TextStyle;
 };
@@ -25,33 +27,40 @@ export default function SearchBar({
   loading,
   rounded,
   inputStyle,
-
+  outlined,
   onSearch,
   value,
   defaultValue,
+  style,
   ...other
 }: Props) {
   const handleClear = () => {
     onClear && onClear();
   };
+  const theme = useColorScheme();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <TouchableOpacity onPress={() => onSearch && onSearch(value)}>
         <FontAwesome
           name="search"
           size={15}
           style={styles.searchIcon}
-          color={value.length > 0 ? Colors.light.tabIconSelected : Colors.gray}
+          color={Colors[theme].tint}
         />
       </TouchableOpacity>
 
       <TextInput
         {...other}
-        style={[styles.input, inputStyle, rounded && styles.rounded]}
+        style={[
+          styles.input,
+          inputStyle,
+          rounded && styles.rounded,
+          outlined && styles.outlined,
+        ]}
         autoFocus={true}
         placeholder="Search"
-        placeholderTextColor={Colors.gray}
+        placeholderTextColor={Colors[theme].tint}
         value={value}
       />
       {loading && (
@@ -87,15 +96,20 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
     margin: 2,
     padding: 8,
-    outlineColor: Colors.focus,
+    // outlineColor: Colors.focus,
     paddingLeft: 30,
     borderRadius: 4,
     fontWeight: "600",
   },
+  outlined: {
+    backgroundColor: "transparent",
+    borderWidth: 1,
+    borderColor: Colors.gray,
+  },
   rounded: { borderRadius: 30 },
   searchIcon: {
     position: "absolute",
-    transform: [{ translateX: 12 }, { translateY: 10 }],
+    transform: [{ translateX: 12 }, { translateY: 12 }],
   },
   clearIcons: {
     position: "absolute",

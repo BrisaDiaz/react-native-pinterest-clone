@@ -6,6 +6,7 @@ const tintColorDark = "#fff";
 export default {
   primary: primary,
   lightGray: "#b2b2b236",
+  darkGray: "#606060",
   focus: "#2196f3",
 
   gray,

@@ -7,14 +7,13 @@ import { topics as topicsMock, relatedPins } from "../mocks";
 import Button from "../components/Button";
 import { collections } from "../mocks";
 import PinsMasonry from "../components/PinsMasonry";
-
 import CollectionsCarrousel from "../components/CollectionsCarrousel";
+import Layout from "../constants/Layout";
 export default function Home({
   navigation,
 }: {
   navigation: NavigationProp<any>;
 }) {
-  const DEFAULT_DISPLAYED_TOPICS = 6;
   const [topics, setTopics] = useState(topicsMock);
   const [hasRender, setHasRender] = useState(false);
   const [pins, setPins] = useState(relatedPins);
@@ -23,10 +22,21 @@ export default function Home({
   const onDisplayMoreTopics = () => {
     setIsTotalTopicsLoaded(true);
   };
+
+  const TOPICS_COLUMNS_NUM = Math.floor(Layout.window.width / 160);
+  const DEFAULT_DISPLAYED_TOPICS =
+    TOPICS_COLUMNS_NUM * 3 > topics.length
+      ? topics.length
+      : TOPICS_COLUMNS_NUM * 3;
   const renderTopic = ({ item }: { item: typeof topicsMock[0] }) => (
     <PinTopic
       data={item}
-      style={{ marginBottom: 6, flex: 1, marginHorizontal: "auto" }}
+      style={{
+        marginBottom: 6,
+        flex: 1,
+        marginHorizontal: "auto",
+        maxWidth: `${100 / TOPICS_COLUMNS_NUM}%`,
+      }}
       onPress={() =>
         navigation.navigate("Search", {
           query: item.name,
@@ -78,7 +88,7 @@ export default function Home({
         columnWrapperStyle={
           {
             width: "100%",
-
+            justifyContent: "center",
             display: "flex",
             gap: 6,
           } as ViewStyle
@@ -88,7 +98,7 @@ export default function Home({
             ? topics
             : topics.slice(0, DEFAULT_DISPLAYED_TOPICS)
         }
-        numColumns={2}
+        numColumns={TOPICS_COLUMNS_NUM}
         renderItem={renderTopic}
         keyExtractor={(item) => item.id.toString()}
       />
@@ -99,8 +109,9 @@ export default function Home({
 }
 const styles = StyleSheet.create({
   container: {
-    padding: "1rem",
+    padding: 6,
     flex: 1,
+    paddingBottom: 20,
   },
   sectionLabel: {
     textAlign: "center",

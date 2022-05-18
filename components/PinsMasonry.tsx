@@ -25,14 +25,16 @@ export default function PinsMasonry({
   };
   const handlePinActions = (selectedAction: Action) => {
     togglePinMenu();
-    console.log(selectedPin, selectedAction);
   };
   const togglePinMenu = () => {
     setIsPinMenuOpen(!isPinMenuOpen);
   };
   const renderItem = ({ item }: { item: Pin }) => (
     <PinComponent
-      style={{ width: "100%", maxWidth: "50%" }}
+      style={{
+        width: "100%",
+        maxWidth: columns ? `${100 / columns}%` : `${100 / defaultColumnsNum}%`,
+      }}
       data={item}
       onMenuClick={handleOpenPinMenu}
     ></PinComponent>
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
 
     display: "flex",
     gap: 6,
-    justifyContent: "space-between",
+    justifyContent: "flex-start",
     marginBottom: 4,
   },
 });

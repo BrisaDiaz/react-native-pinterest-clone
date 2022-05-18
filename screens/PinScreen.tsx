@@ -5,7 +5,7 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Image, TouchableHighlight } from "react-native";
+import { StyleSheet, Image, TouchableHighlight, Share } from "react-native";
 import Colors from "../constants/Colors";
 import { View, Text, ScrollView } from "../components/Themed";
 import Button from "../components/Button";
@@ -16,7 +16,7 @@ import PinsMasonry from "../components/PinsMasonry";
 import CheckButton from "../components/CheckButton";
 import { NavigationProp } from "@react-navigation/native";
 import MenuModal from "../components/MenuModal";
-
+import HeaderLayout from "../components/HeaderLayout";
 import { relatedPins as otherPins, pin as data } from "../mocks";
 export default function PinDetails({
   navigation,
@@ -30,76 +30,6 @@ export default function PinDetails({
     setIsPinMenuOpen(!isPinMenuOpen);
   };
   const theme = useColorScheme();
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerLeft: () => (
-        <View
-          style={{
-            flexDirection: "row",
-
-            alignItems: "center",
-            paddingVertical: 0,
-            paddingHorizontal: 16,
-            marginLeft: -6,
-          }}
-        >
-          <Button
-            style={{ paddingLeft: 0, paddingVertical: 0 }}
-            iconPosition="left"
-            type="secondary"
-            backgroundColor="transparent"
-            onPress={() => navigation.goBack()}
-            Icon={
-              <MaterialIcons
-                name="keyboard-arrow-left"
-                size={24}
-                color={Colors[theme].tint}
-              />
-            }
-          />
-
-          <Button
-            style={{ paddingLeft: 0, paddingVertical: 0 }}
-            iconPosition="left"
-            type="secondary"
-            backgroundColor="transparent"
-            Icon={
-              <Entypo name="paper-plane" size={20} color={Colors[theme].tint} />
-            }
-          />
-          <Button
-            style={{ paddingLeft: 0, paddingVertical: 0 }}
-            iconPosition="left"
-            type="secondary"
-            backgroundColor="transparent"
-            onPress={togglePinMenu}
-            Icon={
-              <Feather
-                name="more-horizontal"
-                size={20}
-                color={Colors[theme].tint}
-              />
-            }
-          />
-        </View>
-      ),
-
-      headerRight: () => (
-        <Button
-          style={{ marginVertical: 0, marginHorizontal: 16 }}
-          text="Save"
-          iconPosition="left"
-          Icon={
-            <MaterialCommunityIcons
-              name="pin"
-              size={16}
-              color={Colors.dark.tint}
-            />
-          }
-        />
-      ),
-    });
-  }, []);
 
   const PIN_MENU_BUTTONS = [
     { label: "Download image", onPress: () => console.log("") },
@@ -114,71 +44,146 @@ export default function PinDetails({
       onPress: () => console.log(""),
     },
   ];
+
   return (
-    <ScrollView style={styles.container}>
-      <Image
-        resizeMode="contain"
-        style={styles.pin}
-        source={{
-          uri: "https://i.pinimg.com/564x/6d/02/ff/6d02fffca6b7ce15fcaed132a3728e79.jpg",
-        }}
-      />
-      <View style={styles.authorInfo}>
-        <Avatar source={pin.author.avatar} size="small" />
+    <HeaderLayout
+      headerContent={
+        <>
+          <View
+            style={{
+              flexDirection: "row",
 
-        <Link text={pin.author.userName} />
+              alignItems: "center",
+              paddingVertical: 0,
+            }}
+          >
+            <Button
+              style={{ paddingLeft: 0, paddingVertical: 0 }}
+              iconPosition="left"
+              type="secondary"
+              backgroundColor="transparent"
+              onPress={() => navigation.goBack()}
+              Icon={
+                <MaterialIcons
+                  name="keyboard-arrow-left"
+                  size={24}
+                  color={Colors[theme].tint}
+                />
+              }
+            />
 
-        <CheckButton
-          checkedText="Unfollow"
-          uncheckedText="Follow"
-          style={styles.followButton}
-        />
-      </View>
-      {pin.title && (
-        <Text style={styles.title} numberOfLines={2}>
-          {pin.title}
-        </Text>
-      )}
-      {pin.description && (
-        <Text style={styles.description}>{pin.description}</Text>
-      )}
-      {pin?.sourceLink && (
-        <Button text="Visit" type="secondary" fullWidth={true} />
-      )}
-      <Text style={styles.dividerText}>more like this</Text>
-      <PinsMasonry pins={relatedPins} columns={2} />
-      <MenuModal
-        visible={isPinMenuOpen}
-        closeButtonVisible={true}
-        closeButtonProps={{ onPress: togglePinMenu }}
-      >
-        <View style={{ paddingHorizontal: "0.6rem", paddingBottom: "1rem" }}>
-          {PIN_MENU_BUTTONS.map((button) => (
-            <TouchableHighlight
-              key={button.label}
-              underlayColor={Colors.lightGray}
-              activeOpacity={1}
-              style={{
-                padding: 6,
-                borderRadius: 3,
-              }}
-              onPress={() => button.onPress()}
-            >
-              <Text style={{ fontWeight: "600" }}>{button.label}</Text>
-            </TouchableHighlight>
-          ))}
+            <Button
+              style={{ paddingLeft: 0, paddingVertical: 0 }}
+              iconPosition="left"
+              type="secondary"
+              backgroundColor="transparent"
+              Icon={
+                <Entypo
+                  name="paper-plane"
+                  size={20}
+                  color={Colors[theme].tint}
+                />
+              }
+            />
+            <Button
+              style={{ paddingLeft: 0, paddingVertical: 0 }}
+              iconPosition="left"
+              type="secondary"
+              backgroundColor="transparent"
+              onPress={togglePinMenu}
+              Icon={
+                <Feather
+                  name="more-horizontal"
+                  size={20}
+                  color={Colors[theme].tint}
+                />
+              }
+            />
+          </View>
+          <Button
+            style={{ marginVertical: 0, marginRight: 6 }}
+            text="Save"
+            iconPosition="left"
+            Icon={
+              <MaterialCommunityIcons
+                name="pin"
+                size={16}
+                color={Colors.dark.tint}
+              />
+            }
+          />
+        </>
+      }
+    >
+      <View style={styles.container}>
+        <View style={styles.pinInfo}>
+          <Image
+            resizeMode="contain"
+            style={styles.pin}
+            source={{
+              uri: "https://i.pinimg.com/564x/6d/02/ff/6d02fffca6b7ce15fcaed132a3728e79.jpg",
+            }}
+          />
+          <View style={styles.authorInfo}>
+            <Avatar source={pin.author.avatar} size="small" />
+
+            <Link text={pin.author.userName} />
+
+            <CheckButton
+              checkedText="Unfollow"
+              uncheckedText="Follow"
+              style={styles.followButton}
+            />
+          </View>
+          {pin.title && (
+            <Text style={styles.title} numberOfLines={2}>
+              {pin.title}
+            </Text>
+          )}
+          {pin.description && (
+            <Text style={styles.description}>{pin.description}</Text>
+          )}
+          {pin?.sourceLink && (
+            <Button text="Visit" type="secondary" fullWidth={true} />
+          )}
         </View>
-      </MenuModal>
-    </ScrollView>
+        <Text style={styles.dividerText}>more like this</Text>
+
+        <PinsMasonry pins={relatedPins} columns={2} />
+        <MenuModal
+          visible={isPinMenuOpen}
+          closeButtonVisible={true}
+          closeButtonProps={{ onPress: togglePinMenu }}
+        >
+          <View style={{ paddingHorizontal: "0.6rem", paddingBottom: "1rem" }}>
+            {PIN_MENU_BUTTONS.map((button) => (
+              <TouchableHighlight
+                key={button.label}
+                underlayColor={Colors.lightGray}
+                activeOpacity={1}
+                style={{
+                  padding: 6,
+                  borderRadius: 3,
+                }}
+                onPress={() => button.onPress()}
+              >
+                <Text style={{ fontWeight: "600" }}>{button.label}</Text>
+              </TouchableHighlight>
+            ))}
+          </View>
+        </MenuModal>
+      </View>
+    </HeaderLayout>
   );
 }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingVertical: 6,
-    paddingHorizontal: 16,
+    padding: 6,
+    paddingBottom: 20,
+    paddingTop: 55,
   },
-
+  pinInfo: { paddingHorizontal: 10 },
   pin: {
     width: "100%",
     resizeMode: "contain",

@@ -11,20 +11,25 @@ import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
 import Colors from "../constants/Colors";
-
+import { View } from "../components/Themed";
 import useColorScheme from "../hooks/useColorScheme";
 import ModalScreen from "../screens/ModalScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
-import AccontScreen from "../screens/AccontScreen";
+import UnAuthUserAccountScreen from "../screens/UnAuthUserAccountScreen";
+import AuthUserAccountScreen from "../screens/AuthUserAccountScreen";
+import LoginScreen from "../screens/LoginScreen";
 import SearchScreen from "../screens/SearchScreen";
 import PinScreen from "../screens/PinScreen";
+import IconButton from "../components/IconButton";
 import Home from "../screens/Home";
+
 import {
   RootStackParamList,
   RootTabParamList,
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
+import { Logs } from "expo";
 
 export default function Navigation({
   colorScheme,
@@ -45,17 +50,20 @@ export default function Navigation({
  * A root stack navigator is often used for displaying modals on top of all other content.
  * https://reactnavigation.org/docs/modal
  */
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
   const theme = useColorScheme();
   return (
     <Stack.Navigator
-      screenOptions={{
+      screenOptions={() => ({
         headerStyle: {
           backgroundColor: Colors[theme].background,
+          borderBottomColor: "transparent !important",
+          borderWith: "0px !important",
         },
-      }}
+      })}
     >
       <Stack.Screen
         name="Root"
@@ -66,8 +74,17 @@ function RootNavigator() {
         name="Pin"
         component={PinScreen}
         options={{
-          headerShown: true,
-
+          headerShown: false,
+          headerBackButtonMenuEnabled: false,
+          headerTitle: "",
+        }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
+        options={{
+          headerShown: false,
+          headerBackButtonMenuEnabled: false,
           headerTitle: "",
         }}
       />
@@ -95,13 +112,24 @@ function BottomTabNavigator() {
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-
-        tabBarStyle: {
-          borderColor: "transparent",
-          height: 40,
-        },
+      screenOptions={() => {
+        return {
+          tabBarActiveTintColor: Colors.primary,
+          tabBarStyle: {
+            borderColor: "transparent",
+            height: 45,
+            marginVertical: 6,
+            borderRadius: 30,
+            maxWidth: "fit-content",
+            marginHorizontal: "auto",
+            position: "absolute",
+            shadowColor: "#171717",
+            shadowOffset: { width: -2, height: 4 },
+            shadowOpacity: 0.2,
+            shadowRadius: 3,
+            borderWidth: 0,
+          },
+        };
       }}
     >
       <BottomTab.Screen
@@ -112,6 +140,7 @@ function BottomTabNavigator() {
           tabBarIconStyle: { width: 40, marginHorizontal: 5 },
           tabBarShowLabel: false,
           headerShown: false,
+
           tabBarIcon: ({ color }) => (
             <TabBarIcon name="pinterest" color={color} />
           ),
@@ -131,10 +160,11 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Account"
-        component={AccontScreen}
+        component={AuthUserAccountScreen}
         options={{
           headerShown: false,
           title: "Account",
+          headerTitleStyle: { display: "none" },
           tabBarShowLabel: false,
           tabBarIconStyle: { width: 40, marginHorizontal: 5 },
           tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,

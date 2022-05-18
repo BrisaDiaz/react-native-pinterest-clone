@@ -14,7 +14,7 @@ export default function CollectionsCarrousel({
   }[];
 }) {
   const carrouselItemWidth =
-    Layout.window.width - 32 > 380 ? 380 : Layout.window.width - 32;
+    Layout.window.width - 18 > 380 ? 380 : Layout.window.width - 18;
   const visibleIndicators =
     Layout.window.width < (data.length - 1.5) * carrouselItemWidth;
 
@@ -32,7 +32,7 @@ export default function CollectionsCarrousel({
             style={{
               width: carrouselItemWidth,
               maxWidth: 380,
-              height: 200,
+              aspectRatio: 1.4,
               borderRadius: 12,
 
               overflow: "hidden",

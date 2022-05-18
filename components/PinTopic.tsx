@@ -19,6 +19,7 @@ export default function PinTopic({ data, style, children, ...others }: Props) {
       style={[styles.container, style]}
     >
       <ImageBackground
+        resizeMode="cover"
         style={styles.image}
         source={{
           uri: data.thumbnail,
@@ -33,7 +34,7 @@ export default function PinTopic({ data, style, children, ...others }: Props) {
 const styles = StyleSheet.create({
   container: {
     position: "relative",
-    height: 70,
+    aspectRatio: 1.85,
     width: "100%",
 
     borderRadius: 16,
@@ -41,7 +42,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 104,
+    height: "100%",
   },
   textContainer: {
     position: "absolute",

@@ -1,3 +1,4 @@
+import { getMaxTimeUnit } from "./utils/getTimeUntilNow";
 export const pin = {
   title: "Los ‘scrunchies’ gigantes son la tendencia que arrasa esta primavera",
   description:
@@ -235,23 +236,80 @@ export const topics = [
       "https://i.pinimg.com/474x/94/46/5b/94465b775810df37966a57e1e819c2b5.jpg",
   },
 ];
-  export const collections = [
-    {
-      id: 1,
-      name: "shipping container house",
-      thumbnail:
-        "https://i.pinimg.com/474x/60/fc/62/60fc6202626da99e466c61d08b938848.jpg",
-    },
-    {
-      id: 2,
-      name: "nail stamping",
-      thumbnail:
-        "https://i.pinimg.com/474x/cd/cd/81/cdcd81c42e7b527b800c42253b0cc505.jpg",
-    },
-    {
-      id: 3,
-      name: "hanging plants",
-      thumbnail:
-        "https://i.pinimg.com/474x/d6/96/e5/d696e572c5c04b64f67c929f46f8f7de.jpg",
-    },
-  ];
+export const collections = [
+  {
+    id: 1,
+    name: "shipping container house",
+    thumbnail:
+      "https://i.pinimg.com/474x/60/fc/62/60fc6202626da99e466c61d08b938848.jpg",
+  },
+  {
+    id: 2,
+    name: "nail stamping",
+    thumbnail:
+      "https://i.pinimg.com/474x/cd/cd/81/cdcd81c42e7b527b800c42253b0cc505.jpg",
+  },
+  {
+    id: 3,
+    name: "hanging plants",
+    thumbnail:
+      "https://i.pinimg.com/474x/d6/96/e5/d696e572c5c04b64f67c929f46f8f7de.jpg",
+  },
+];
+export const boards = [
+  {
+    id: 1,
+    name: "memes",
+    pinsCount: 235,
+    updatedAt: getMaxTimeUnit("Mon May 16 2022 19:04:30 GMT-0300"),
+    thumbnails: [
+      "https://i.pinimg.com/236x/e4/5c/b1/e45cb1d792977843512baeca7d6f9d6b.jpg",
+      "https://i.pinimg.com/564x/84/e7/72/84e77259f263222e70cfec65447389e2.jpg",
+      "https://i.pinimg.com/564x/5a/4d/dc/5a4ddc50cd06ca624e2672f31e4e1c49.jpg",
+    ],
+  },
+  {
+    id: 2,
+    name: "wallpapers",
+    pinsCount: 100,
+    updatedAt: getMaxTimeUnit("Mon May 13 2022 19:04:30 GMT-0300"),
+    thumbnails: [
+      "https://i.pinimg.com/236x/a2/91/45/a2914594d79bdab8be667c959a8c08df.jpg",
+      "https://i.pinimg.com/236x/91/f7/b0/91f7b034459175645881c9d6f8868140.jpg",
+      "https://i.pinimg.com/236x/02/d4/e3/02d4e30fbc28c8fffcc173ab02f31241.jpg",
+    ],
+  },
+  {
+    id: 3,
+    name: "nature",
+    pinsCount: 100,
+    updatedAt: getMaxTimeUnit("Mon May 14 2022 18:09:55 GMT-0300"),
+    thumbnails: [
+      "https://i.pinimg.com/236x/c7/be/57/c7be57089925e81330d26565ea466416.jpg",
+      "https://i.pinimg.com/236x/fd/f8/0a/fdf80ad737ff2a07eb76e6f7bf5ce644.jpg",
+      "https://i.pinimg.com/236x/7d/43/f1/7d43f16b08b0bb1ee335b9c93c88a746.jpg",
+    ],
+  },
+  {
+    id: 4,
+    name: "recipes",
+    pinsCount: 43,
+    updatedAt: getMaxTimeUnit("Mon Feb 14 2022 18:09:55 GMT-0300"),
+    thumbnails: [
+      "https://i.pinimg.com/236x/48/02/14/480214c60f7de1713b450c0185672056.jpg",
+      "https://i.pinimg.com/236x/d4/0f/31/d40f31b047c26cdaa4d15ccf87e9f9e1.jpg",
+      "https://i.pinimg.com/236x/d6/a4/4b/d6a44b660716bb50c4c8d01db519202b.jpg",
+    ],
+  },
+  {
+    id: 5,
+    name: "books quotes",
+    pinsCount: 268,
+    updatedAt: getMaxTimeUnit("Mon May 16 2022 18:09:55 GMT-0300"),
+    thumbnails: [
+      "https://i.pinimg.com/236x/fd/25/7d/fd257de923e24be2638ac77783eba7ab.jpg",
+      "https://i.pinimg.com/236x/58/1a/00/581a001247af44b47d1c74d5eeb6ab9c.jpg",
+      "https://i.pinimg.com/236x/39/05/1f/39051fb5659a99275b567231860b8876.jpg",
+    ],
+  },
+];

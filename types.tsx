@@ -17,6 +17,7 @@ export type RootStackParamList = {
   Root: NavigatorScreenParams<RootTabParamList> | undefined;
   Modal: undefined;
   NotFound: undefined;
+  Login: undefined;
   Pin: { id: number };
 };
 
@@ -47,3 +48,11 @@ export interface Pin {
     avatar: string;
   };
 };
+
+export interface PinBoard {
+  id: number;
+  name: string;
+  pinsCount: number;
+  updatedAt: string;
+  thumbnails: string[];
+}
