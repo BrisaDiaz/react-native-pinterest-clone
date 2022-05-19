@@ -2,16 +2,28 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import Login from "../components/Login";
 import { View } from "../components/Themed";
-import { RootTabScreenProps } from "../types";
+import { NavigationProp } from "@react-navigation/native";
 import Button from "../components/Button";
 import { MaterialIcons } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import HeaderLayout from "../components/HeaderLayout";
+import { useAppDispatch, useAppSelector } from "../hooks/useStore";
+import { setGuestUser } from "../store/slices/auth";
 export default function AccountScreen({
   navigation,
-}: RootTabScreenProps<"Home">) {
+}: {
+  navigation: NavigationProp<any>;
+}) {
   const theme = useColorScheme();
+  const dispatch = useAppDispatch();
+  const authState = useAppSelector((store) => store.auth);
+  const handleGuestLogin = () => {
+    dispatch(setGuestUser());
+  };
+  React.useEffect(() => {
+    if (authState.user) return navigation.navigate("Account");
+  }, [authState]);
 
   return (
     <HeaderLayout
@@ -44,7 +56,7 @@ export default function AccountScreen({
       }
     >
       <View style={styles.container}>
-        <Login />
+        <Login onGuestLogin={() => handleGuestLogin()} />
       </View>
     </HeaderLayout>
   );

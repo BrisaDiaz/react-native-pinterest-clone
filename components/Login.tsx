@@ -6,7 +6,11 @@ import { Text, View, ScrollView } from "./Themed";
 import Button from "./Button";
 import Link from "./Link";
 import { GoogleButton, FacebookButton } from "./SocialButtons";
-export default function EditScreenInfo() {
+export default function EditScreenInfo({
+  onGuestLogin,
+}: {
+  onGuestLogin: () => void;
+}) {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.formContainer}>
@@ -39,6 +43,7 @@ export default function EditScreenInfo() {
             fullWidth={true}
             backgroundColor={Colors.darkGray}
             style={styles.mb6}
+            onPress={() => onGuestLogin()}
             Icon={
               <MaterialCommunityIcons
                 name="incognito"

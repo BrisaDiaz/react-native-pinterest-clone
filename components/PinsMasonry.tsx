@@ -6,10 +6,10 @@ import { Pin } from "../types";
 import Layout from "../constants/Layout";
 import PinMenu, { Action } from "./PinMenu";
 export default function PinsMasonry({
-  pins,
+  data,
   columns,
 }: {
-  pins: Pin[];
+  data: Pin[];
   columns?: number;
 }) {
   const [selectedPin, setSelectedPin] = React.useState<Pin | null>(null);
@@ -44,7 +44,7 @@ export default function PinsMasonry({
     <>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={pins}
+        data={data}
         columnWrapperStyle={styles.masonryColumnWrapper}
         contentContainerStyle={styles.masonry}
         renderItem={renderItem}

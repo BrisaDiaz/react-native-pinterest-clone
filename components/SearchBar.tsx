@@ -96,8 +96,8 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
     margin: 2,
     padding: 8,
-    // outlineColor: Colors.focus,
-    paddingLeft: 30,
+
+    paddingHorizontal: 30,
     borderRadius: 4,
     fontWeight: "600",
   },

@@ -313,3 +313,14 @@ export const boards = [
     ],
   },
 ];
+
+ export const userProfile = {
+   full_name: "guest user",
+   user_name: "guestUser2022",
+   avatar: undefined,
+   email: "guestUser@gmail.com",
+   followersCount: 32,
+   followingCount: 225,
+   pin_boards: boards,
+   created_pins: [],
+ };

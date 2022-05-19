@@ -8,7 +8,12 @@ import SearchBar from "../components/SearchBar";
 import Tag from "../components/Tag";
 import { relatedPins } from "../mocks";
 import PinsMasonry from "../components/PinsMasonry";
-type PinCollection = { id: number; name: string; thumbnail: string };
+import { useAppSelector, useAppDispatch } from "../hooks/useStore";
+import {
+  setSearchQuery,
+  addSearchTag,
+  removeSearchTag,
+} from "../store/slices/search";
 type Tag = { id: number; name: string };
 
 export default function SearchScreen({
@@ -18,9 +23,6 @@ export default function SearchScreen({
   navigation: NavigationProp<any>;
   route: RouteProp<any>;
 }) {
-  const [searchQuery, setSearchQuery] = React.useState(
-    route?.params?.query || "",
-  );
   const [pins, setPins] = React.useState(relatedPins);
 
   const [filterTags, setFilterTags] = React.useState([
@@ -31,13 +33,27 @@ export default function SearchScreen({
     "collected",
     "with fringe",
   ]);
-  const [selectedTags, setSelectedTags] = React.useState(["elegant"]);
+  const dispatch = useAppDispatch();
+  const searchState = useAppSelector((store) => store.search);
 
+  const handleSearchChange = (search: string) => {
+    dispatch(setSearchQuery(search));
+  };
+  const handleTagsChange = (tag: string, isChecked: boolean) => {
+    if (isChecked) {
+      dispatch(removeSearchTag(tag));
+    }
+    return dispatch(addSearchTag(tag));
+  };
   const renderTag = ({ item }: { item: string }) => (
-    <Tag text={item} defaultChecked={selectedTags.includes(item)} />
+    <Tag
+      text={item}
+      defaultChecked={searchState.searchTags.includes(item)}
+      onChange={(isChecked) => handleTagsChange(item, isChecked)}
+    />
   );
   React.useEffect(() => {
-    setSearchQuery(route?.params?.query || "");
+    handleSearchChange(route?.params?.query || "");
   }, [route?.params?.query]);
 
   return (
@@ -45,9 +61,9 @@ export default function SearchScreen({
       <SearchBar
         onSearch={(search) => console.log(search)}
         onSubmitEditing={(search) => console.log(search)}
-        value={searchQuery}
-        onClear={() => setSearchQuery("")}
-        onChangeText={(currentValue) => setSearchQuery(currentValue)}
+        value={searchState.searchQuery}
+        onClear={() => handleSearchChange("")}
+        onChangeText={(currentValue) => handleSearchChange(currentValue)}
         outlined={true}
         rounded={true}
       />
@@ -62,7 +78,7 @@ export default function SearchScreen({
         scrollEnabled={true}
       />
 
-      <PinsMasonry pins={pins} columns={2} />
+      <PinsMasonry data={pins} />
     </ScrollView>
   );
 }

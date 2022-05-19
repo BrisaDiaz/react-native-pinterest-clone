@@ -149,7 +149,7 @@ export default function PinDetails({
         </View>
         <Text style={styles.dividerText}>more like this</Text>
 
-        <PinsMasonry pins={relatedPins} columns={2} />
+        <PinsMasonry data={relatedPins} />
         <MenuModal
           visible={isPinMenuOpen}
           closeButtonVisible={true}

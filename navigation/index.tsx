@@ -22,6 +22,7 @@ import SearchScreen from "../screens/SearchScreen";
 import PinScreen from "../screens/PinScreen";
 import IconButton from "../components/IconButton";
 import Home from "../screens/Home";
+import { useAppSelector } from "../hooks/useStore";
 
 import {
   RootStackParamList,
@@ -107,7 +108,7 @@ function RootNavigator() {
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+  const authSession = useAppSelector((store) => store.auth);
 
   return (
     <BottomTab.Navigator
@@ -160,7 +161,9 @@ function BottomTabNavigator() {
       />
       <BottomTab.Screen
         name="Account"
-        component={AuthUserAccountScreen}
+        component={
+          authSession.user ? AuthUserAccountScreen : UnAuthUserAccountScreen
+        }
         options={{
           headerShown: false,
           title: "Account",

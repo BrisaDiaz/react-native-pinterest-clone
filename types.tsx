@@ -56,3 +56,13 @@ export interface PinBoard {
   updatedAt: string;
   thumbnails: string[];
 }
+export interface UserProfile {
+  user_name: string;
+  full_name: string;
+  email: string;
+  avatar?: string;
+  followersCount: number;
+  followingCount: number;
+  pin_boards: PinBoard[];
+  created_pins: Pin[];
+}
