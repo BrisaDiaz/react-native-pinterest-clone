@@ -1,8 +1,7 @@
 ## 📸 Screenshots
 
 
-![image](https://res.cloudinary.com/myproyects/image/upload/v1652850071/proyects/screencapture-localhost-19006-Login-2022-05-18-01_50_43_wqqvn8.webp)
-
+![image](https://res.cloudinary.com/myproyects/image/upload/v1652850074/proyects/screencapture-localhost-19006-Pin-2022-05-18-01_48_49_oqbl4s.webp)
 
 ![image](https://res.cloudinary.com/myproyects/image/upload/v1652850073/proyects/screencapture-localhost-19006-2022-05-18-01_52_51_sogxq8.webp)
 
