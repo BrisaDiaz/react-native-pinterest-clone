@@ -5,11 +5,12 @@ import { Feather } from "@expo/vector-icons";
 import Button from "./Button";
 import Colors from "../constants/Colors";
 import { Pin } from "../types";
-
+import getRndInter from "../utils/getRndInteger";
 type Props = TouchableOpacity["props"] & {
   data: Pin;
   style?: ViewStyle;
   onMenuClick?: (data: Pin) => void;
+  dynamicHeight?: boolean;
 };
 import { useLinkProps } from "@react-navigation/native";
 
@@ -17,6 +18,7 @@ export default function PinComponent({
   data,
   style,
   onMenuClick,
+  dynamicHeight,
   ...other
 }: Props) {
   const { onPress } = useLinkProps({
@@ -35,7 +37,10 @@ export default function PinComponent({
       >
         <Image
           resizeMode="cover"
-          style={styles.pin}
+          style={[
+            styles.pin,
+            { aspectRatio: dynamicHeight? getRndInter(7, 10) / 10 : 1},
+          ]}
           source={{
             uri: data.pin,
           }}
@@ -68,15 +73,14 @@ const styles = StyleSheet.create({
   pin: {
     width: "100%",
     resizeMode: "contain",
-
+    backgroundColor: Colors.gray,
     aspectRatio: 1,
     borderRadius: 8,
   },
-  title: { fontSize: 10, fontWeight: "700", marginVertical: 4 },
+  title: { fontSize: 10, fontWeight: "700", marginVertical: 4, marginRight: 2 },
   iconButton: { padding: 0, marginLeft: "auto" },
   footer: {
     flexDirection: "row",
-    gap: 2,
     justifyContent: "space-between",
   },
 });
