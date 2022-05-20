@@ -1,22 +1,28 @@
 import React, { useState } from "react";
 import { ScrollView, FlatList, Text } from "../components/Themed";
 import { StyleSheet, ViewStyle } from "react-native";
-import PinTopic from "../components/PinTopic";
+import PinTopicComponent from "../components/PinTopic";
 import { NavigationProp } from "@react-navigation/native";
-import { topics as topicsMock, relatedPins } from "../mocks";
+import { FIXED_TOPICS } from "../constants/Data";
 import Button from "../components/Button";
-import { popularArticles } from "../mocks";
+import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
 import PinsMasonry from "../components/PinsMasonry";
 import ArticlesCarrousel from "../components/ArticlesCarrousel";
 import Layout from "../constants/Layout";
+import { PinTopic } from "../types";
+import {
+  useGetTodayPopularPinsQuery,
+  useGetTodayPopularArticlesQuery,
+} from "../store/services";
 export default function Home({
   navigation,
 }: {
   navigation: NavigationProp<any>;
 }) {
-  const [topics, setTopics] = useState(topicsMock);
-  const [hasRender, setHasRender] = useState(false);
-  const [pins, setPins] = useState(relatedPins);
+  const { data: popularPins, isLoading: isLoadingPins } =
+    useGetTodayPopularPinsQuery({});
+  const { data: popularArticles, isLoading: isLoadingArticles } =
+    useGetTodayPopularArticlesQuery({});
   const [isTotalTopicsLoaded, setIsTotalTopicsLoaded] = useState(false);
 
   const onDisplayMoreTopics = () => {
@@ -25,11 +31,11 @@ export default function Home({
 
   const TOPICS_COLUMNS_NUM = Math.floor(Layout.window.width / 160);
   const DEFAULT_DISPLAYED_TOPICS =
-    TOPICS_COLUMNS_NUM * 3 > topics.length
-      ? topics.length
+    TOPICS_COLUMNS_NUM * 3 > FIXED_TOPICS.length
+      ? FIXED_TOPICS.length
       : TOPICS_COLUMNS_NUM * 3;
-  const renderTopic = ({ item }: { item: typeof topicsMock[0] }) => (
-    <PinTopic
+  const renderTopic = ({ item }: { item: PinTopic }) => (
+    <PinTopicComponent
       data={item}
       style={{
         marginBottom: 6,
@@ -44,7 +50,7 @@ export default function Home({
       }
     >
       {!isTotalTopicsLoaded &&
-      topics[DEFAULT_DISPLAYED_TOPICS - 1].id === item.id ? (
+      FIXED_TOPICS[DEFAULT_DISPLAYED_TOPICS - 1].name === item.name ? (
         <Button
           text="More"
           type="secondary"
@@ -54,7 +60,7 @@ export default function Home({
           onPress={() => onDisplayMoreTopics()}
         />
       ) : undefined}
-    </PinTopic>
+    </PinTopicComponent>
   );
 
   return (
@@ -79,7 +85,17 @@ export default function Home({
       >
         Explore the best of pinterest
       </Text>
-      <ArticlesCarrousel data={popularArticles} />
+      {isLoadingArticles && (
+        <ArticlesCarrousel
+          data={new Array(3).fill({
+            id: Math.random() * 10,
+            name: "",
+            thumbnail: "",
+          })}
+          isLoading={true}
+        />
+      )}
+      {popularArticles && <ArticlesCarrousel data={popularArticles} />}
       <Text style={styles.sectionLabel}>Discover interests</Text>
       <FlatList
         contentContainerStyle={{
@@ -95,15 +111,16 @@ export default function Home({
         }
         data={
           isTotalTopicsLoaded
-            ? topics
-            : topics.slice(0, DEFAULT_DISPLAYED_TOPICS)
+            ? FIXED_TOPICS
+            : FIXED_TOPICS.slice(0, DEFAULT_DISPLAYED_TOPICS)
         }
         numColumns={TOPICS_COLUMNS_NUM}
         renderItem={renderTopic}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item) => item.name}
       />
       <Text style={styles.sectionLabel}>Explore popular ideas</Text>
-      <PinsMasonry data={pins} />
+      {popularPins && <PinsMasonry data={popularPins} />}
+      {isLoadingPins && <PinMasonrySkeleton itemsNum={12} />}
     </ScrollView>
   );
 }

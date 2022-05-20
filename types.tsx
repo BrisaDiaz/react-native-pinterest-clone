@@ -67,7 +67,10 @@ export interface UserProfile {
   created_pins: Pin[];
 }
 export interface PinTopic {
-  id: number;
+
   name: string;
   thumbnail: string;
+}
+export interface Article extends PinTopic {
+  id: number;
 }

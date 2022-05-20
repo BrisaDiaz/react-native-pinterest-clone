@@ -17,7 +17,7 @@ import {
 } from "../store/slices/search";
 import {
   useLazyGetPinsQuery,
-  useGetPopularTopicsQuery,
+  useGetTodayPopularTopicsQuery,
 } from "../store/services";
 import Layout from "../constants/Layout";
 import { PinTopic as PinTopicType } from "../types";
@@ -31,7 +31,7 @@ export default function SearchScreen({
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((store) => store.search);
   const { data: popularTopics, isLoading: isLoadingTopics } =
-    useGetPopularTopicsQuery();
+    useGetTodayPopularTopicsQuery();
   const [trigger, { data, isLoading }] = useLazyGetPinsQuery();
   const handleSearchChange = (search: string) => {
     dispatch(setSearchQuery(search));

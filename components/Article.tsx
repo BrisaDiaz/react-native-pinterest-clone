@@ -1,20 +1,24 @@
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-
-import { Text } from "./Themed";
+import useLoadingStyle from "../hooks/useLoadingStyle";
+import Animated from "react-native-reanimated";
+import { Text, View } from "./Themed";
 type Props = TouchableOpacity["props"] & {
   data: { id: number; name: string; thumbnail: string };
 };
 export default function Article({ data, ...others }: Props) {
+  const { loadingStyle } = useLoadingStyle();
   return (
     <TouchableOpacity activeOpacity={0.8} {...others}>
-      <Image
-        style={styles.image}
-        resizeMethod="resize"
-        source={{
-          uri: data.thumbnail,
-        }}
-      />
-      <Text style={styles.title}>{data.name}</Text>
+      <Animated.View style={[{ width: "100%", height: "100%" }, loadingStyle]}>
+        <Image
+          style={styles.image}
+          resizeMethod="resize"
+          source={{
+            uri: data.thumbnail,
+          }}
+        />
+        <Text style={styles.title}>{data.name}</Text>
+      </Animated.View>
     </TouchableOpacity>
   );
 }

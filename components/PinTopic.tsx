@@ -5,13 +5,18 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-
+import { PinTopic } from "../types";
 import { Text } from "./Themed";
 type Props = TouchableOpacity["props"] & {
-  data: { id: number; name: string; thumbnail: string };
+  data: PinTopic;
   children?: ReactNode;
 };
-export default function PinTopic({ data, style, children, ...others }: Props) {
+export default function PinTopicComponent({
+  data,
+  style,
+  children,
+  ...others
+}: Props) {
   return (
     <TouchableOpacity
       activeOpacity={0.8}

@@ -3,11 +3,18 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
-import { relatedPins, userProfile, popularTopics } from "../../mocks";
-import { Pin, UserProfile, PinTopic } from "../../types";
+import {
+  relatedPins,
+  userProfile,
+  popularTopics,
+  popularArticles,
+} from "../../mocks";
+import { Pin, UserProfile, PinTopic, Article } from "../../types";
 export interface SearchPinsArgs {
   searchQuery: string;
   tags: string[];
+  take?: Number;
+  skip?: number;
 }
 
 export interface SearchPinsData {
@@ -61,16 +68,30 @@ export const appAPI = createApi({
         };
       },
     }),
-    getPopularTopics: builder.query<PinTopic[], void>({
+    getTodayPopularTopics: builder.query<PinTopic[], void>({
       queryFn: () => {
         setTimeout(() => {}, 6 * 1000);
         return { data: popularTopics };
+      },
+    }),
+    getTodayPopularArticles: builder.query<Article[], { take?: number }>({
+      queryFn: () => {
+        setTimeout(() => {}, 6 * 1000);
+        return { data: popularArticles };
+      },
+    }),
+    getTodayPopularPins: builder.query<Pin[], { take?: number }>({
+      queryFn: () => {
+        setTimeout(() => {}, 6 * 1000);
+        return { data: relatedPins };
       },
     }),
   }),
 });
 export const {
   useGetUserProfileQuery,
-  useGetPopularTopicsQuery,
+  useGetTodayPopularTopicsQuery,
+  useGetTodayPopularPinsQuery,
+  useGetTodayPopularArticlesQuery,
   useLazyGetPinsQuery,
 } = appAPI;

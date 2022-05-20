@@ -4,20 +4,21 @@ import Carrousel from "./Carrousel";
 import Button from "./Button";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
+import useLoadingStyle from "../hooks/useLoadingStyle";
+import Animated from "react-native-reanimated";
+import { Article } from "../types";
 export default function ArticlesCarrousel({
   data,
+  isLoading = false,
 }: {
-  data: {
-    id: number;
-    name: string;
-    thumbnail: string;
-  }[];
+  isLoading?: boolean;
+  data: Article[];
 }) {
   const carrouselItemWidth =
     Layout.window.width - 18 > 380 ? 380 : Layout.window.width - 18;
   const visibleIndicators =
     Layout.window.width < (data.length - 1.5) * carrouselItemWidth;
-
+  const { loadingStyle } = useLoadingStyle();
   return (
     <Carrousel
       dotIndicatorsVisible={visibleIndicators}
@@ -28,15 +29,18 @@ export default function ArticlesCarrousel({
         data: data,
         contentContainerStyle: { marginHorizontal: "auto" },
         renderItem: ({ item }) => (
-          <View
-            style={{
-              width: carrouselItemWidth,
-              maxWidth: 380,
-              aspectRatio: 1.4,
-              borderRadius: 12,
+          <Animated.View
+            style={[
+              {
+                width: carrouselItemWidth,
+                maxWidth: 380,
+                aspectRatio: 1.4,
+                borderRadius: 12,
 
-              overflow: "hidden",
-            }}
+                overflow: "hidden",
+              },
+              isLoading && loadingStyle,
+            ]}
           >
             <ImageBackground
               style={{
@@ -77,7 +81,7 @@ export default function ArticlesCarrousel({
                 />
               </View>
             </ImageBackground>
-          </View>
+          </Animated.View>
         ),
       }}
     />
