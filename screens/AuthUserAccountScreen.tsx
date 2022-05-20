@@ -82,7 +82,7 @@ export default function AccountScreen({
               <View style={styles.userAvatar}>
                 <Text style={styles.nameInitial}>{data.full_name[0]}</Text>
               </View>
-              <Text style={styles.userName}>{data.full_name}</Text>
+              <Text style={styles.user_name}>{data.full_name}</Text>
               <Text>{data.email}</Text>
 
               <Text style={styles.followers}>
@@ -173,7 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: "700",
   },
-  userName: {
+  user_name: {
     fontWeight: "700",
     fontSize: 25,
     textTransform: "capitalize",

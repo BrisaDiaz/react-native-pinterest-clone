@@ -103,7 +103,7 @@ export default function Home({
         keyExtractor={(item) => item.id.toString()}
       />
       <Text style={styles.sectionLabel}>Explore popular ideas</Text>
-      <PinsMasonry pins={pins} />
+      <PinsMasonry data={pins} />
     </ScrollView>
   );
 }

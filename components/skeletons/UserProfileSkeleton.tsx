@@ -8,7 +8,7 @@ export default function UserProfileSkeleton() {
   return (
     <View style={styles.userData}>
       <Animated.View style={[styles.userAvatar, loadingStyle]} />
-      <Animated.View style={[styles.userName, loadingStyle]} />
+      <Animated.View style={[styles.user_name, loadingStyle]} />
       <Animated.View style={[styles.email, loadingStyle]} />
       <Animated.View style={[styles.followers, loadingStyle]} />
     </View>
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  userName: {
+  user_name: {
     height: 25,
     width: 170,
     marginVertical: 6,

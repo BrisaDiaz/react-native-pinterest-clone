@@ -35,7 +35,7 @@ export default function PinDetails({
     { label: "Download image", onPress: () => console.log("") },
 
     {
-      label: `See more of ${pin.author.userName}`,
+      label: `See more of ${pin.author.user_name}`,
       onPress: () => console.log(""),
     },
     { label: "Hide pin", onPress: () => console.log("") },
@@ -127,7 +127,7 @@ export default function PinDetails({
           <View style={styles.authorInfo}>
             <Avatar source={pin.author.avatar} size="small" />
 
-            <Link text={pin.author.userName} />
+            <Link text={pin.author.user_name} />
 
             <CheckButton
               checkedText="Unfollow"

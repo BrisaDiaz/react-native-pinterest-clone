@@ -40,14 +40,14 @@ export interface Pin {
   id: number;
   pin: string;
   title?: string;
-  tags?: string[];
+  tags: string[];
   collection?: { id: number; name: string };
   author?: {
     id: number;
-    userName: string;
+    user_name: string;
     avatar: string;
   };
-};
+}
 
 export interface PinBoard {
   id: number;
@@ -65,4 +65,9 @@ export interface UserProfile {
   followingCount: number;
   pin_boards: PinBoard[];
   created_pins: Pin[];
+}
+export interface PinTopic {
+  id: number;
+  name: string;
+  thumbnail: string;
 }

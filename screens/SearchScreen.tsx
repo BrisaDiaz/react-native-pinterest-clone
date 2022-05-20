@@ -1,21 +1,26 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 
-import { ScrollView, FlatList } from "../components/Themed";
+import { ScrollView, FlatList, Text, View } from "../components/Themed";
 import { NavigationProp, RouteProp } from "@react-navigation/native";
-
+import PinTopic from "../components/PinTopic";
 import SearchBar from "../components/SearchBar";
 import Tag from "../components/Tag";
-import { relatedPins } from "../mocks";
+
 import PinsMasonry from "../components/PinsMasonry";
 import { useAppSelector, useAppDispatch } from "../hooks/useStore";
 import {
   setSearchQuery,
   addSearchTag,
   removeSearchTag,
+  addSearchHistory,
 } from "../store/slices/search";
-type Tag = { id: number; name: string };
-
+import {
+  useLazyGetPinsQuery,
+  useGetPopularTopicsQuery,
+} from "../store/services";
+import Layout from "../constants/Layout";
+import { PinTopic as PinTopicType } from "../types";
 export default function SearchScreen({
   navigation,
   route,
@@ -23,62 +28,150 @@ export default function SearchScreen({
   navigation: NavigationProp<any>;
   route: RouteProp<any>;
 }) {
-  const [pins, setPins] = React.useState(relatedPins);
-
-  const [filterTags, setFilterTags] = React.useState([
-    "elegant",
-    "short hair",
-    "loose hair",
-    "easy",
-    "collected",
-    "with fringe",
-  ]);
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((store) => store.search);
-
+  const { data: popularTopics, isLoading: isLoadingTopics } =
+    useGetPopularTopicsQuery();
+  const [trigger, { data, isLoading }] = useLazyGetPinsQuery();
   const handleSearchChange = (search: string) => {
     dispatch(setSearchQuery(search));
   };
-  const handleTagsChange = (tag: string, isChecked: boolean) => {
-    if (isChecked) {
-      dispatch(removeSearchTag(tag));
+
+  /// search listeners
+  const handleTagsChange = (tag: string) => {
+    if (searchState.searchTags.includes(tag)) {
+      return dispatch(removeSearchTag(tag));
     }
     return dispatch(addSearchTag(tag));
   };
+
+  React.useEffect(() => {
+    const urlQuery = route?.params?.query;
+    urlQuery && dispatch(addSearchHistory(urlQuery));
+    handleSearchChange(urlQuery || "");
+  }, [route?.params?.query]);
+  const handleSearch = () => {
+    if (!searchState.searchQuery.length) return;
+
+    dispatch(addSearchHistory(searchState.searchQuery));
+    trigger({
+      searchQuery: searchState.searchQuery,
+      tags: searchState.searchTags,
+    });
+  };
+  const handleSearchByTag = (search: string) => {
+    dispatch(addSearchHistory(search));
+    navigation.navigate("Search", { query: search });
+  };
+  React.useEffect(() => {
+    handleSearch();
+  }, [searchState.searchTags]);
+  //// topic render info
+  const TOPICS_COLUMNS_NUM = Math.floor(Layout.window.width / 160);
+  const TOPICS_SPACING = 6;
+  const renderTopic = ({ item }: { item: PinTopicType }) => (
+    <PinTopic
+      data={item}
+      style={{
+        marginBottom: 6,
+        flex: 1,
+        marginHorizontal: "auto",
+        maxWidth: `${100 / TOPICS_COLUMNS_NUM}%`,
+        marginLeft: TOPICS_SPACING,
+      }}
+      onPress={() => handleSearchByTag(item.name)}
+    ></PinTopic>
+  );
+  /// tags render info
   const renderTag = ({ item }: { item: string }) => (
     <Tag
       text={item}
       defaultChecked={searchState.searchTags.includes(item)}
-      onChange={(isChecked) => handleTagsChange(item, isChecked)}
+      onChange={() => handleTagsChange(item)}
     />
   );
-  React.useEffect(() => {
-    handleSearchChange(route?.params?.query || "");
-  }, [route?.params?.query]);
+  /// search tags render info
+
+  const renderSearchTag = ({ item }: { item: string }) => (
+    <Tag
+      text={item}
+      onChange={(isChecked) => isChecked && handleSearchByTag(item)}
+    />
+  );
 
   return (
     <ScrollView style={styles.container}>
       <SearchBar
-        onSearch={(search) => console.log(search)}
-        onSubmitEditing={(search) => console.log(search)}
+        onSearch={(search) => handleSearch()}
+        onSubmitEditing={(search) => handleSearch()}
         value={searchState.searchQuery}
         onClear={() => handleSearchChange("")}
         onChangeText={(currentValue) => handleSearchChange(currentValue)}
         outlined={true}
+        loading={isLoading}
         rounded={true}
       />
+      {popularTopics && (!data || !data.total) && (
+        <>
+          {searchState.searchHistory.length > 0 && (
+            <>
+              <Text style={styles.sectionLabel}>Recent searches</Text>
+              <FlatList
+                horizontal={true}
+                contentContainerStyle={styles.tagList}
+                showsHorizontalScrollIndicator={false}
+                data={searchState.searchHistory}
+                renderItem={renderSearchTag}
+                keyExtractor={(item) => item}
+                scrollEnabled={true}
+              />
+            </>
+          )}
+          {!data ? (
+            <Text style={styles.sectionLabel}>Popular in Pinterest </Text>
+          ) : (
+            <View style={styles.notFoundMessage}>
+              <Text style={styles.notFoundText}>
+                Sorry, no pin was found for this search.
+              </Text>
+              <Text style={styles.notFoundText}>
+                Do you want to try one of these?
+              </Text>
+            </View>
+          )}
 
-      <FlatList
-        horizontal={true}
-        contentContainerStyle={styles.tagList}
-        showsHorizontalScrollIndicator={false}
-        data={filterTags}
-        renderItem={renderTag}
-        keyExtractor={(item) => item}
-        scrollEnabled={true}
-      />
+          <FlatList
+            contentContainerStyle={{
+              marginBottom: "1rem",
+              marginLeft: -TOPICS_SPACING,
+            }}
+            columnWrapperStyle={{
+              width: "100%",
+              justifyContent: "center",
+              display: "flex",
+            }}
+            data={popularTopics}
+            numColumns={TOPICS_COLUMNS_NUM}
+            renderItem={renderTopic}
+            keyExtractor={(item) => item.id.toString()}
+          />
+        </>
+      )}
+      {!isLoading && data && (
+        <>
+          <FlatList
+            horizontal={true}
+            contentContainerStyle={styles.tagList}
+            showsHorizontalScrollIndicator={false}
+            data={data.suggestedTags}
+            renderItem={renderTag}
+            keyExtractor={(item) => item}
+            scrollEnabled={true}
+          />
 
-      <PinsMasonry data={pins} />
+          <PinsMasonry data={data.result} />
+        </>
+      )}
     </ScrollView>
   );
 }
@@ -88,12 +181,27 @@ const styles = StyleSheet.create({
     flex: 1,
 
     padding: 6,
-    paddingBottom: 20,
+    paddingBottom: 40,
   },
   tagList: {
     maxHeight: "fit-content",
     marginTop: 4,
     marginBottom: 16,
     height: 40,
+  },
+  sectionLabel: {
+    fontWeight: "600",
+
+    marginTop: "1rem",
+    marginBottom: "0.8rem",
+    textAlign: "center",
+  },
+  notFoundMessage: {
+    marginBottom: "1.5rem",
+  },
+  notFoundText: {
+    fontWeight: "700",
+    fontSize: 14,
+    textAlign: "center",
   },
 });

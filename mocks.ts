@@ -15,7 +15,7 @@ export const pin = {
     id: 1,
     avatar:
       "https://i.pinimg.com/280x280_RS/5e/99/a1/5e99a11e4b338cb8a5bc4fd0f163f79e.jpg",
-    userName: "OkChicas",
+    user_name: "OkChicas",
   },
 };
 export const relatedPins = [
@@ -23,11 +23,11 @@ export const relatedPins = [
     id: 1,
     pin: "https://i.pinimg.com/564x/d4/84/1c/d4841cde566d555cdb80628877ff1647.jpg",
     title: "19 Hairstyles for you to wear your buns",
-    tags: [""],
-    collection: { id: 1, name: "" },
+    tags: ["loose hair", "elegant"],
+
     author: {
       id: 1,
-      userName: "",
+      user_name: "",
       avatar: "",
     },
   },
@@ -35,11 +35,11 @@ export const relatedPins = [
     id: 2,
     pin: "https://i.pinimg.com/236x/d9/3d/c6/d93dc615a57d9ece0664c7e9ab6599d4.jpg",
     title: "Pearls in the hair, the trend that will make you look more elegant",
-    tags: [""],
-    collection: { id: 1, name: "" },
+    tags: ["easy", "elegant", "loose hair"],
+
     author: {
       id: 1,
-      userName: "",
+      user_name: "",
       avatar: "",
     },
   },
@@ -47,11 +47,11 @@ export const relatedPins = [
     id: 3,
     pin: "https://i.pinimg.com/236x/c9/30/6b/c9306be2ff456e2e1a2e8ed78e8fb435.jpg",
     title: "16 Cutest Back-to-School Hairstyle Ideas for Girls",
-    tags: [""],
-    collection: { id: 1, name: "" },
+    tags: ["elegant", "collected", "with scarves"],
+
     author: {
       id: 1,
-      userName: "",
+      user_name: "",
       avatar: "",
     },
   },
@@ -59,11 +59,11 @@ export const relatedPins = [
     id: 4,
     pin: "https://i.pinimg.com/236x/8b/42/4e/8b424eff71af2785f02fa9815e7df0e9.jpg",
     title: "Mother Of The Bride Hairstyles: Elegant Ideas [2022 Guide]",
-    tags: [""],
-    collection: { id: 1, name: "" },
+    tags: ["collected", "easy"],
+
     author: {
       id: 1,
-      userName: "",
+      user_name: "",
       avatar: "",
     },
   },
@@ -71,11 +71,11 @@ export const relatedPins = [
     id: 5,
     pin: "https://i.pinimg.com/564x/48/58/7b/48587b9f53470de5e6779e35cc7d01fc.jpg",
 
-    tags: [""],
-    collection: { id: 1, name: "" },
+    tags: ["easy", "with scarves"],
+
     author: {
       id: 1,
-      userName: "",
+      user_name: "",
       avatar: "",
     },
   },
@@ -83,11 +83,11 @@ export const relatedPins = [
     id: 6,
     pin: "https://i.pinimg.com/564x/9c/d8/99/9cd899e84f6811c2450ef0c1a71e882d.jpg",
     title: "VSCO Girl Hairstyles You'll Want To Copy",
-    tags: [""],
-    collection: { id: 1, name: "" },
+    tags: ["easy", "with scarves"],
+
     author: {
       id: 1,
-      userName: "",
+      user_name: "",
       avatar: "",
     },
   },
@@ -97,12 +97,27 @@ export const relatedPins = [
     pin: "https://i.pinimg.com/564x/4a/1e/2a/4a1e2a67784fe704929eae0c8c4c3bba.jpg",
     title: "Every Major Hair Look From Fashion Week SS19",
     description: "Updos, down dos and everything in between",
-    tags: [""],
-    collection: { id: 1, name: "" },
+    tags: ["loose hair", "easy", "with braids"],
+
     author: {
       id: 1,
-      userName: "",
+      user_name: "",
       avatar: "",
+    },
+  },
+  {
+    id: 8,
+    pin: "https://i.pinimg.com/564x/06/52/0c/06520ce301e9d1815decd5affb1b420f.jpg",
+    title: "38 Easy Retro & Vintage Hairstyles to Try This Year",
+    description:
+      "Pining after Marilyn Monroe’s luscious curls or Bettie Page’s full bangs? Then you’re in luck, because today we have a list of totally sexy vintage hairstyles that are perfect for the modern woman.",
+    tags: ["loose hair", "easy", "short hair"],
+
+    author: {
+      id: 1,
+      user_name: "latesthair",
+      avatar:
+        "https://i.pinimg.com/75x75_RS/95/fe/9b/95fe9b66d4808ea484903a416df55859.jpg",
     },
   },
 ];
@@ -234,6 +249,44 @@ export const topics = [
     name: "women's Fashion",
     thumbnail:
       "https://i.pinimg.com/474x/94/46/5b/94465b775810df37966a57e1e819c2b5.jpg",
+  },
+];
+export const popularTopics = [
+  {
+    id: 22,
+    name: "Artistic posters",
+    thumbnail:
+      "https://i.pinimg.com/474x/5b/bf/18/5bbf180fd0954ac4ed343baefd491efd.jpg",
+  },
+  {
+    id: 23,
+    name: "aesthetic drawings",
+    thumbnail:
+      "https://i.pinimg.com/474x/ec/92/0d/ec920d2d6ddc26df3b605bf9d7267489.jpg",
+  },
+  {
+    id: 24,
+    name: "creative crafts",
+    thumbnail:
+      "https://i.pinimg.com/236x/a2/d7/3a/a2d73ae86dd6a233a23a8dce0efc5d17.jpg",
+  },
+  {
+    id: 25,
+    name: "men's haircuts",
+    thumbnail:
+      "https://i.pinimg.com/474x/a3/9f/a3/a39fa328f48e06432fd74f7e1f0eeb53.jpg",
+  },
+  {
+    id: 26,
+    name: "character sketches",
+    thumbnail:
+      "https://i.pinimg.com/474x/91/ef/3c/91ef3c85cde6ff1120df472fe57209ef.jpg",
+  },
+  {
+    id: 27,
+    name: "fashion photos",
+    thumbnail:
+      "https://i.pinimg.com/474x/98/11/8a/98118a604772cd9dcc8ec06efedc7016.jpg",
   },
 ];
 export const collections = [
