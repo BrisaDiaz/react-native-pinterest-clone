@@ -5,9 +5,9 @@ import PinTopic from "../components/PinTopic";
 import { NavigationProp } from "@react-navigation/native";
 import { topics as topicsMock, relatedPins } from "../mocks";
 import Button from "../components/Button";
-import { collections } from "../mocks";
+import { popularArticles } from "../mocks";
 import PinsMasonry from "../components/PinsMasonry";
-import CollectionsCarrousel from "../components/CollectionsCarrousel";
+import ArticlesCarrousel from "../components/ArticlesCarrousel";
 import Layout from "../constants/Layout";
 export default function Home({
   navigation,
@@ -79,7 +79,7 @@ export default function Home({
       >
         Explore the best of pinterest
       </Text>
-      <CollectionsCarrousel data={collections} />
+      <ArticlesCarrousel data={popularArticles} />
       <Text style={styles.sectionLabel}>Discover interests</Text>
       <FlatList
         contentContainerStyle={{
@@ -111,7 +111,7 @@ const styles = StyleSheet.create({
   container: {
     padding: 6,
     flex: 1,
-    paddingBottom: 20,
+    paddingBottom: 40,
   },
   sectionLabel: {
     textAlign: "center",

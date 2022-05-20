@@ -4,7 +4,7 @@ import Carrousel from "./Carrousel";
 import Button from "./Button";
 import Colors from "../constants/Colors";
 import Layout from "../constants/Layout";
-export default function CollectionsCarrousel({
+export default function ArticlesCarrousel({
   data,
 }: {
   data: {

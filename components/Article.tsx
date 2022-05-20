@@ -4,7 +4,7 @@ import { Text } from "./Themed";
 type Props = TouchableOpacity["props"] & {
   data: { id: number; name: string; thumbnail: string };
 };
-export default function PinCollection({ data, ...others }: Props) {
+export default function Article({ data, ...others }: Props) {
   return (
     <TouchableOpacity activeOpacity={0.8} {...others}>
       <Image

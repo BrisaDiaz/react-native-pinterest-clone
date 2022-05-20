@@ -289,7 +289,7 @@ export const popularTopics = [
       "https://i.pinimg.com/474x/98/11/8a/98118a604772cd9dcc8ec06efedc7016.jpg",
   },
 ];
-export const collections = [
+export const popularArticles = [
   {
     id: 1,
     name: "shipping container house",
