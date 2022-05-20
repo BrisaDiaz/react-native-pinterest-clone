@@ -76,6 +76,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.gray,
     aspectRatio: 1,
     borderRadius: 8,
+    alignSelf: "stretch",
   },
   title: { fontSize: 10, fontWeight: "700", marginVertical: 4, marginRight: 2 },
   iconButton: { padding: 0, marginLeft: "auto" },

@@ -11,8 +11,8 @@ function PinsMasonry({ data }: { data: Pin[] }) {
   const [selectedPin, setSelectedPin] = React.useState<Pin | null>(null);
   const [isPinMenuOpen, setIsPinMenuOpen] = React.useState(false);
   const defaultPinsMaxWidth = 200;
-  const DEFAULT_COL_NUM = Math.ceil(Layout.window.width / defaultPinsMaxWidth);
-  const SPACING = 6;
+  const calcWith = Math.ceil(Layout.window.width / defaultPinsMaxWidth)
+  const DEFAULT_COL_NUM = calcWith > 1 ? calcWith : 2;  const SPACING = 6;
   const PINS_WITH =
     (Layout.window.width - 12) /
     (data.length < DEFAULT_COL_NUM ? data.length : DEFAULT_COL_NUM);

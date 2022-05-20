@@ -6,7 +6,7 @@ import { NavigationProp, RouteProp } from "@react-navigation/native";
 import PinTopic from "../components/PinTopic";
 import SearchBar from "../components/SearchBar";
 import Tag from "../components/Tag";
-
+import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
 import PinsMasonry from "../components/PinsMasonry";
 import { useAppSelector, useAppDispatch } from "../hooks/useStore";
 import {
@@ -111,7 +111,8 @@ export default function SearchScreen({
         loading={isLoading}
         rounded={true}
       />
-      {popularTopics && (!data || !data.total) && (
+      {isLoading && <PinMasonrySkeleton itemsNum={12} />}
+      {popularTopics && (!data || !data.total) && !isLoading && (
         <>
           {searchState.searchHistory.length > 0 && (
             <>
@@ -127,6 +128,7 @@ export default function SearchScreen({
               />
             </>
           )}
+
           {!data ? (
             <Text style={styles.sectionLabel}>Popular in Pinterest </Text>
           ) : (
