@@ -45,24 +45,31 @@ export default function SearchScreen({
     return dispatch(addSearchTag(tag));
   };
 
-  React.useEffect(() => {
-    const urlQuery = route?.params?.query;
-    urlQuery && dispatch(addSearchHistory(urlQuery));
-    handleSearchChange(urlQuery || "");
-  }, [route?.params?.query]);
-  const handleSearch = () => {
+  const handleSearch = (search?: string) => {
     if (!searchState.searchQuery.length) return;
 
-    dispatch(addSearchHistory(searchState.searchQuery));
+    dispatch(addSearchHistory(search || searchState.searchQuery));
     trigger({
-      searchQuery: searchState.searchQuery,
+      searchQuery: search || searchState.searchQuery,
       tags: searchState.searchTags,
     });
   };
+  /// make search request with current search query or arg
   const handleSearchByTag = (search: string) => {
     dispatch(addSearchHistory(search));
     navigation.navigate("Search", { query: search });
   };
+  /// lisente to url changes
+  React.useEffect(() => {
+    const urlQuery = route?.params?.query;
+
+    handleSearchChange(urlQuery || "");
+    if (urlQuery) {
+      handleSearch(urlQuery);
+      dispatch(addSearchHistory(urlQuery));
+    }
+  }, [route?.params?.query]);
+
   React.useEffect(() => {
     handleSearch();
   }, [searchState.searchTags]);
@@ -80,7 +87,7 @@ export default function SearchScreen({
         marginLeft: TOPICS_SPACING,
       }}
       onPress={() => handleSearchByTag(item.name)}
-    ></PinTopic>
+    />
   );
   /// tags render info
   const renderTag = ({ item }: { item: string }) => (
@@ -119,12 +126,16 @@ export default function SearchScreen({
               <Text style={styles.sectionLabel}>Recent searches</Text>
               <FlatList
                 horizontal={true}
-                contentContainerStyle={styles.tagList}
+                contentContainerStyle={[
+                  styles.tagList,
+                  { justifyContent: "space-around" },
+                ]}
                 showsHorizontalScrollIndicator={false}
                 data={searchState.searchHistory}
                 renderItem={renderSearchTag}
                 keyExtractor={(item) => item}
                 scrollEnabled={true}
+                inverted={true}
               />
             </>
           )}
@@ -132,14 +143,16 @@ export default function SearchScreen({
           {!data ? (
             <Text style={styles.sectionLabel}>Popular in Pinterest </Text>
           ) : (
-            <View style={styles.notFoundMessage}>
-              <Text style={styles.notFoundText}>
-                Sorry, no pin was found for this search.
-              </Text>
-              <Text style={styles.notFoundText}>
-                Do you want to try one of these?
-              </Text>
-            </View>
+            searchState.searchQuery && (
+              <View style={styles.notFoundMessage}>
+                <Text style={styles.notFoundText}>
+                  Sorry, no pin was found for this search.
+                </Text>
+                <Text style={styles.notFoundText}>
+                  Do you want to try one of these?
+                </Text>
+              </View>
+            )
           )}
 
           <FlatList
