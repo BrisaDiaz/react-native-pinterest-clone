@@ -41,6 +41,8 @@ export interface Pin {
   pin: string;
   title?: string;
   tags: string[];
+  description?: string;
+  source_link?: string;
   collection?: { id: number; name: string };
   author?: {
     id: number;

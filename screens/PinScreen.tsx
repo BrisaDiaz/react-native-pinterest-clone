@@ -5,7 +5,13 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Image, TouchableHighlight, Share } from "react-native";
+import {
+  StyleSheet,
+  Image,
+  TouchableHighlight,
+  Linking,
+  Alert,
+} from "react-native";
 import Colors from "../constants/Colors";
 import { View, Text, ScrollView } from "../components/Themed";
 import Button from "../components/Button";
@@ -14,18 +20,31 @@ import Link from "../components/Link";
 import useColorScheme from "../hooks/useColorScheme";
 import PinsMasonry from "../components/PinsMasonry";
 import CheckButton from "../components/CheckButton";
-import { NavigationProp } from "@react-navigation/native";
+import { NavigationProp, RouteProp } from "@react-navigation/native";
 import MenuModal from "../components/MenuModal";
 import HeaderLayout from "../components/HeaderLayout";
-import { relatedPins as otherPins, pin as data } from "../mocks";
+import { useGetPinQuery, useLazyGetPinsByTagsQuery } from "../store/services";
+import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
+import PinDetailsSkeleton from "../components/skeletons/PinDetailsSkeleton";
+import { flingGestureHandlerProps } from "react-native-gesture-handler/lib/typescript/handlers/FlingGestureHandler";
 export default function PinDetails({
   navigation,
+  route,
 }: {
   navigation: NavigationProp<any>;
+  route: RouteProp<any>;
 }) {
-  const [pin, setPin] = React.useState(data);
-  const [relatedPins, setRelatedPins] = React.useState(otherPins);
   const [isPinMenuOpen, setIsPinMenuOpen] = React.useState(false);
+  const [imageAspectRatio, setImageAspectRatio] = React.useState(1);
+  const [isPinImageLoaded, setIsPinImageLoaded] = React.useState(false);
+
+  const { data: pin, isLoading: isLoadingPin } = useGetPinQuery(
+    route.params?.id || 0,
+  );
+  const [
+    triggerGetSimilar,
+    { data: similarPins, isLoading: isLoadingSimilar },
+  ] = useLazyGetPinsByTagsQuery();
   const togglePinMenu = () => {
     setIsPinMenuOpen(!isPinMenuOpen);
   };
@@ -35,7 +54,7 @@ export default function PinDetails({
     { label: "Download image", onPress: () => console.log("") },
 
     {
-      label: `See more of ${pin.author.user_name}`,
+      label: `See more of ${pin?.author?.user_name}`,
       onPress: () => console.log(""),
     },
     { label: "Hide pin", onPress: () => console.log("") },
@@ -44,7 +63,32 @@ export default function PinDetails({
       onPress: () => console.log(""),
     },
   ];
+  React.useEffect(() => {
+    if (pin) {
+      setIsPinImageLoaded(false);
 
+      Image.getSize(pin.pin, (width, height) => {
+        setImageAspectRatio(width / height);
+        setIsPinImageLoaded(true);
+      });
+      triggerGetSimilar({ tags: pin.tags, refererId: pin.id });
+    }
+
+    return () => {
+      setImageAspectRatio(1);
+    };
+  }, [pin]);
+  const handleGoToSource = React.useCallback(async () => {
+    if (!pin?.source_link) return;
+
+    const supported = await Linking.canOpenURL(pin?.source_link);
+
+    if (supported) {
+      await Linking.openURL(pin?.source_link);
+    } else {
+      Alert.alert(`The URL couldn't be open: ${pin?.source_link}`);
+    }
+  }, [pin?.source_link]);
   return (
     <HeaderLayout
       headerContent={
@@ -116,40 +160,60 @@ export default function PinDetails({
       }
     >
       <View style={styles.container}>
-        <View style={styles.pinInfo}>
-          <Image
-            resizeMode="contain"
-            style={styles.pin}
-            source={{
-              uri: "https://i.pinimg.com/564x/6d/02/ff/6d02fffca6b7ce15fcaed132a3728e79.jpg",
-            }}
-          />
-          <View style={styles.authorInfo}>
-            <Avatar source={pin.author.avatar} size="small" />
+        {(isLoadingPin || !isPinImageLoaded) && <PinDetailsSkeleton />}
+        {pin && !isLoadingPin && isPinImageLoaded && (
+          <>
+            <View style={styles.pinInfo}>
+              <Image
+                resizeMode="cover"
+                style={[styles.pin, { aspectRatio: imageAspectRatio }]}
+                source={{
+                  uri: pin?.pin,
+                }}
+              />
+              <View style={styles.authorInfo}>
+                {pin.author && (
+                  <>
+                    <Avatar source={pin?.author?.avatar} size="small" />
 
-            <Link text={pin.author.user_name} />
+                    <Link text={pin?.author?.user_name} />
+                  </>
+                )}
 
-            <CheckButton
-              checkedText="Unfollow"
-              uncheckedText="Follow"
-              style={styles.followButton}
-            />
-          </View>
-          {pin.title && (
-            <Text style={styles.title} numberOfLines={2}>
-              {pin.title}
-            </Text>
-          )}
-          {pin.description && (
-            <Text style={styles.description}>{pin.description}</Text>
-          )}
-          {pin?.sourceLink && (
-            <Button text="Visit" type="secondary" fullWidth={true} />
-          )}
-        </View>
+                <CheckButton
+                  checkedText="Unfollow"
+                  uncheckedText="Follow"
+                  style={styles.followButton}
+                />
+              </View>
+              {pin?.title && (
+                <Text style={styles.title} numberOfLines={2}>
+                  {pin?.title}
+                </Text>
+              )}
+              {pin?.description && (
+                <Text style={styles?.description}>{pin?.description}</Text>
+              )}
+              {pin?.source_link && (
+                <Button
+                  text="Visit"
+                  type="secondary"
+                  fullWidth={true}
+                  style={styles.visitButton}
+                  onPress={() => handleGoToSource()}
+                />
+              )}
+            </View>
+          </>
+        )}
         <Text style={styles.dividerText}>more like this</Text>
-
-        <PinsMasonry data={relatedPins} />
+        {(isLoadingSimilar || !isPinImageLoaded) && (
+          <PinMasonrySkeleton itemsNum={12} />
+        )}
+        {similarPins &&
+          !isLoadingPin &&
+          isPinImageLoaded &&
+          !isLoadingSimilar && <PinsMasonry data={similarPins} />}
         <MenuModal
           visible={isPinMenuOpen}
           closeButtonVisible={true}
@@ -188,7 +252,7 @@ const styles = StyleSheet.create({
     width: "100%",
     resizeMode: "contain",
     flex: 1,
-    aspectRatio: 1,
+
     borderRadius: 8,
   },
   title: {
@@ -206,6 +270,7 @@ const styles = StyleSheet.create({
   followButton: {
     marginLeft: "auto",
   },
+  visitButton: { marginTop: 4 },
   description: {
     textAlign: "center",
     marginVertical: 8,

@@ -3,6 +3,7 @@ import {
   fetchBaseQuery,
   FetchBaseQueryError,
 } from "@reduxjs/toolkit/query/react";
+import { tapGestureHandlerProps } from "react-native-gesture-handler/lib/typescript/handlers/TapGestureHandler";
 import {
   relatedPins,
   userProfile,
@@ -28,7 +29,16 @@ export const appAPI = createApi({
   endpoints: (builder) => ({
     getPins: builder.query<SearchPinsData, SearchPinsArgs>({
       queryFn: ({ searchQuery, tags }) => {
-        if (!searchQuery.toLocaleLowerCase().includes("hair"))
+        setTimeout(() => {}, 6 * 1000);
+        const cleanQuery = searchQuery.trim().toLowerCase();
+        /// filter by query
+        const matches = relatedPins.filter(
+          (pin) =>
+            pin?.title?.toLowerCase()?.includes(cleanQuery) ||
+            pin?.description?.toLowerCase()?.includes(cleanQuery) ||
+            pin.tags.some((tag) => cleanQuery?.includes(tag)),
+        );
+        if (!matches.length)
           return {
             data: {
               total: 0,
@@ -37,12 +47,10 @@ export const appAPI = createApi({
             } as SearchPinsData,
           };
 
-        setTimeout(() => {}, 6 * 1000);
+        //// filter by tag
         const pins = !tags.length
-          ? relatedPins
-          : relatedPins.filter((pin) =>
-              pin.tags.some((tag) => tags.includes(tag)),
-            );
+          ? matches
+          : matches.filter((pin) => pin.tags.some((tag) => tags.includes(tag)));
         const suggestedTags = [
           ...new Set(
             pins.reduce((array: string[], current: Pin) => {
@@ -86,6 +94,32 @@ export const appAPI = createApi({
         return { data: relatedPins };
       },
     }),
+    getPin: builder.query<Pin, number>({
+      queryFn: (id) => {
+        setTimeout(() => {}, 6 * 1000);
+        const foundPin = relatedPins.find((pin) => pin.id === id);
+        if (!foundPin)
+          return {
+            error: {
+              status: 404,
+              statusText: "NOT FOUND",
+              data: "No pin was found",
+            },
+          };
+        return { data: foundPin };
+      },
+    }),
+    getPinsByTags: builder.query<Pin[], { tags: string[]; refererId: number }>({
+      queryFn: ({ tags, refererId }) => {
+        setTimeout(() => {}, 6 * 1000);
+        const matches = relatedPins.filter(
+          (pin) =>
+            pin.tags.some((tag) => tags.includes(tag)) && pin.id !== refererId,
+        );
+
+        return { data: matches };
+      },
+    }),
   }),
 });
 export const {
@@ -94,4 +128,6 @@ export const {
   useGetTodayPopularPinsQuery,
   useGetTodayPopularArticlesQuery,
   useLazyGetPinsQuery,
+  useGetPinQuery,
+  useLazyGetPinsByTagsQuery,
 } = appAPI;
