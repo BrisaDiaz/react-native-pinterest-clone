@@ -1,14 +1,13 @@
-import { StyleSheet, Switch } from "react-native";
+import { StyleSheet } from "react-native";
 import React from "react";
 import { Text, View } from "../components/Themed";
 import HeaderLayout from "../components/HeaderLayout";
 import GoBackButton from "../components/GoBackButton";
-
+import Switch from "../components/Switch";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScreenParamList } from "../types";
 import Button from "../components/Button";
-import useColorScheme from "../hooks/useColorScheme";
-import Colors from "../constants/Colors";
+
 import FloatingInput from "../components/FloatingInput";
 export default function AccountScreen({
   navigation,
@@ -16,11 +15,15 @@ export default function AccountScreen({
   navigation: NativeStackNavigationProp<ScreenParamList, "CreateBoard">;
 }) {
   const [isPrivetBoard, setIsPrivetBoard] = React.useState(false);
-
-  const togglePrivacySwitch = () => {
-    setIsPrivetBoard(!isPrivetBoard);
+  const [boardName, setBoardName] = React.useState("");
+  const setPrivacy = (value: boolean) => {
+    setIsPrivetBoard(value);
   };
-  const theme = useColorScheme();
+  const handleBoardNameChange = (value: string) => {
+    setBoardName(value.trim());
+  };
+  const handleCreateBoard = () => {};
+
   return (
     <HeaderLayout
       headerContent={
@@ -37,7 +40,11 @@ export default function AccountScreen({
             <Text style={{ fontSize: 16, fontWeight: "700" }}>
               Create Board
             </Text>
-            <Button rounded={true} text="Create" disabled={true} />
+            <Button
+              rounded={true}
+              text="Create"
+              disabled={boardName.length > 0 ? true : false}
+            />
           </View>
         </>
       }
@@ -47,10 +54,7 @@ export default function AccountScreen({
 
         <View style={styles.markPrivacySection}>
           <Text style={styles.privacyText}>Mark board as private</Text>
-          <Switch
-            onTouchStart={() => togglePrivacySwitch()}
-            value={isPrivetBoard}
-          />
+          <Switch onChange={(value) => setPrivacy(value)} />
         </View>
       </View>
     </HeaderLayout>
