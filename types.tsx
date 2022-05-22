@@ -18,6 +18,7 @@ export type RootStackParamList = {
   Modal: undefined;
   NotFound: undefined;
   Login: undefined;
+  CreateBoard: undefined;
   Pin: { id: number };
 };
 

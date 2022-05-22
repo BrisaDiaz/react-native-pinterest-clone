@@ -9,10 +9,11 @@ export default function PinsBoardMasonrySkeleton({
 }: {
   columns?: number;
 }) {
-  const defaultBoardsMaxWidth = 200;
-  const defaultColumnsNum =
+  const BOAR_MAX_W = 200;
+  const GAP = 6;
+  const COLUMNS_NUM =
     Layout.window.width > 400
-      ? Math.floor(Layout.window.width / defaultBoardsMaxWidth)
+      ? Math.floor(Layout.window.width / BOAR_MAX_W)
       : 2;
 
   return (
@@ -20,23 +21,24 @@ export default function PinsBoardMasonrySkeleton({
       showsVerticalScrollIndicator={false}
       contentContainerStyle={{
         width: "100%",
+        marginLeft: -GAP,
       }}
       columnWrapperStyle={
         {
           width: "100%",
-          gap: 6,
-          paddingRight: 6,
+          marginRight: -GAP,
           justifyContent: "flex-start",
         } as ViewStyle
       }
-      numColumns={columns || defaultColumnsNum}
+      numColumns={COLUMNS_NUM}
       data={new Array(6).fill(1)}
       keyExtractor={() => uuid()}
       renderItem={({ item }) => (
         <PinBoardSkeleton
           style={{
-            maxWidth: `${columns ? 100 / columns : 100 / defaultColumnsNum}%`,
+            maxWidth: `${100 / COLUMNS_NUM}%`,
             marginBottom: 4,
+            marginLeft: GAP,
           }}
         />
       )}

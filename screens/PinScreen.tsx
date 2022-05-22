@@ -26,7 +26,8 @@ import HeaderLayout from "../components/HeaderLayout";
 import { useGetPinQuery, useLazyGetPinsByTagsQuery } from "../store/services";
 import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
 import PinDetailsSkeleton from "../components/skeletons/PinDetailsSkeleton";
-import { flingGestureHandlerProps } from "react-native-gesture-handler/lib/typescript/handlers/FlingGestureHandler";
+
+import GoBackButton from "../components/GoBackButton";
 export default function PinDetails({
   navigation,
   route,
@@ -101,19 +102,9 @@ export default function PinDetails({
               paddingVertical: 0,
             }}
           >
-            <Button
-              style={{ paddingLeft: 0, paddingVertical: 0 }}
-              iconPosition="left"
-              type="secondary"
-              backgroundColor="transparent"
+            <GoBackButton
               onPress={() => navigation.goBack()}
-              Icon={
-                <MaterialIcons
-                  name="keyboard-arrow-left"
-                  size={24}
-                  color={Colors[theme].tint}
-                />
-              }
+              style={{ marginRight: 6 }}
             />
 
             <Button

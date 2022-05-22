@@ -14,6 +14,7 @@ import {
   useGetTodayPopularPinsQuery,
   useGetTodayPopularArticlesQuery,
 } from "../store/services";
+
 export default function Home({
   navigation,
 }: {

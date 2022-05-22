@@ -13,7 +13,7 @@ import { ColorSchemeName } from 'react-native';
 import Colors from "../constants/Colors";
 import { View } from "../components/Themed";
 import useColorScheme from "../hooks/useColorScheme";
-import ModalScreen from "../screens/ModalScreen";
+import CreateBoardScreen from "../screens/CreateBoardScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
 import UnAuthUserAccountScreen from "../screens/UnAuthUserAccountScreen";
 import AuthUserAccountScreen from "../screens/AuthUserAccountScreen";
@@ -90,13 +90,19 @@ function RootNavigator() {
         }}
       />
       <Stack.Screen
+        name="CreateBoard"
+        component={CreateBoardScreen}
+        options={{
+          headerShown: false,
+          headerBackButtonMenuEnabled: false,
+          headerTitle: "",
+        }}
+      />
+      <Stack.Screen
         name="NotFound"
         component={NotFoundScreen}
         options={{ title: "Oops!" }}
       />
-      <Stack.Group screenOptions={{ presentation: "modal" }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
     </Stack.Navigator>
   );
 }

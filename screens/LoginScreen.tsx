@@ -3,19 +3,16 @@ import React from "react";
 import Login from "../components/Login";
 import { View } from "../components/Themed";
 import { NavigationProp } from "@react-navigation/native";
-import Button from "../components/Button";
-import { MaterialIcons } from "@expo/vector-icons";
-import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import HeaderLayout from "../components/HeaderLayout";
 import { useAppDispatch, useAppSelector } from "../hooks/useStore";
 import { setGuestUser } from "../store/slices/auth";
+import GoBackButton from "../components/GoBackButton";
 export default function AccountScreen({
   navigation,
 }: {
   navigation: NavigationProp<any>;
 }) {
-  const theme = useColorScheme();
   const dispatch = useAppDispatch();
   const authState = useAppSelector((store) => store.auth);
   const handleGuestLogin = () => {
@@ -38,20 +35,7 @@ export default function AccountScreen({
             marginLeft: -6,
           }}
         >
-          <Button
-            style={{ paddingLeft: 0, paddingVertical: 0 }}
-            iconPosition="left"
-            type="secondary"
-            backgroundColor="transparent"
-            onPress={() => navigation.goBack()}
-            Icon={
-              <MaterialIcons
-                name="keyboard-arrow-left"
-                size={24}
-                color={Colors[theme].tint}
-              />
-            }
-          />
+          <GoBackButton onPress={() => navigation.goBack()} />
         </View>
       }
     >
