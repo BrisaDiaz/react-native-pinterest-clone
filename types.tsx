@@ -26,7 +26,7 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, Screen>;
 
 export type RootTabParamList = {
-  Search: undefined;
+  Search?: { query: string };
   Account: undefined;
   Home: undefined;
 };
@@ -37,6 +37,7 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
     NativeStackScreenProps<RootStackParamList>
   >;
 
+export type ScreenParamList = RootStackParamList & RootTabParamList;
 export interface Pin {
   id: number;
   pin: string;

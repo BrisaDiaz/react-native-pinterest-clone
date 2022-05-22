@@ -6,7 +6,7 @@ import { RootTabScreenProps } from "../types";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { FontAwesome } from "@expo/vector-icons";
-export default function AccontScreen({
+export default function AccountScreen({
   navigation,
 }: RootTabScreenProps<"Home">) {
   const theme = useColorScheme();

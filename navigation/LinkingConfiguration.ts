@@ -17,7 +17,7 @@ const linking: LinkingOptions<RootStackParamList> = {
         screens: {
           Home: {
             screens: {
-              AccontScreen: "one",
+              AccountScreen: "one",
             },
           },
           Search: {

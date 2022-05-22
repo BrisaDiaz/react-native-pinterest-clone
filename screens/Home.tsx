@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { ScrollView, FlatList, Text } from "../components/Themed";
 import { StyleSheet, ViewStyle } from "react-native";
 import PinTopicComponent from "../components/PinTopic";
-import { NavigationProp } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ScreenParamList } from "../types";
 import { FIXED_TOPICS } from "../constants/Data";
 import Button from "../components/Button";
 import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
@@ -18,7 +19,7 @@ import {
 export default function Home({
   navigation,
 }: {
-  navigation: NavigationProp<any>;
+  navigation: NativeStackNavigationProp<ScreenParamList, "Home">;
 }) {
   const { data: popularPins, isLoading: isLoadingPins } =
     useGetTodayPopularPinsQuery({});

@@ -20,7 +20,9 @@ import Link from "../components/Link";
 import useColorScheme from "../hooks/useColorScheme";
 import PinsMasonry from "../components/PinsMasonry";
 import CheckButton from "../components/CheckButton";
-import { NavigationProp, RouteProp } from "@react-navigation/native";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
+import { ScreenParamList } from "../types";
 import MenuModal from "../components/MenuModal";
 import HeaderLayout from "../components/HeaderLayout";
 import { useGetPinQuery, useLazyGetPinsByTagsQuery } from "../store/services";
@@ -32,8 +34,8 @@ export default function PinDetails({
   navigation,
   route,
 }: {
-  navigation: NavigationProp<any>;
-  route: RouteProp<any>;
+  navigation: NativeStackNavigationProp<ScreenParamList, "Pin">;
+  route: RouteProp<ScreenParamList, "Pin">;
 }) {
   const [isPinMenuOpen, setIsPinMenuOpen] = React.useState(false);
   const [imageAspectRatio, setImageAspectRatio] = React.useState(1);

@@ -3,7 +3,9 @@ import React from "react";
 import { Text, View } from "../components/Themed";
 import HeaderLayout from "../components/HeaderLayout";
 import GoBackButton from "../components/GoBackButton";
-import { NavigationProp } from "@react-navigation/native";
+
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ScreenParamList } from "../types";
 import Button from "../components/Button";
 import useColorScheme from "../hooks/useColorScheme";
 import Colors from "../constants/Colors";
@@ -11,7 +13,7 @@ import FloatingInput from "../components/FloatingInput";
 export default function AccountScreen({
   navigation,
 }: {
-  navigation: NavigationProp<any>;
+  navigation: NativeStackNavigationProp<ScreenParamList, "CreateBoard">;
 }) {
   const [isPrivetBoard, setIsPrivetBoard] = React.useState(false);
 

@@ -28,7 +28,7 @@ function PinsMasonry({
     return distributeItemsByNum(data, DEFAULT_COL_NUM);
   }, [data]);
 
-  const renderItem = ({ item }: { item: any }) => (
+  const renderItem = ({ item }: { item: unknown }) => (
     <PinComponent
       key={uuid()}
       style={{ width: PINS_WITH - SPACING, marginBottom: 6 }}

@@ -1,7 +1,7 @@
 const distributeItemsByNum = (dataList: any[], columns: number) => {
   const lastColumIndex = columns - 1;
 
-  let masonry: Array<any[]> = [];
+  let masonry: Array<unknown[]> = [];
   let currentColumnIndex = 0;
 
   while (dataList.length) {

@@ -1,8 +1,9 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { RouteProp } from "@react-navigation/native";
+import { ScreenParamList } from "../types";
 import { ScrollView, FlatList, Text, View } from "../components/Themed";
-import { NavigationProp, RouteProp } from "@react-navigation/native";
 import PinTopic from "../components/PinTopic";
 import SearchBar from "../components/SearchBar";
 import Tag from "../components/Tag";
@@ -25,8 +26,8 @@ export default function SearchScreen({
   navigation,
   route,
 }: {
-  navigation: NavigationProp<any>;
-  route: RouteProp<any>;
+  navigation: NativeStackNavigationProp<ScreenParamList, "Search">;
+  route: RouteProp<ScreenParamList, "Search">;
 }) {
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((store) => store.search);

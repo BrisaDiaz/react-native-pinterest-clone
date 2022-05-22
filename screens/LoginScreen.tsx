@@ -2,16 +2,18 @@ import { StyleSheet } from "react-native";
 import React from "react";
 import Login from "../components/Login";
 import { View } from "../components/Themed";
-import { NavigationProp } from "@react-navigation/native";
-import useColorScheme from "../hooks/useColorScheme";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { ScreenParamList } from "../types";
+
 import HeaderLayout from "../components/HeaderLayout";
 import { useAppDispatch, useAppSelector } from "../hooks/useStore";
 import { setGuestUser } from "../store/slices/auth";
 import GoBackButton from "../components/GoBackButton";
+
 export default function AccountScreen({
   navigation,
 }: {
-  navigation: NavigationProp<any>;
+  navigation: NativeStackNavigationProp<ScreenParamList, "Login">;
 }) {
   const dispatch = useAppDispatch();
   const authState = useAppSelector((store) => store.auth);
