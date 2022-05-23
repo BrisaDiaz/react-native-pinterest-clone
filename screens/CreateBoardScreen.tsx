@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import React from "react";
 import { Text, View } from "../components/Themed";
-import HeaderLayout from "../components/HeaderLayout";
+import HeaderLayout from "../components/layout/HeaderLayout";
 import GoBackButton from "../components/GoBackButton";
 import Switch from "../components/Switch";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
@@ -22,7 +22,6 @@ export default function AccountScreen({
   const handleBoardNameChange = (value: string) => {
     setBoardName(value.trim());
   };
-  const handleCreateBoard = () => {};
 
   return (
     <HeaderLayout
@@ -43,14 +42,18 @@ export default function AccountScreen({
             <Button
               rounded={true}
               text="Create"
-              disabled={boardName.length > 0 ? true : false}
+              type={boardName.length > 0 ? "primary" : "secondary"}
             />
           </View>
         </>
       }
     >
       <View style={styles.container}>
-        <FloatingInput label=" Name of the board" placeholder="Add" />
+        <FloatingInput
+          label=" Name of the board"
+          placeholder="Add"
+          onChangeText={handleBoardNameChange}
+        />
 
         <View style={styles.markPrivacySection}>
           <Text style={styles.privacyText}>Mark board as private</Text>

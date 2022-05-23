@@ -4,15 +4,17 @@ import { FlatList, View } from "./Themed";
 import { StyleSheet } from "react-native";
 import { Pin } from "../types";
 import Layout from "../constants/Layout";
-import PinMenu, { Action } from "./PinMenu";
+import PinOptionsModal, { Action } from "./PinOptionsModal";
 import distributeItemsByNum from "../utils/distributeItemsByNum";
 
 function PinsMasonry({ data }: { data: Pin[] }) {
   const [selectedPin, setSelectedPin] = React.useState<Pin | null>(null);
-  const [isPinMenuOpen, setIsPinMenuOpen] = React.useState(false);
+  const [isPinOptionsModalOpen, setIsPinOptionsModalOpen] =
+    React.useState(false);
   const defaultPinsMaxWidth = 200;
-  const calcWith = Math.ceil(Layout.window.width / defaultPinsMaxWidth)
-  const DEFAULT_COL_NUM = calcWith > 1 ? calcWith : 2;  const SPACING = 6;
+  const calcWith = Math.ceil(Layout.window.width / defaultPinsMaxWidth);
+  const DEFAULT_COL_NUM = calcWith > 1 ? calcWith : 2;
+  const SPACING = 6;
   const PINS_WITH =
     (Layout.window.width - 12) /
     (data.length < DEFAULT_COL_NUM ? data.length : DEFAULT_COL_NUM);
@@ -21,21 +23,21 @@ function PinsMasonry({ data }: { data: Pin[] }) {
     return distributeItemsByNum(data, DEFAULT_COL_NUM);
   }, [data]);
 
-  const handleOpenPinMenu = (pin: Pin) => {
-    togglePinMenu();
+  const handleOpenPinOptionsModal = (pin: Pin) => {
+    togglePinOptionsModal();
     setSelectedPin(pin);
   };
   const handlePinActions = (selectedAction: Action) => {
-    togglePinMenu();
+    togglePinOptionsModal();
   };
-  const togglePinMenu = () => {
-    setIsPinMenuOpen(!isPinMenuOpen);
+  const togglePinOptionsModal = () => {
+    setIsPinOptionsModalOpen(!isPinOptionsModalOpen);
   };
   const renderItem = ({ item }: { item: Pin }) => (
     <PinComponent
       key={item.id}
       data={item}
-      onMenuClick={handleOpenPinMenu}
+      onMenuClick={handleOpenPinOptionsModal}
       style={{ width: PINS_WITH - SPACING }}
       dynamicHeight={true}
     />
@@ -61,12 +63,12 @@ function PinsMasonry({ data }: { data: Pin[] }) {
           />
         ))}
       </View>
-      <PinMenu
-        visible={isPinMenuOpen}
+      <PinOptionsModal
+        visible={isPinOptionsModalOpen}
         closeButtonVisible={true}
-        closeButtonProps={{ onPress: togglePinMenu }}
+        closeButtonProps={{ onPress: togglePinOptionsModal }}
         title="options"
-        onOptionSelected={handlePinActions}
+        onSelectedAction={handlePinActions}
       />
     </>
   );

@@ -67,6 +67,11 @@ export default function MenuModal({
               borderTopLeftRadius: 20,
               minHeight: "20%",
               overflow: "hidden",
+              shadowColor: "#171717",
+              shadowOffset: { width: -1, height: -1 },
+              shadowOpacity: 0.2,
+              shadowRadius: 3,
+              borderWidth: 0,
             },
             menuStyles,
           ]}
@@ -85,7 +90,7 @@ export default function MenuModal({
                     fontWeight: "700",
                     marginLeft: -30,
                     letterSpacing: 0.5,
-                    fontSize: 12,
+                    fontSize: 13,
                   }}
                 >
                   {title}

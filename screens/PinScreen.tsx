@@ -1,19 +1,8 @@
-import {
-  MaterialCommunityIcons,
-  Feather,
-  Entypo,
-  MaterialIcons,
-} from "@expo/vector-icons";
+import { MaterialCommunityIcons, Feather, Entypo } from "@expo/vector-icons";
 import React from "react";
-import {
-  StyleSheet,
-  Image,
-  TouchableHighlight,
-  Linking,
-  Alert,
-} from "react-native";
+import { StyleSheet, Image, Linking, Alert } from "react-native";
 import Colors from "../constants/Colors";
-import { View, Text, ScrollView } from "../components/Themed";
+import { View, Text } from "../components/Themed";
 import Button from "../components/Button";
 import Avatar from "../components/Avatar";
 import Link from "../components/Link";
@@ -23,13 +12,16 @@ import CheckButton from "../components/CheckButton";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { ScreenParamList } from "../types";
-import MenuModal from "../components/MenuModal";
-import HeaderLayout from "../components/HeaderLayout";
+
+import HeaderLayout from "../components/layout/HeaderLayout";
 import { useGetPinQuery, useLazyGetPinsByTagsQuery } from "../store/services";
 import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
 import PinDetailsSkeleton from "../components/skeletons/PinDetailsSkeleton";
-
+import ModalsLayout from "../components/layout/ModalsLayout";
 import GoBackButton from "../components/GoBackButton";
+import { useAppDispatch } from "../hooks/useStore";
+import { openModal, setStashedPin } from "../store/slices/modals";
+import SecondaryPinOptionsModal from "../components/SecondaryPinOptionsModal";
 export default function PinDetails({
   navigation,
   route,
@@ -37,7 +29,8 @@ export default function PinDetails({
   navigation: NativeStackNavigationProp<ScreenParamList, "Pin">;
   route: RouteProp<ScreenParamList, "Pin">;
 }) {
-  const [isPinMenuOpen, setIsPinMenuOpen] = React.useState(false);
+  const [isPinOptionsModalOpen, setIsPinOptionsModalOpen] =
+    React.useState(false);
   const [imageAspectRatio, setImageAspectRatio] = React.useState(1);
   const [isPinImageLoaded, setIsPinImageLoaded] = React.useState(false);
 
@@ -48,24 +41,17 @@ export default function PinDetails({
     triggerGetSimilar,
     { data: similarPins, isLoading: isLoadingSimilar },
   ] = useLazyGetPinsByTagsQuery();
-  const togglePinMenu = () => {
-    setIsPinMenuOpen(!isPinMenuOpen);
+  const togglePinOptionsModal = () => {
+    setIsPinOptionsModalOpen(!isPinOptionsModalOpen);
+  };
+  const dispatch = useAppDispatch();
+  const handleStorePin = () => {
+    if (!pin) return;
+    dispatch(setStashedPin(pin));
+    dispatch(openModal("pinStorage"));
   };
   const theme = useColorScheme();
 
-  const PIN_MENU_BUTTONS = [
-    { label: "Download image", onPress: () => console.log("") },
-
-    {
-      label: `See more of ${pin?.author?.user_name}`,
-      onPress: () => console.log(""),
-    },
-    { label: "Hide pin", onPress: () => console.log("") },
-    {
-      label: `Report pin`,
-      onPress: () => console.log(""),
-    },
-  ];
   React.useEffect(() => {
     if (pin) {
       setIsPinImageLoaded(false);
@@ -127,7 +113,7 @@ export default function PinDetails({
               iconPosition="left"
               type="secondary"
               backgroundColor="transparent"
-              onPress={togglePinMenu}
+              onPress={togglePinOptionsModal}
               Icon={
                 <Feather
                   name="more-horizontal"
@@ -141,6 +127,7 @@ export default function PinDetails({
             style={{ marginVertical: 0, marginRight: 6 }}
             text="Save"
             iconPosition="left"
+            onPress={() => handleStorePin()}
             Icon={
               <MaterialCommunityIcons
                 name="pin"
@@ -152,6 +139,7 @@ export default function PinDetails({
         </>
       }
     >
+      <ModalsLayout />
       <View style={styles.container}>
         {(isLoadingPin || !isPinImageLoaded) && <PinDetailsSkeleton />}
         {pin && !isLoadingPin && isPinImageLoaded && (
@@ -185,7 +173,9 @@ export default function PinDetails({
                 </Text>
               )}
               {pin?.description && (
-                <Text style={styles?.description}>{pin?.description}</Text>
+                <Text style={styles?.description} numberOfLines={3}>
+                  {pin?.description}
+                </Text>
               )}
               {pin?.source_link && (
                 <Button
@@ -207,28 +197,10 @@ export default function PinDetails({
           !isLoadingPin &&
           isPinImageLoaded &&
           !isLoadingSimilar && <PinsMasonry data={similarPins} />}
-        <MenuModal
-          visible={isPinMenuOpen}
-          closeButtonVisible={true}
-          closeButtonProps={{ onPress: togglePinMenu }}
-        >
-          <View style={{ paddingHorizontal: "0.6rem", paddingBottom: "1rem" }}>
-            {PIN_MENU_BUTTONS.map((button) => (
-              <TouchableHighlight
-                key={button.label}
-                underlayColor={Colors.lightGray}
-                activeOpacity={1}
-                style={{
-                  padding: 6,
-                  borderRadius: 3,
-                }}
-                onPress={() => button.onPress()}
-              >
-                <Text style={{ fontWeight: "600" }}>{button.label}</Text>
-              </TouchableHighlight>
-            ))}
-          </View>
-        </MenuModal>
+        <SecondaryPinOptionsModal
+          visible={isPinOptionsModalOpen}
+          closeButtonProps={{ onPress: togglePinOptionsModal }}
+        />
       </View>
     </HeaderLayout>
   );

@@ -1,13 +1,13 @@
 import { ReactNode } from "react";
 import { ViewStyle } from "react-native";
-import useColorScheme from "../hooks/useColorScheme";
+import useColorScheme from "../../hooks/useColorScheme";
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   useAnimatedScrollHandler,
   withTiming,
 } from "react-native-reanimated";
-import Colors from "../constants/Colors";
+import Colors from "../../constants/Colors";
 export default function Header({
   headerContent,
   headerContainerStyle,

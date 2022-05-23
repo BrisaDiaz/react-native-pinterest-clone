@@ -12,14 +12,14 @@ export type Action =
   | "download"
   | "hide"
   | "report";
-export default function PinMenu(
-  props: Props & { onOptionSelected: (action: Action) => void },
+export default function PinOptionsModal(
+  props: Props & { onSelectedAction?: (action: Action) => void },
 ) {
   const theme = useColorScheme();
   const PIN_MENU_BUTTONS: {
     label: string;
     description?: string;
-    actionName: Action;
+    type: Action;
     icon: ReactNode;
   }[] = [
     {
@@ -28,7 +28,7 @@ export default function PinMenu(
       icon: (
         <Ionicons size={16} color={Colors[theme].tint} name="logo-whatsapp" />
       ),
-      actionName: "share",
+      type: "share",
     },
     {
       label: `Store`,
@@ -40,19 +40,19 @@ export default function PinMenu(
           name="pin"
         />
       ),
-      actionName: "store",
+      type: "store",
     },
     {
       label: `Send`,
 
       icon: <Feather size={16} color={Colors[theme].tint} name="upload" />,
-      actionName: "send",
+      type: "send",
     },
     {
       label: "Download image",
 
       icon: <Feather size={16} color={Colors[theme].tint} name="download" />,
-      actionName: "download",
+      type: "download",
     },
 
     {
@@ -60,7 +60,7 @@ export default function PinMenu(
       description: "Show less pins like this",
 
       icon: <Ionicons size={16} color={Colors[theme].tint} name="close" />,
-      actionName: "hide",
+      type: "hide",
     },
     {
       label: `Report`,
@@ -73,11 +73,11 @@ export default function PinMenu(
           name="ios-warning-outline"
         />
       ),
-      actionName: "report",
+      type: "report",
     },
   ];
   return (
-    <MenuModal {...props}>
+    <MenuModal closeButtonVisible={true} title="options" {...props}>
       <View
         style={{
           paddingHorizontal: "0.5rem",
@@ -85,9 +85,9 @@ export default function PinMenu(
           marginTop: 6,
         }}
       >
-        {PIN_MENU_BUTTONS.map((button) => (
+        {PIN_MENU_BUTTONS.map((action) => (
           <TouchableHighlight
-            key={button.label}
+            key={action.label}
             underlayColor={Colors.lightGray}
             activeOpacity={1}
             style={{
@@ -97,21 +97,23 @@ export default function PinMenu(
               flexDirection: "row",
               alignItems: "flex-start",
             }}
-            onPress={() => props.onOptionSelected(button.actionName)}
+            onPress={() =>
+              props.onSelectedAction && props.onSelectedAction(action.type)
+            }
           >
             <>
-              {button.icon}
+              {action.icon}
               <View
                 style={{
                   marginLeft: 6,
-                  marginTop: button.description ? -2 : 0,
+                  marginTop: action.description ? -2 : 0,
                   backgroundColor: "transparent",
                 }}
               >
-                <Text style={{ fontWeight: "600" }}>{button.label}</Text>
-                {button.description && (
+                <Text style={{ fontWeight: "700" }}>{action.label}</Text>
+                {action.description && (
                   <Text style={{ fontSize: 12, opacity: 0.85 }}>
-                    {button.description}
+                    {action.description}
                   </Text>
                 )}
               </View>

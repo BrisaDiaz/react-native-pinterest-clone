@@ -200,6 +200,7 @@ export const boards = [
     id: 1,
     name: "memes",
     pinsCount: 235,
+    private: true,
     updatedAt: getMaxTimeUnit("Mon May 16 2022 19:04:30 GMT-0300"),
     thumbnails: [
       "https://i.pinimg.com/236x/e4/5c/b1/e45cb1d792977843512baeca7d6f9d6b.jpg",
@@ -211,6 +212,7 @@ export const boards = [
     id: 2,
     name: "wallpapers",
     pinsCount: 100,
+    private: false,
     updatedAt: getMaxTimeUnit("Mon May 13 2022 19:04:30 GMT-0300"),
     thumbnails: [
       "https://i.pinimg.com/236x/a2/91/45/a2914594d79bdab8be667c959a8c08df.jpg",
@@ -221,6 +223,7 @@ export const boards = [
   {
     id: 3,
     name: "nature",
+    private: false,
     pinsCount: 100,
     updatedAt: getMaxTimeUnit("Mon May 14 2022 18:09:55 GMT-0300"),
     thumbnails: [
@@ -232,6 +235,7 @@ export const boards = [
   {
     id: 4,
     name: "recipes",
+    private: false,
     pinsCount: 43,
     updatedAt: getMaxTimeUnit("Mon Feb 14 2022 18:09:55 GMT-0300"),
     thumbnails: [
@@ -243,6 +247,7 @@ export const boards = [
   {
     id: 5,
     name: "books quotes",
+    private: true,
     pinsCount: 268,
     updatedAt: getMaxTimeUnit("Mon May 16 2022 18:09:55 GMT-0300"),
     thumbnails: [

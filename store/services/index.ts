@@ -32,11 +32,8 @@ export const appAPI = createApi({
         setTimeout(() => {}, 6 * 1000);
         const cleanQuery = searchQuery.trim().toLowerCase();
         /// filter by query
-        const matches = relatedPins.filter(
-          (pin) =>
-            pin?.title?.toLowerCase()?.includes(cleanQuery) ||
-            pin?.description?.toLowerCase()?.includes(cleanQuery) ||
-            pin.tags.some((tag) => cleanQuery?.includes(tag)),
+        const matches = relatedPins.filter((pin) =>
+          pin.tags.some((tag) => cleanQuery?.includes(tag)),
         );
         if (!matches.length)
           return {
@@ -50,7 +47,9 @@ export const appAPI = createApi({
         //// filter by tag
         const pins = !tags.length
           ? matches
-          : matches.filter((pin) => pin.tags.some((tag) => tags.includes(tag)));
+          : matches.filter((pin) =>
+              tags.every((tag) => pin.tags.includes(tag)),
+            );
         const suggestedTags = [
           ...new Set(
             pins.reduce((array: string[], current: Pin) => {

@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Pin } from "../../types";
 
-type ModalName = "pinStorageModal" | "pinOptionsModal";
+type ModalName = "pinStorage" | "pinOptions";
 export interface State {
   pin: null | Pin;
   modals: {
-    pinStorageModal: {
+    pinStorage: {
       isVisible: boolean;
     };
-    pinOptionsModal: {
+    pinOptions: {
       isVisible: boolean;
     };
   };
@@ -16,10 +16,10 @@ export interface State {
 const initialState: State = {
   pin: null,
   modals: {
-    pinStorageModal: {
+    pinStorage: {
       isVisible: false,
     },
-    pinOptionsModal: {
+    pinOptions: {
       isVisible: false,
     },
   },
@@ -43,4 +43,5 @@ export const modalsSlice = createSlice({
     },
   },
 });
-export const { setStashedPin, removePin } = modalsSlice.actions;
+export const { setStashedPin, removePin, closeModal, openModal } =
+  modalsSlice.actions;

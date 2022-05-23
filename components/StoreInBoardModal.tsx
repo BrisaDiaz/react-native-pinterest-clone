@@ -1,22 +1,27 @@
 import { useGetUserProfileQuery } from "../store/services";
+
 import { View, Text, ScrollView } from "./Themed";
 import MenuModal, { Props as MenuModalProps } from "./MenuModal";
 import { StyleSheet, TouchableHighlight, Image } from "react-native";
 import IconButton from "./IconButton";
 import { Entypo } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
-export default function StoreInBoardModal(
-  props: MenuModalProps & {
-    onStore?: (boardId: number) => void;
-    onCreateBoard?: () => void;
-  },
-) {
+export default function StoreInBoardModal({
+  onStore,
+  onCreateBoard,
+  ...props
+}: MenuModalProps & {
+  onStore?: (boardId: number) => void;
+  onCreateBoard?: () => void;
+}) {
   const { data } = useGetUserProfileQuery();
   const handleStoreInBoard = (boardId: number) => {
-    props.onStore && props.onStore(boardId);
+    onStore && onStore(boardId);
   };
+
   const handleCreateBoard = () => {
-    props.onCreateBoard && props.onCreateBoard();
+    onCreateBoard && onCreateBoard();
+   
   };
   return (
     <MenuModal title="Store in board" closeButtonVisible={true} {...props}>
@@ -33,6 +38,7 @@ export default function StoreInBoardModal(
                 <TouchableHighlight
                   key={board.id}
                   style={styles.board}
+                  underlayColor={Colors.lightGray}
                   onPress={() => handleStoreInBoard(board.id)}
                 >
                   <>

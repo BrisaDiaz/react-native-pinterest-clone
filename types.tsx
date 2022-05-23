@@ -59,6 +59,7 @@ export interface PinBoard {
   pinsCount: number;
   updatedAt: string;
   thumbnails: string[];
+  private: boolean;
 }
 export interface UserProfile {
   user_name: string;

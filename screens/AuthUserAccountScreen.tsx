@@ -5,7 +5,6 @@ import Button from "../components/Button";
 import { View } from "../components/Themed";
 
 import Colors from "../constants/Colors";
-
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScreenParamList } from "../types";
 import PinBoardsMasonry from "../components/PinBoardsMasonry";
@@ -14,18 +13,24 @@ import IconButton from "../components/IconButton";
 import { Ionicons, Entypo } from "@expo/vector-icons";
 import { boards } from "../mocks";
 import SearchBar from "../components/SearchBar";
-import HeaderLayout from "../components/HeaderLayout";
+import HeaderLayout from "../components/layout/HeaderLayout";
 import { useAppSelector, useAppDispatch } from "../hooks/useStore";
 import { setSearchQuery } from "../store/slices/search";
 import { useGetUserProfileQuery } from "../store/services";
 import PinsMasonry from "../components/PinsMasonry";
 import UserProfileSkeleton from "../components/skeletons/UserProfileSkeleton";
 import PinBoardMasonrySkeleton from "../components/skeletons/PinBoardMasonrySkeleton";
+import AddToProfileModal, { Action } from "../components/AddToProfileModal";
 export default function AccountScreen({
   navigation,
 }: {
   navigation: NativeStackNavigationProp<ScreenParamList, "Account">;
 }) {
+  const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
+  console.log(isAddModalOpen);
+  const toggleAddModal = () => {
+    setIsAddModalOpen(!isAddModalOpen);
+  };
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((store) => store.search);
 
@@ -37,9 +42,11 @@ export default function AccountScreen({
       query: searchState.searchQuery,
     });
   };
-  const handleCreateBoard = () => {
-    navigation.navigate("CreateBoard");
+  const handleAddToProfileActions = (actionType: Action) => {
+toggleAddModal()
+    if (actionType === "add board") return navigation.navigate("CreateBoard");
   };
+
   const { data, isLoading } = useGetUserProfileQuery();
 
   return (
@@ -65,8 +72,9 @@ export default function AccountScreen({
           >
             <IconButton
               icon={<Entypo size={24} name="plus" />}
-              onPress={() => handleCreateBoard()}
+              onPress={() => toggleAddModal()}
             />
+
             <IconButton
               icon={<Ionicons size={19} name="settings-sharp" />}
               style={{ paddingBottom: 0 }}
@@ -75,6 +83,11 @@ export default function AccountScreen({
         </>
       }
     >
+      <AddToProfileModal
+        visible={isAddModalOpen}
+        closeButtonProps={{ onPress: () => toggleAddModal() }}
+        onSelectedAction={handleAddToProfileActions}
+      />
       <View style={styles.container}>
         {isLoading && (
           <>

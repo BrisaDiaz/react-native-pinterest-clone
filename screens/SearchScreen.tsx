@@ -47,9 +47,10 @@ export default function SearchScreen({
   };
 
   const handleSearch = (search?: string) => {
-    if (!searchState.searchQuery.length) return;
+    if (!searchState.searchQuery.length && !search?.length) return;
 
     dispatch(addSearchHistory(search || searchState.searchQuery));
+
     trigger({
       searchQuery: search || searchState.searchQuery,
       tags: searchState.searchTags,
@@ -67,7 +68,6 @@ export default function SearchScreen({
     handleSearchChange(urlQuery || "");
     if (urlQuery) {
       handleSearch(urlQuery);
-      dispatch(addSearchHistory(urlQuery));
     }
   }, [route?.params?.query]);
 
@@ -129,7 +129,7 @@ export default function SearchScreen({
                 horizontal={true}
                 contentContainerStyle={[
                   styles.tagList,
-                  { justifyContent: "space-around" },
+                  { justifyContent: "space-around", width: "100%" },
                 ]}
                 showsHorizontalScrollIndicator={false}
                 data={searchState.searchHistory}

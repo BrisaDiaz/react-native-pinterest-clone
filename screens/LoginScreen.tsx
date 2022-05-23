@@ -5,7 +5,7 @@ import { View } from "../components/Themed";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { ScreenParamList } from "../types";
 
-import HeaderLayout from "../components/HeaderLayout";
+import HeaderLayout from "../components/layout/HeaderLayout";
 import { useAppDispatch, useAppSelector } from "../hooks/useStore";
 import { setGuestUser } from "../store/slices/auth";
 import GoBackButton from "../components/GoBackButton";

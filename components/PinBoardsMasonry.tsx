@@ -1,10 +1,11 @@
 import { FlatList } from "./Themed";
-import { ViewStyle } from "react-native";
+import React from "react";
 import Board from "./PinBoard";
 import { v4 as uuid } from "uuid";
 import { PinBoard } from "../types";
 import Layout from "../constants/Layout";
-export default function BoardsMasonry({ data }: { data: PinBoard[] }) {
+type Props = { data: PinBoard[] };
+function BoardsMasonry({ data, ...props }: Props) {
   const BOAR_MAX_W = 200;
   const GAP = 6;
   const COLUMNS_NUM =
@@ -38,6 +39,8 @@ export default function BoardsMasonry({ data }: { data: PinBoard[] }) {
           data={item}
         />
       )}
+      {...props}
     />
   );
 }
+export default React.memo(BoardsMasonry);
