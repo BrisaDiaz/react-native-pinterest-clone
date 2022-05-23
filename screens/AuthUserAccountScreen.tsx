@@ -27,7 +27,7 @@ export default function AccountScreen({
   navigation: NativeStackNavigationProp<ScreenParamList, "Account">;
 }) {
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
-  console.log(isAddModalOpen);
+
   const toggleAddModal = () => {
     setIsAddModalOpen(!isAddModalOpen);
   };

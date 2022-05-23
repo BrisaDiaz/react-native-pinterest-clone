@@ -19,7 +19,7 @@ import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
 import PinDetailsSkeleton from "../components/skeletons/PinDetailsSkeleton";
 import ModalsLayout from "../components/layout/ModalsLayout";
 import GoBackButton from "../components/GoBackButton";
-import { useAppDispatch } from "../hooks/useStore";
+import { useAppDispatch, useAppSelector } from "../hooks/useStore";
 import { openModal, setStashedPin } from "../store/slices/modals";
 import SecondaryPinOptionsModal from "../components/SecondaryPinOptionsModal";
 export default function PinDetails({
@@ -45,8 +45,10 @@ export default function PinDetails({
     setIsPinOptionsModalOpen(!isPinOptionsModalOpen);
   };
   const dispatch = useAppDispatch();
+  const authState = useAppSelector((store) => store.auth);
   const handleStorePin = () => {
     if (!pin) return;
+    if (!authState.user) return navigation.navigate("Login");
     dispatch(setStashedPin(pin));
     dispatch(openModal("pinStorage"));
   };
@@ -165,6 +167,7 @@ export default function PinDetails({
                   checkedText="Unfollow"
                   uncheckedText="Follow"
                   style={styles.followButton}
+                  disabled={authState.user ? true : false}
                 />
               </View>
               {pin?.title && (

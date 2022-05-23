@@ -72,7 +72,6 @@ export interface UserProfile {
   created_pins: Pin[];
 }
 export interface PinTopic {
-
   name: string;
   thumbnail: string;
 }

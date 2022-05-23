@@ -9,31 +9,43 @@ export default function ModalsLayout({
 }: {
   children?: React.ReactNode;
 }) {
+  const { onPress: redirectToLogin } = useLinkProps({
+    to: { screen: "Login" },
+  });
   const modalState = useAppSelector((store) => store.modals);
+  const authState = useAppSelector((store) => store.auth);
+
   const dispatch = useAppDispatch();
 
   const handlePinOptionActions = (actionType: Action) => {
+    if (!authState.user) {
+      dispatch(closeModal("pinOptions"));
+      redirectToLogin();
+      return;
+    }
     if (actionType === "store") {
       dispatch(closeModal("pinOptions"));
       dispatch(openModal("pinStorage"));
     }
   };
-  const { onPress } = useLinkProps({
+  const { onPress: redirectToCreateBoardScreen } = useLinkProps({
     to: { screen: "CreateBoard" },
   });
   const handleCreateModal = () => {
     dispatch(closeModal("pinStorage"));
-    onPress();
+    redirectToCreateBoardScreen();
   };
   return (
     <>
-      <StoreInBoardModal
-        visible={modalState.modals.pinStorage.isVisible}
-        onCreateBoard={() => handleCreateModal()}
-        closeButtonProps={{
-          onPress: () => dispatch(closeModal("pinStorage")),
-        }}
-      />
+      {authState.user && (
+        <StoreInBoardModal
+          visible={modalState.modals.pinStorage.isVisible}
+          onCreateBoard={() => handleCreateModal()}
+          closeButtonProps={{
+            onPress: () => dispatch(closeModal("pinStorage")),
+          }}
+        />
+      )}
       <PinOptionsModal
         visible={modalState.modals.pinOptions.isVisible}
         onSelectedAction={handlePinOptionActions}

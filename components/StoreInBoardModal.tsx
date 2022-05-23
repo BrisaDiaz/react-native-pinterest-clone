@@ -4,7 +4,7 @@ import { View, Text, ScrollView } from "./Themed";
 import MenuModal, { Props as MenuModalProps } from "./MenuModal";
 import { StyleSheet, TouchableHighlight, Image } from "react-native";
 import IconButton from "./IconButton";
-import { Entypo } from "@expo/vector-icons";
+import { Entypo, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
 export default function StoreInBoardModal({
   onStore,
@@ -21,7 +21,6 @@ export default function StoreInBoardModal({
 
   const handleCreateBoard = () => {
     onCreateBoard && onCreateBoard();
-   
   };
   return (
     <MenuModal title="Store in board" closeButtonVisible={true} {...props}>
@@ -49,6 +48,13 @@ export default function StoreInBoardModal({
                     <Text style={styles.boardName} numberOfLines={1}>
                       {board.name}
                     </Text>
+                    {board.private && (
+                      <FontAwesome
+                        size={16}
+                        name="lock"
+                        style={styles.lockedIcon}
+                      />
+                    )}
                   </>
                 </TouchableHighlight>
               ))}
@@ -74,6 +80,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginTop: 12,
+    borderRadius: 4,
   },
   boardThumbnail: {
     width: 40,
@@ -85,6 +92,11 @@ const styles = StyleSheet.create({
   boardName: {
     fontWeight: "700",
     fontSize: 15,
+  },
+  lockedIcon: {
+    padding: 2,
+    marginLeft: "auto",
+    marginRight: 6,
   },
   modalFooter: {
     flexDirection: "row",

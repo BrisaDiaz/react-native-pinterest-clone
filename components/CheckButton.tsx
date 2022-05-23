@@ -18,6 +18,7 @@ export default function CheckButton({
   defaultChecked,
   onChangeState,
   onPress,
+  disabled,
   ...others
 }: CheckButtonProps) {
   const [checked, setChecked] = useState(defaultChecked || false);
@@ -36,6 +37,7 @@ export default function CheckButton({
     },
   };
   const toggleFollow = (event: GestureResponderEvent) => {
+    if (disabled) return;
     setChecked(!checked);
 
     onChangeState && onChangeState(!checked);
@@ -46,6 +48,7 @@ export default function CheckButton({
       type="secondary"
       rounded={true}
       style={[style]}
+      disabled={disabled}
       text={FollowButtonStyle[theme].text}
       color={FollowButtonStyle[theme].color}
       backgroundColor={FollowButtonStyle[theme].backgroundColor}
