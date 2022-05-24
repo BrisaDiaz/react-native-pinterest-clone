@@ -6,7 +6,7 @@ import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
 import useColorScheme from "../hooks/useColorScheme";
 import { ReactNode } from "react";
 export type Action =
-  | "share"
+  | "share by whatsapp"
   | "store"
   | "send"
   | "download"
@@ -28,7 +28,7 @@ export default function PinOptionsModal(
       icon: (
         <Ionicons size={16} color={Colors[theme].tint} name="logo-whatsapp" />
       ),
-      type: "share",
+      type: "share by whatsapp",
     },
     {
       label: `Store`,

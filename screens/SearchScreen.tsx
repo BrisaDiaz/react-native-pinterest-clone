@@ -10,6 +10,7 @@ import Tag from "../components/Tag";
 import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
 import PinsMasonry from "../components/PinsMasonry";
 import { useAppSelector, useAppDispatch } from "../hooks/useStore";
+
 import {
   setSearchQuery,
   addSearchTag,

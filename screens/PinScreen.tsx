@@ -1,6 +1,8 @@
 import { MaterialCommunityIcons, Feather, Entypo } from "@expo/vector-icons";
 import React from "react";
-import { StyleSheet, Image, Linking, Alert } from "react-native";
+
+
+import { StyleSheet, Image, Linking, Alert, Share } from "react-native";
 import Colors from "../constants/Colors";
 import { View, Text } from "../components/Themed";
 import Button from "../components/Button";
@@ -12,7 +14,6 @@ import CheckButton from "../components/CheckButton";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { ScreenParamList } from "../types";
-
 import HeaderLayout from "../components/layout/HeaderLayout";
 import { useGetPinQuery, useLazyGetPinsByTagsQuery } from "../store/services";
 import PinMasonrySkeleton from "../components/skeletons/PinMasonrySkeleton";
@@ -21,7 +22,10 @@ import ModalsLayout from "../components/layout/ModalsLayout";
 import GoBackButton from "../components/GoBackButton";
 import { useAppDispatch, useAppSelector } from "../hooks/useStore";
 import { openModal, setStashedPin } from "../store/slices/modals";
-import SecondaryPinOptionsModal from "../components/SecondaryPinOptionsModal";
+import SecondaryPinOptionsModal, {
+  Action,
+} from "../components/SecondaryPinOptionsModal";
+import useFileManager from "../hooks/useFileManager";
 export default function PinDetails({
   navigation,
   route,
@@ -62,6 +66,7 @@ export default function PinDetails({
         setImageAspectRatio(width / height);
         setIsPinImageLoaded(true);
       });
+
       triggerGetSimilar({ tags: pin.tags, refererId: pin.id });
     }
 
@@ -80,6 +85,27 @@ export default function PinDetails({
       Alert.alert(`The URL couldn't be open: ${pin?.source_link}`);
     }
   }, [pin?.source_link]);
+  const { share, save } = useFileManager();
+  const onShare = async () => {
+    if (!pin) return;
+
+    try {
+      await share(pin.pin);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const onDownload = async () => {
+    if (!pin) return;
+    try {
+      await save(pin.pin);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handlePinOptions = (actionType: Action) => {
+    if (actionType === "download") return onDownload();
+  };
   return (
     <HeaderLayout
       headerContent={
@@ -102,6 +128,7 @@ export default function PinDetails({
               iconPosition="left"
               type="secondary"
               backgroundColor="transparent"
+              onPress={() => onShare()}
               Icon={
                 <Entypo
                   name="paper-plane"
@@ -203,6 +230,7 @@ export default function PinDetails({
         <SecondaryPinOptionsModal
           visible={isPinOptionsModalOpen}
           closeButtonProps={{ onPress: togglePinOptionsModal }}
+          onSelectedAction={handlePinOptions}
         />
       </View>
     </HeaderLayout>
