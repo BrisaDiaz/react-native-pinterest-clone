@@ -1,7 +1,6 @@
-
+import React, { useState } from "react";
 import {
   FlatList,
-  ViewStyle,
   NativeSyntheticEvent,
   NativeScrollEvent,
 } from "react-native";
@@ -12,9 +11,11 @@ import Animated, {
   useSharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
+import "react-native-get-random-values";
 import { v4 as uuid } from "uuid";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
+
 const Carrousel = ({
   itemWidth,
   itemsContainerProps,
@@ -31,8 +32,10 @@ const Carrousel = ({
   const theme = useColorScheme();
   const scrollOffset = useSharedValue(0);
   const displayItemIndex = useSharedValue(0);
+
   let listRef: RefObject<FlatList<any>> = useRef(null);
   const scrollHandler = (event: NativeSyntheticEvent<NativeScrollEvent>) => {
+    if (!listRef || !listRef.current) return;
     const offsetX = event.nativeEvent?.contentOffset.x;
 
     const maxThreshold =
@@ -40,19 +43,16 @@ const Carrousel = ({
     const minThreshold =
       itemWidth * displayItemIndex.value - itemWidth * threshold;
 
-    function scrollToOffset() {
-      if (listRef && listRef.current)
-        listRef.current?.scrollToOffset({
-          offset: displayItemIndex.value * (itemWidth + spacing),
-          animated: true,
-        });
-    }
+    // function scrollToOffset() {
+    //   listRef.current?.scrollToOffset({
+    //     offset: displayItemIndex.value * (itemWidth + spacing),
+    //     animated: true,
+    //   });
+    // }
     if (offsetX > maxThreshold) {
       displayItemIndex.value = displayItemIndex.value + 1;
-      scrollToOffset();
     } else if (offsetX < minThreshold && displayItemIndex.value !== 0) {
       displayItemIndex.value = displayItemIndex.value - 1;
-      scrollToOffset();
     }
   };
 
@@ -60,15 +60,9 @@ const Carrousel = ({
     useAnimatedStyle(() => {
       return {
         backgroundColor:
-          index === displayItemIndex.value ? Colors[theme].tint : Colors.gray,
+          index === displayItemIndex?.value ? Colors[theme].tint : Colors.gray,
       };
     });
-
-  const flatListAnimatedStyle = useAnimatedStyle(() => {
-    return {
-      left: -scrollOffset,
-    };
-  });
 
   return (
     <>
@@ -83,22 +77,23 @@ const Carrousel = ({
         contentContainerStyle={[
           itemsContainerProps.contentContainerStyle,
           {
-            marginTop: "1rem",
-            maxWidth: "fit-content",
-            gap: spacing || 0,
-          } as ViewStyle,
-          flatListAnimatedStyle,
+            marginTop: 14,
+            left: 0,
+            marginLeft: -spacing || 0,
+            alignItems: "center",
+            marginHorizontal: "auto",
+          },
         ]}
-      ></FlatList>
+      />
       <View
         style={[
           {
             flexDirection: "row",
             width: "100%",
             justifyContent: "center",
-            gap: 6,
-            marginVertical: "0.5rem",
-          } as ViewStyle,
+            marginHorizontal: 3,
+            marginVertical: 7,
+          },
         ]}
       >
         {dotIndicatorsVisible &&
@@ -113,6 +108,7 @@ const Carrousel = ({
                     height: 6,
                     borderRadius: 100,
                     backgroundColor: Colors.gray,
+                    marginHorizontal: 3,
                   },
                   dotAnimatedStyles(index),
                 ]}
@@ -122,4 +118,4 @@ const Carrousel = ({
     </>
   );
 };
-export default Carrousel;
+export default React.memo(Carrousel);

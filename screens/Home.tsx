@@ -41,9 +41,11 @@ export default function Home({
       data={item}
       style={{
         marginBottom: 6,
+        marginLeft: 6,
         flex: 1,
         marginHorizontal: "auto",
         maxWidth: `${100 / TOPICS_COLUMNS_NUM}%`,
+        alignItems: "center",
       }}
       onPress={() =>
         navigation.navigate("Search", {
@@ -56,9 +58,14 @@ export default function Home({
         <Button
           text="More"
           type="secondary"
+          style={{ marginHorizontal: "auto", alignSelf: "center" }}
           rounded={true}
           backgroundColor={"#fff"}
-          fontStyle={{ fontWeight: "600", fontSize: 16, color: "#000" }}
+          fontStyle={{
+            fontWeight: "600",
+            fontSize: 16,
+            color: "#000",
+          }}
           onPress={() => onDisplayMoreTopics()}
         />
       ) : undefined}
@@ -73,7 +80,7 @@ export default function Home({
           fontWeight: "600",
           textAlign: "center",
           width: "100%",
-          paddingBottom: "2rem",
+          paddingBottom: 28,
         }}
       >
         Today
@@ -102,16 +109,14 @@ export default function Home({
       <Text style={styles.sectionLabel}>Discover interests</Text>
       <FlatList
         contentContainerStyle={{
-          marginBottom: "1rem",
+          marginBottom: 14,
+          marginLeft: -6,
         }}
-        columnWrapperStyle={
-          {
-            width: "100%",
-            justifyContent: "center",
-            display: "flex",
-            gap: 6,
-          } as ViewStyle
-        }
+        columnWrapperStyle={{
+          width: "100%",
+          justifyContent: "center",
+          display: "flex",
+        }}
         data={
           isTotalTopicsLoaded
             ? FIXED_TOPICS
@@ -129,13 +134,14 @@ export default function Home({
 }
 const styles = StyleSheet.create({
   container: {
-    padding: 6,
+    paddingHorizontal: 6,
+    paddingVertical: 42,
+
     flex: 1,
-    paddingBottom: 40,
   },
   sectionLabel: {
     textAlign: "center",
-    marginVertical: "1rem",
+    marginVertical: 14,
     fontSize: 16,
     fontWeight: "500",
   },

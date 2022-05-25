@@ -186,7 +186,10 @@ export default function PinDetails({
                   <>
                     <Avatar source={pin?.author?.avatar} size="small" />
 
-                    <Link text={pin?.author?.user_name} />
+                    <Link
+                      text={pin?.author?.user_name}
+                      style={styles.userName}
+                    />
                   </>
                 )}
 
@@ -239,9 +242,9 @@ export default function PinDetails({
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 6,
-    paddingBottom: 20,
-    paddingTop: 55,
+    paddingHorizontal: 6,
+    paddingBottom: 42,
+    paddingTop: 70,
   },
   pinInfo: { paddingHorizontal: 10 },
   pin: {
@@ -260,9 +263,10 @@ const styles = StyleSheet.create({
   authorInfo: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+
     marginVertical: 6,
   },
+  userName: { marginLeft: 6 },
   followButton: {
     marginLeft: "auto",
   },

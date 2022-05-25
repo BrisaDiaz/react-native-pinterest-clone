@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.lightGray,
     margin: 2,
     padding: 8,
-    // outlineColor: Colors.focus,
+
     fontWeight: "600",
     borderRadius: 4,
   },

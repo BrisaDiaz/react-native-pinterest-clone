@@ -49,7 +49,7 @@ export default function MenuModal({
       <Pressable
         onPress={(e) => onOuterClick && onOuterClick(e)}
         style={{
-          backgroundColor: background || "transparent",
+          backgroundColor: background || "inherit",
           height: "100%",
           width: "100%",
         }}
@@ -58,7 +58,7 @@ export default function MenuModal({
           style={[
             {
               width: "100%",
-              height: "max-content",
+              height: "auto",
               position: "absolute",
               bottom: 0,
               borderTopColor: Colors.lightGray,
@@ -72,6 +72,7 @@ export default function MenuModal({
               shadowOpacity: 0.2,
               shadowRadius: 3,
               borderWidth: 0,
+              paddingBottom: 14,
             },
             menuStyles,
           ]}

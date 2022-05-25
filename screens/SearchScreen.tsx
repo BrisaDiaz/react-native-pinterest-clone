@@ -159,7 +159,7 @@ export default function SearchScreen({
 
           <FlatList
             contentContainerStyle={{
-              marginBottom: "1rem",
+              marginBottom: 14,
               marginLeft: -TOPICS_SPACING,
             }}
             columnWrapperStyle={{
@@ -197,11 +197,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
 
-    padding: 6,
+    paddingHorizontal: 6,
+    paddingTop: 28,
     paddingBottom: 40,
   },
   tagList: {
-    maxHeight: "fit-content",
+    maxHeight: "auto",
     marginTop: 4,
     marginBottom: 16,
     height: 40,
@@ -209,12 +210,12 @@ const styles = StyleSheet.create({
   sectionLabel: {
     fontWeight: "600",
 
-    marginTop: "1rem",
-    marginBottom: "0.8rem",
+    marginTop: 14,
+    marginBottom: 11.2,
     textAlign: "center",
   },
   notFoundMessage: {
-    marginBottom: "1.5rem",
+    marginBottom: 21,
   },
   notFoundText: {
     fontWeight: "700",

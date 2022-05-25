@@ -1,7 +1,8 @@
 import { FlatList } from "./Themed";
 import React from "react";
 import Board from "./PinBoard";
-import { v4 as uuid } from "uuid";
+ import "react-native-get-random-values";
+ import { v4 as uuid } from "uuid";
 import { PinBoard } from "../types";
 import Layout from "../constants/Layout";
 type Props = { data: PinBoard[] };

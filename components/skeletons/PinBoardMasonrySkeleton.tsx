@@ -1,7 +1,8 @@
 import { FlatList } from "../Themed";
 import { ViewStyle } from "react-native";
 import Board from "../PinBoard";
-import { v4 as uuid } from "uuid";
+ import "react-native-get-random-values";
+ import { v4 as uuid } from "uuid";
 import Layout from "../../constants/Layout";
 import PinBoardSkeleton from "./PinBoardSkeleton";
 export default function PinsBoardMasonrySkeleton({

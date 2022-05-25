@@ -11,7 +11,7 @@ import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 
 import Colors from "../constants/Colors";
-import { View } from "../components/Themed";
+
 import useColorScheme from "../hooks/useColorScheme";
 import CreateBoardScreen from "../screens/CreateBoardScreen";
 import NotFoundScreen from "../screens/NotFoundScreen";
@@ -123,12 +123,19 @@ function BottomTabNavigator() {
         return {
           tabBarActiveTintColor: Colors.primary,
           tabBarStyle: {
+            flex: 1,
+            flexDirection: "row",
+            alignItems: "center",
+            justifyContent: "center",
             borderColor: "transparent",
             height: 45,
-            marginVertical: 6,
-            borderRadius: 30,
-            maxWidth: "fit-content",
+            marginVertical: 14,
             marginHorizontal: "auto",
+
+            maxWidth: 180,
+
+            borderRadius: 30,
+
             position: "absolute",
             shadowColor: "#171717",
             shadowOffset: { width: -2, height: 4 },

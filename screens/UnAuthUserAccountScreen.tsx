@@ -51,17 +51,18 @@ export default function AccountScreen({
             alignContent: "center",
             justifyContent: "center",
             marginTop: -25,
+            alignSelf: "center",
           }}
         >
           <FontAwesome
             color={Colors.darkGray}
             size={25}
             name="user"
-            style={{ marginHorizontal: "auto" }}
+            style={{ marginHorizontal: "auto", alignSelf: "center" }}
           />
         </View>
         <Text
-          style={{ fontWeight: "700", textAlign: "center", marginVertical: 6 }}
+          style={{ fontWeight: "700", alignSelf: "center", marginVertical: 6 }}
         >
           Your Profile
         </Text>
@@ -69,7 +70,10 @@ export default function AccountScreen({
       <Button
         text="Start"
         rounded={true}
-        style={{ marginHorizontal: "auto", marginVertical: 16 }}
+        style={{
+          alignSelf: "center",
+          marginVertical: 16,
+        }}
         onPress={() => navigation.navigate("Login")}
       />
     </View>

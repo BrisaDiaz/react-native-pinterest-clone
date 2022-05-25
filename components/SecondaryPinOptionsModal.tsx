@@ -22,7 +22,7 @@ export default function SecondaryPinOptionsModal({
   ];
   return (
     <MenuModal closeButtonVisible={true} title="options" {...props}>
-      <View style={{ paddingHorizontal: "0.6rem", paddingBottom: "1rem" }}>
+      <View style={{ paddingHorizontal: 8.5, paddingBottom: 14 }}>
         {PIN_MENU_ACTIONS.map((action) => (
           <TouchableHighlight
             key={action.label}

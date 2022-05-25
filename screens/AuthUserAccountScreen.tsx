@@ -92,7 +92,7 @@ toggleAddModal()
         {isLoading && (
           <>
             <UserProfileSkeleton />
-            <View style={{ marginTop: "3rem" }} />
+            <View style={{ marginTop: 42 }} />
             <PinBoardMasonrySkeleton />
           </>
         )}
@@ -114,17 +114,20 @@ toggleAddModal()
                 text="Share"
                 type="secondary"
                 rounded={true}
-                style={{ marginBottom: "1rem" }}
+                style={{
+                  marginBottom: 14,
+                  marginHorizontal: "auto",
+                  alignSelf: "center",
+                }}
               />
             </View>
             <Tabs
               containerStyle={{
-                marginVertical: "2rem",
+                marginVertical: 28,
               }}
               defaultKey="stored"
               tabButtonsContainerStyle={{
-                width: "fit-content",
-                marginHorizontal: "auto",
+                justifyContent: "center",
               }}
               tabs={[
                 {
@@ -138,7 +141,7 @@ toggleAddModal()
                         fontWeight: "700",
                         fontSize: 16,
                         textAlign: "center",
-                        marginVertical: "3rem",
+                        marginVertical: 42,
                       }}
                     >
                       No pin created yet
@@ -156,7 +159,7 @@ toggleAddModal()
                         fontWeight: "700",
                         fontSize: 16,
                         textAlign: "center",
-                        marginVertical: "3rem",
+                        marginVertical: 42,
                       }}
                     >
                       No pin stored yet

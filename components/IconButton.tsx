@@ -10,7 +10,7 @@ export default function IconButton({ icon, ...props }: Props) {
       style={[
         {
           borderRadius: 50,
-          width: "min-content",
+          alignSelf: "flex-start",
           paddingVertical: 5,
           paddingHorizontal: 7,
         },

@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
   modalFooter: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+
+    padding: 12,
     borderTopColor: Colors.lightGray,
     borderTopWidth: 1,
   },

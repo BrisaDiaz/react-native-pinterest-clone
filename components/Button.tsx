@@ -103,10 +103,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    alignSelf: "flex-start",
 
-    width: "fit-content",
     position: "relative",
-    height: "fit-content",
+    height: "auto",
   },
   textLight: {
     color: Colors.dark.tint,

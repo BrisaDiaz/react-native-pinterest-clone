@@ -66,8 +66,8 @@ export default function AccountScreen({
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: "4rem",
-    paddingHorizontal: "1rem",
+    paddingTop: 48,
+    paddingHorizontal: 14,
   },
   markPrivacySection: {
     flexDirection: "row",
@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     width: "100%",
     maxWidth: "400px",
-    paddingVertical: "1rem",
+    paddingVertical: 14,
   },
   privacyText: { fontSize: 15 },
 });

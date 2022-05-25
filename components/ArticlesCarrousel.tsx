@@ -27,7 +27,11 @@ export default function ArticlesCarrousel({
       spacing={6}
       itemsContainerProps={{
         data: data,
-        contentContainerStyle: { marginHorizontal: "auto" },
+        contentContainerStyle: {
+          marginHorizontal: "auto",
+          alignSelf: "center",
+          justifyContent: "center",
+        },
         renderItem: ({ item }) => (
           <Animated.View
             style={[
@@ -36,7 +40,7 @@ export default function ArticlesCarrousel({
                 maxWidth: 380,
                 aspectRatio: 1.4,
                 borderRadius: 12,
-
+                marginLeft: 6,
                 overflow: "hidden",
               },
               isLoading && loadingStyle,
@@ -56,7 +60,7 @@ export default function ArticlesCarrousel({
                   width: "100%",
                   height: "100%",
                   justifyContent: "flex-end",
-                  padding: "1rem",
+                  padding: 14,
                 }}
               >
                 <Text
@@ -64,7 +68,7 @@ export default function ArticlesCarrousel({
                     color: Colors.dark.tint,
                     fontWeight: "700",
                     fontSize: 22,
-                    marginBottom: "1rem",
+                    marginBottom: 14,
                     textTransform: "capitalize",
                   }}
                 >

@@ -44,7 +44,7 @@ export default function SearchBar({
       <TouchableOpacity onPress={() => onSearch && onSearch(value)}>
         <FontAwesome
           name="search"
-          size={15}
+          size={18}
           style={styles.searchIcon}
           color={Colors[theme].tint}
         />
@@ -78,7 +78,7 @@ export default function SearchBar({
         >
           <AntDesign
             name="closecircle"
-            size={15}
+            size={18}
             color={Colors.light.tabIconSelected}
           />
         </TouchableOpacity>
@@ -89,7 +89,7 @@ export default function SearchBar({
 
 const styles = StyleSheet.create({
   container: {
-    maxHeight: "fit-content",
+    maxHeight: "auto",
     position: "relative",
   },
   input: {
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   clearIcons: {
     position: "absolute",
     right: 0,
-    transform: [{ translateX: -12 }, { translateY: 12 }],
+    transform: [{ translateX: -12 }, { translateY: 10 }],
   },
   spinner: {
     position: "absolute",

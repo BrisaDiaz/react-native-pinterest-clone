@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
   authorInfo: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+
     marginVertical: 6,
   },
   avatar: { width: 30, aspectRatio: 1, borderRadius: 100 },
@@ -42,6 +42,7 @@ const styles = StyleSheet.create({
     height: 14,
     width: 100,
     borderRadius: 4,
+    marginLeft: 6,
   },
   button: { width: 100, height: 30, borderRadius: 30, marginLeft: "auto" },
   title: {

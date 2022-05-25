@@ -74,12 +74,13 @@ export default function EditScreenInfo({
 }
 
 const styles = StyleSheet.create({
-  container: { width: "100%" },
+  container: { width: "100%", marginHorizontal: "auto", alignSelf: "center" },
   formContainer: {
     alignItems: "center",
     width: 250,
     marginBottom: 16,
     marginHorizontal: "auto",
+    alignSelf: "center",
   },
   mb6: {
     marginBottom: 6,
@@ -109,6 +110,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     width: "100%",
     textAlign: "center",
+    alignItems: "center",
   },
   dividerLine: {
     margin: 16,

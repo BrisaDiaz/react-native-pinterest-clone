@@ -1,5 +1,4 @@
 import { StyleSheet, TouchableOpacity, TextStyle } from "react-native";
-import Colors from "../constants/Colors";
 import { Text } from "./Themed";
 type Props = TouchableOpacity["props"] & {
   text: string;

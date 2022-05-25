@@ -11,8 +11,8 @@ function PinsMasonry({ data }: { data: Pin[] }) {
   const [selectedPin, setSelectedPin] = React.useState<Pin | null>(null);
   const [isPinOptionsModalOpen, setIsPinOptionsModalOpen] =
     React.useState(false);
-  const defaultPinsMaxWidth = 200;
-  const calcWith = Math.ceil(Layout.window.width / defaultPinsMaxWidth);
+  const defaultPinsmaxWidth = 200;
+  const calcWith = Math.ceil(Layout.window.width / defaultPinsmaxWidth);
   const DEFAULT_COL_NUM = calcWith > 1 ? calcWith : 2;
   const SPACING = 6;
   const PINS_WITH =
@@ -77,7 +77,7 @@ export default PinsMasonry;
 const styles = StyleSheet.create({
   masonry: {
     marginTop: 6,
-    marginBottom: "1.5rem",
+    marginBottom: 21,
     width: "100%",
     flexDirection: "row",
     minHeight: 100,
