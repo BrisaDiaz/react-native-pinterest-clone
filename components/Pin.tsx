@@ -39,7 +39,7 @@ export default function PinComponent({
           resizeMode="cover"
           style={[
             styles.pin,
-            { aspectRatio: dynamicHeight? getRndInter(7, 10) / 10 : 1},
+            { aspectRatio: dynamicHeight ? getRndInter(7, 10) / 10 : 1 },
           ]}
           source={{
             uri: data.pin,
@@ -72,13 +72,19 @@ const styles = StyleSheet.create({
   container: { width: "100%", flex: 1 },
   pin: {
     width: "100%",
-    resizeMode: "contain",
+    minWidth: "100%",
     backgroundColor: Colors.gray,
     aspectRatio: 1,
     borderRadius: 8,
     alignSelf: "stretch",
   },
-  title: { fontSize: 10, fontWeight: "700", marginVertical: 4, marginRight: 2 },
+  title: {
+    fontSize: 10,
+    fontWeight: "700",
+    marginVertical: 4,
+    marginRight: 2,
+    maxWidth: "85%",
+  },
   iconButton: { padding: 0, marginLeft: "auto" },
   footer: {
     flexDirection: "row",

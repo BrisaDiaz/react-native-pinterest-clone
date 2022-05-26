@@ -1,6 +1,5 @@
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
-import * as Permissions from "expo-permissions";
 import * as Sharing from "expo-sharing";
 
 export default function useFileManager() {
@@ -10,10 +9,20 @@ export default function useFileManager() {
 
     return result;
   };
+  const requestCameraPermissions = async () => {
+    const { accessPrivileges } = await MediaLibrary.getPermissionsAsync();
+    if (accessPrivileges !== "all") {
+      const { accessPrivileges: requestPermissionsResponse } =
+        await MediaLibrary.requestPermissionsAsync();
+      return requestPermissionsResponse;
+    }
+    return accessPrivileges;
+  };
 
   const saveExpoFile = async (fileUri: string) => {
-    const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-    if (status === "granted") {
+    let accessPrivileges = await requestCameraPermissions();
+
+    if (accessPrivileges === "all") {
       const asset = await MediaLibrary.createAssetAsync(fileUri);
       await MediaLibrary.createAlbumAsync("Download", asset, false);
       return true;
@@ -25,7 +34,7 @@ export default function useFileManager() {
   };
   const share = async (uri: string) => {
     const result = await downloadExpoFile(uri, Date.now() + ".jpg");
-    console.log(result)
+    console.log(result);
     await shareExpoFile(result.uri);
   };
   const save = async (uri: string) => {

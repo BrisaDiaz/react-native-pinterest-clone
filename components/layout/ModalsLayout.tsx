@@ -58,17 +58,13 @@ export default function ModalsLayout({
         <StoreInBoardModal
           visible={modalState.modals.pinStorage.isVisible}
           onCreateBoard={() => handleCreateModal()}
-          closeButtonProps={{
-            onPress: () => dispatch(closeModal("pinStorage")),
-          }}
+          onDismiss={() => dispatch(closeModal("pinStorage"))}
         />
       )}
       <PinOptionsModal
         visible={modalState.modals.pinOptions.isVisible}
         onSelectedAction={handlePinOptionActions}
-        closeButtonProps={{
-          onPress: () => dispatch(closeModal("pinOptions")),
-        }}
+        onDismiss={() => dispatch(closeModal("pinOptions"))}
       />
       <>{children}</>
     </>

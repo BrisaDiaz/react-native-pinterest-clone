@@ -9,8 +9,8 @@ export default function IconButton({ icon, ...props }: Props) {
     <TouchableHighlight
       style={[
         {
-          borderRadius: 50,
-          width: "min-content",
+          borderRadius: 100,
+          alignSelf: "flex-start",
           paddingVertical: 5,
           paddingHorizontal: 7,
         },

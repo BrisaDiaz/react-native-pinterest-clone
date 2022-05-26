@@ -47,15 +47,16 @@ import { setStashedPin, openModal } from "../store/slices/modals";
  const styles = StyleSheet.create({
    masonry: {
      width: "100%",
-     marginBottom: "1.5rem",
+     paddingBottom: 21,
+     marginLeft: -3,
    },
 
    masonryColumnWrapper: {
      width: "100%",
 
      display: "flex",
-     marginLeft: -6,
-     justifyContent: "flex-start",
+
+ 
      marginBottom: 4,
    },
  });

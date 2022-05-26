@@ -50,10 +50,11 @@ export default function AccountScreen({
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
+    paddingTop: 60,
     alignItems: "center",
     flex: 1,
-    paddingVertical: 6,
+
+    paddingVertical: 14,
     paddingHorizontal: 16,
   },
 });

@@ -23,7 +23,7 @@ export default function StoreInBoardModal({
     onCreateBoard && onCreateBoard();
   };
   return (
-    <MenuModal title="Store in board" closeButtonVisible={true} {...props}>
+    <MenuModal title="Store in board" {...props}>
       {data && (
         <>
           <View style={styles.container}>
@@ -101,8 +101,8 @@ const styles = StyleSheet.create({
   modalFooter: {
     flexDirection: "row",
     alignItems: "center",
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+
+    padding: 12,
     borderTopColor: Colors.lightGray,
     borderTopWidth: 1,
   },

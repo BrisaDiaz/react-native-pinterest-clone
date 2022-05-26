@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
     fontWeight: "700",
     borderRadius: 30,
     margin: 3,
-    width: "fit-content",
-    maxHeight: "fit-content",
+    alignSelf: "flex-start",
+    maxHeight: "auto",
     textTransform: "capitalize",
   },
   light: {

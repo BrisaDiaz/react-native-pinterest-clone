@@ -28,7 +28,7 @@ export default function AddToProfileModal({
     },
   ];
   return (
-    <MenuModal closeButtonVisible={true} title="Add to profile" {...props}>
+    <MenuModal title="Add to profile" {...props}>
       <View style={styles.container}>
         {OPTIONS.map((option) => (
           <View key={option.title}>
@@ -55,8 +55,8 @@ export default function AddToProfileModal({
 }
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: "0.5rem",
-    marginBottom: "1rem",
+    paddingHorizontal: 7,
+    marginBottom: 14,
     marginTop: 6,
   },
   sectionTitle: {

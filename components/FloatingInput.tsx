@@ -41,7 +41,7 @@ export default function FloatingInput({
 const styles = StyleSheet.create({
   inputLabel: {
     paddingHorizontal: 7.5,
-    width: "fit-content",
+    alignSelf: "flex-start",
     marginBottom: -6,
     position: "relative",
     zIndex: 10,
@@ -53,6 +53,5 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 20,
     fontWeight: "700",
-
   },
 });

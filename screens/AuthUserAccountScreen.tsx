@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet } from "react-native";
-import { Text, ScrollView } from "../components/Themed";
+import { Text } from "../components/Themed";
 import Button from "../components/Button";
 import { View } from "../components/Themed";
 
@@ -28,8 +28,11 @@ export default function AccountScreen({
 }) {
   const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
 
-  const toggleAddModal = () => {
-    setIsAddModalOpen(!isAddModalOpen);
+  const openAddModal = () => {
+    setIsAddModalOpen(true);
+  };
+  const closeAddModal = () => {
+    setIsAddModalOpen(false);
   };
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((store) => store.search);
@@ -43,7 +46,7 @@ export default function AccountScreen({
     });
   };
   const handleAddToProfileActions = (actionType: Action) => {
-toggleAddModal()
+    closeAddModal();
     if (actionType === "add board") return navigation.navigate("CreateBoard");
   };
 
@@ -67,12 +70,11 @@ toggleAddModal()
             style={{
               flexDirection: "row",
               alignItems: "center",
-              justifyContent: "center",
             }}
           >
             <IconButton
               icon={<Entypo size={24} name="plus" />}
-              onPress={() => toggleAddModal()}
+              onPress={() => openAddModal()}
             />
 
             <IconButton
@@ -85,14 +87,14 @@ toggleAddModal()
     >
       <AddToProfileModal
         visible={isAddModalOpen}
-        closeButtonProps={{ onPress: () => toggleAddModal() }}
+        onDismiss={() => closeAddModal()}
         onSelectedAction={handleAddToProfileActions}
       />
       <View style={styles.container}>
         {isLoading && (
           <>
             <UserProfileSkeleton />
-            <View style={{ marginTop: "3rem" }} />
+            <View style={{ marginTop: 42 }} />
             <PinBoardMasonrySkeleton />
           </>
         )}
@@ -114,18 +116,18 @@ toggleAddModal()
                 text="Share"
                 type="secondary"
                 rounded={true}
-                style={{ marginBottom: "1rem" }}
+                style={{
+                  marginBottom: 14,
+                  marginHorizontal: "auto",
+                  alignSelf: "center",
+                }}
               />
             </View>
             <Tabs
               containerStyle={{
-                marginVertical: "2rem",
+                marginVertical: 28,
               }}
               defaultKey="stored"
-              tabButtonsContainerStyle={{
-                width: "fit-content",
-                marginHorizontal: "auto",
-              }}
               tabs={[
                 {
                   label: "Created",
@@ -138,7 +140,7 @@ toggleAddModal()
                         fontWeight: "700",
                         fontSize: 16,
                         textAlign: "center",
-                        marginVertical: "3rem",
+                        marginVertical: 42,
                       }}
                     >
                       No pin created yet
@@ -156,7 +158,7 @@ toggleAddModal()
                         fontWeight: "700",
                         fontSize: 16,
                         textAlign: "center",
-                        marginVertical: "3rem",
+                        marginVertical: 42,
                       }}
                     >
                       No pin stored yet
@@ -175,7 +177,7 @@ toggleAddModal()
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: 70,
+    paddingTop: 120,
     paddingHorizontal: 6,
     paddingBottom: 20,
   },

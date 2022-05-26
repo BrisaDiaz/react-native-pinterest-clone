@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     borderRadius: 100,
 
     alignItems: "center",
-    justifyContent: "center",
+ 
   },
 
   user_name: {
