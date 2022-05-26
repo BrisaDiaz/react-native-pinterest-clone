@@ -55,7 +55,7 @@ export default function AddToProfileModal({
 }
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 7,
+    paddingHorizontal: 12,
     marginBottom: 14,
     marginTop: 6,
   },

@@ -16,7 +16,6 @@ import {
   useGetTodayPopularPinsQuery,
   useGetTodayPopularArticlesQuery,
 } from "../store/services";
-import ModalsLayout from "../components/layout/ModalsLayout";
 
 export default function Home({
   navigation,
@@ -77,7 +76,6 @@ export default function Home({
   return (
     <ScrollView>
       <View style={styles.container}>
-        <ModalsLayout />
         <Text
           style={{
             fontWeight: "600",

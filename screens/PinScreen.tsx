@@ -111,136 +111,137 @@ export default function PinDetails({
     if (actionType === "download") return onDownload();
   };
   return (
-    <HeaderLayout
-      headerContent={
-        <>
-          <View
-            style={{
-              flexDirection: "row",
-
-              alignItems: "center",
-              paddingVertical: 0,
-            }}
-          >
-            <GoBackButton
-              onPress={() => navigation.goBack()}
-              style={{ marginRight: 6 }}
-            />
-
-            <Button
-              style={{ paddingLeft: 0, paddingVertical: 0 }}
-              iconPosition="left"
-              type="secondary"
-              backgroundColor="transparent"
-              onPress={() => onShare()}
-              Icon={
-                <Entypo
-                  name="paper-plane"
-                  size={20}
-                  color={Colors[theme].tint}
-                />
-              }
-            />
-            <Button
-              style={{ paddingLeft: 0, paddingVertical: 0 }}
-              iconPosition="left"
-              type="secondary"
-              backgroundColor="transparent"
-              onPress={openPinOptionsModal}
-              Icon={
-                <Feather
-                  name="more-horizontal"
-                  size={20}
-                  color={Colors[theme].tint}
-                />
-              }
-            />
-          </View>
-          <Button
-            style={{ marginVertical: 0, marginRight: 6 }}
-            text="Save"
-            iconPosition="left"
-            onPress={() => handleStorePin()}
-            Icon={
-              <MaterialCommunityIcons
-                name="pin"
-                size={16}
-                color={Colors.dark.tint}
-              />
-            }
-          />
-        </>
-      }
-    >
-      <ModalsLayout />
-      <View style={styles.container}>
-        {(isLoadingPin || !isPinImageLoaded) && <PinDetailsSkeleton />}
-        {pin && !isLoadingPin && isPinImageLoaded && (
+    <ModalsLayout>
+      <HeaderLayout
+        headerContent={
           <>
-            <View style={styles.pinInfo}>
-              <Image
-                resizeMode="cover"
-                style={[styles.pin, { aspectRatio: imageAspectRatio }]}
-                source={{
-                  uri: pin?.pin,
-                }}
+            <View
+              style={{
+                flexDirection: "row",
+
+                alignItems: "center",
+                paddingVertical: 0,
+              }}
+            >
+              <GoBackButton
+                onPress={() => navigation.goBack()}
+                style={{ marginRight: 6 }}
               />
-              <View style={styles.authorInfo}>
-                {pin.author && (
-                  <>
-                    <Avatar source={pin?.author?.avatar} size="small" />
 
-                    <Link
-                      text={pin?.author?.user_name}
-                      style={styles.userName}
-                    />
-                  </>
-                )}
-
-                <CheckButton
-                  checkedText="Unfollow"
-                  uncheckedText="Follow"
-                  style={styles.followButton}
-                  disabled={authState.user ? true : false}
-                />
-              </View>
-              {pin?.title && (
-                <Text style={styles.title} numberOfLines={2}>
-                  {pin?.title}
-                </Text>
-              )}
-              {pin?.description && (
-                <Text style={styles?.description} numberOfLines={3}>
-                  {pin?.description}
-                </Text>
-              )}
-              {pin?.source_link && (
-                <Button
-                  text="Visit"
-                  type="secondary"
-                  fullWidth={true}
-                  style={styles.visitButton}
-                  onPress={() => handleGoToSource()}
-                />
-              )}
+              <Button
+                style={{ paddingLeft: 0, paddingVertical: 0 }}
+                iconPosition="left"
+                type="secondary"
+                backgroundColor="transparent"
+                onPress={() => onShare()}
+                Icon={
+                  <Entypo
+                    name="paper-plane"
+                    size={20}
+                    color={Colors[theme].tint}
+                  />
+                }
+              />
+              <Button
+                style={{ paddingLeft: 0, paddingVertical: 0 }}
+                iconPosition="left"
+                type="secondary"
+                backgroundColor="transparent"
+                onPress={openPinOptionsModal}
+                Icon={
+                  <Feather
+                    name="more-horizontal"
+                    size={20}
+                    color={Colors[theme].tint}
+                  />
+                }
+              />
             </View>
+            <Button
+              style={{ marginVertical: 0, marginRight: 6 }}
+              text="Save"
+              iconPosition="left"
+              onPress={() => handleStorePin()}
+              Icon={
+                <MaterialCommunityIcons
+                  name="pin"
+                  size={16}
+                  color={Colors.dark.tint}
+                />
+              }
+            />
           </>
-        )}
-        <Text style={styles.dividerText}>more like this</Text>
-        {(isLoadingSimilar || !isPinImageLoaded) && (
-          <PinMasonrySkeleton itemsNum={12} />
-        )}
-        {similarPins &&
-          !isLoadingPin &&
-          isPinImageLoaded &&
-          !isLoadingSimilar && <PinsMasonry data={similarPins} />}
-        <SecondaryPinOptionsModal
-          visible={isPinOptionsModalOpen}
-          onDismiss={closePinOptionsModal}
-          onSelectedAction={handlePinOptions}
-        />
-      </View>
-    </HeaderLayout>
+        }
+      >
+        <View style={styles.container}>
+          {(isLoadingPin || !isPinImageLoaded) && <PinDetailsSkeleton />}
+          {pin && !isLoadingPin && isPinImageLoaded && (
+            <>
+              <View style={styles.pinInfo}>
+                <Image
+                  resizeMode="cover"
+                  style={[styles.pin, { aspectRatio: imageAspectRatio }]}
+                  source={{
+                    uri: pin?.pin,
+                  }}
+                />
+                <View style={styles.authorInfo}>
+                  {pin.author && (
+                    <>
+                      <Avatar source={pin?.author?.avatar} size="small" />
+
+                      <Link
+                        text={pin?.author?.user_name}
+                        style={styles.userName}
+                      />
+                    </>
+                  )}
+
+                  <CheckButton
+                    checkedText="Unfollow"
+                    uncheckedText="Follow"
+                    style={styles.followButton}
+                    disabled={authState.user ? true : false}
+                  />
+                </View>
+                {pin?.title && (
+                  <Text style={styles.title} numberOfLines={2}>
+                    {pin?.title}
+                  </Text>
+                )}
+                {pin?.description && (
+                  <Text style={styles?.description} numberOfLines={3}>
+                    {pin?.description}
+                  </Text>
+                )}
+                {pin?.source_link && (
+                  <Button
+                    text="Visit"
+                    type="secondary"
+                    fullWidth={true}
+                    style={styles.visitButton}
+                    onPress={() => handleGoToSource()}
+                  />
+                )}
+              </View>
+            </>
+          )}
+          <Text style={styles.dividerText}>more like this</Text>
+          {(isLoadingSimilar || !isPinImageLoaded) && (
+            <PinMasonrySkeleton itemsNum={12} />
+          )}
+          {similarPins &&
+            !isLoadingPin &&
+            isPinImageLoaded &&
+            !isLoadingSimilar && <PinsMasonry data={similarPins} />}
+          <SecondaryPinOptionsModal
+            visible={isPinOptionsModalOpen}
+            onDismiss={closePinOptionsModal}
+            onSelectedAction={handlePinOptions}
+          />
+        </View>
+      </HeaderLayout>
+    </ModalsLayout>
   );
 }
 const styles = StyleSheet.create({

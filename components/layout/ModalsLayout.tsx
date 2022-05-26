@@ -1,10 +1,16 @@
 import React from "react";
 import StoreInBoardModal from "../StoreInBoardModal";
-import PinOptionsModal, { Action } from "../PinOptionsModal";
+import PinOptionsModal, {
+  Action as PinOptionsAction,
+} from "../PinOptionsModal";
+import AddToProfileModal, {
+  Action as AddToProfileAction,
+} from "../AddToProfileModal";
 import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
 import { closeModal, openModal } from "../../store/slices/modals";
 import { useLinkProps } from "@react-navigation/native";
 import useFileManager from "../../hooks/useFileManager";
+
 export default function ModalsLayout({
   children,
 }: {
@@ -19,7 +25,7 @@ export default function ModalsLayout({
   const dispatch = useAppDispatch();
   const { share, save } = useFileManager();
 
-  const handlePinOptionActions = async (actionType: Action) => {
+  const handlePinOptionActions = async (actionType: PinOptionsAction) => {
     const stashedPin = modalState.pin;
     if (!stashedPin) return;
     try {
@@ -45,12 +51,19 @@ export default function ModalsLayout({
       console.log(error);
     }
   };
+
   const { onPress: redirectToCreateBoardScreen } = useLinkProps({
     to: { screen: "CreateBoard" },
   });
   const handleCreateModal = () => {
     dispatch(closeModal("pinStorage"));
     redirectToCreateBoardScreen();
+  };
+  const handleAddToProfileActions = async (actionType: AddToProfileAction) => {
+    dispatch(closeModal("addToProfile"));
+    if (actionType === "add board") {
+      return redirectToCreateBoardScreen();
+    }
   };
   return (
     <>
@@ -65,6 +78,11 @@ export default function ModalsLayout({
         visible={modalState.modals.pinOptions.isVisible}
         onSelectedAction={handlePinOptionActions}
         onDismiss={() => dispatch(closeModal("pinOptions"))}
+      />
+      <AddToProfileModal
+        visible={modalState.modals.addToProfile.isVisible}
+        onSelectedAction={handleAddToProfileActions}
+        onDismiss={() => dispatch(closeModal("addToProfile"))}
       />
       <>{children}</>
     </>

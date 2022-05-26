@@ -47,11 +47,20 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   floatingInput: {
+    shadowColor: "#fafafa00",
+
+    borderColor: "#fafafa00",
+
     borderBottomWidth: 2,
     borderBottomColor: Colors.lightGray,
     paddingHorizontal: 12,
     paddingVertical: 8,
     fontSize: 20,
     fontWeight: "700",
+    shadowOffset: {
+      height: 0,
+      width: 0,
+    },
+    outlineStyle: "none",
   },
 });

@@ -22,6 +22,7 @@ import SearchScreen from "../screens/SearchScreen";
 import PinScreen from "../screens/PinScreen";
 import IconButton from "../components/IconButton";
 import Home from "../screens/Home";
+import ModalsLayout from "../components/layout/ModalsLayout";
 import { useAppSelector } from "../hooks/useStore";
 
 import {
@@ -117,83 +118,88 @@ function BottomTabNavigator() {
   const authSession = useAppSelector((store) => store.auth);
 
   return (
-    <BottomTab.Navigator
-      initialRouteName="Home"
-      screenOptions={() => {
-        return {
-          tabBarActiveTintColor: Colors.primary,
-          tabBarStyle: {
-            flexDirection: "row",
+    <>
+      <ModalsLayout />
+      <BottomTab.Navigator
+        initialRouteName="Home"
+        screenOptions={() => {
+          return {
+            tabBarActiveTintColor: Colors.primary,
+            tabBarStyle: {
+              flexDirection: "row",
+              zIndex: 200,
+              borderColor: "transparent",
 
-            borderColor: "transparent",
+              width: "100%",
 
-            width: "100%",
+              ...Platform.select({
+                android: {
+                  position: "relative",
+                  margin: 0,
+                },
+                default: {
+                  position: "absolute",
+                  shadowColor: "#171717",
+                  shadowOffset: { width: -2, height: 4 },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 3,
+                  borderWidth: 0,
+                  borderRadius: 30,
+                  alignSelf: "center",
+                  maxWidth: 180,
 
-            ...Platform.select({
-              android: {
-                position: "relative",
-                margin: 0,
-              },
-              default: {
-                position: "absolute",
-                shadowColor: "#171717",
-                shadowOffset: { width: -2, height: 4 },
-                shadowOpacity: 0.2,
-                shadowRadius: 3,
-                borderWidth: 0,
-                borderRadius: 30,
-                alignSelf: "center",
-                maxWidth: 180,
-
-                marginVertical: 14,
-                marginHorizontal: "auto",
-              },
-            }),
-          },
-        };
-      }}
-    >
-      <BottomTab.Screen
-        name="Home"
-        component={Home}
-        options={({ navigation }: RootTabScreenProps<"Home">) => ({
-          headerTitleStyle: { display: "none" },
-          tabBarIconStyle: { width: 40, marginHorizontal: 5 },
-          tabBarShowLabel: false,
-          headerShown: false,
-
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="pinterest" color={color} />
-          ),
-        })}
-      />
-
-      <BottomTab.Screen
-        name="Search"
-        component={SearchScreen}
-        options={{
-          title: "Search",
-          headerShown: false,
-          tabBarShowLabel: false,
-          tabBarIconStyle: { width: 40, marginHorizontal: 5 },
-          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+                  marginVertical: 14,
+                  marginHorizontal: "auto",
+                },
+              }),
+            },
+          };
         }}
-      />
-      <BottomTab.Screen
-        name="Account"
-        component={
-          authSession.user ? AuthUserAccountScreen : UnAuthUserAccountScreen
-        }
-        options={{
-          headerShown: false,
-          title: "Account",
-          headerTitleStyle: { display: "none" },
-          tabBarShowLabel: false,
-          tabBarIconStyle: { width: 40, marginHorizontal: 5 },
-          tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
-        }}
-      />
-    </BottomTab.Navigator>
+      >
+        <BottomTab.Screen
+          name="Home"
+          component={Home}
+          options={({ navigation }: RootTabScreenProps<"Home">) => ({
+            headerTitleStyle: { display: "none" },
+            tabBarIconStyle: { width: 40, marginHorizontal: 5 },
+            tabBarShowLabel: false,
+            headerShown: false,
+
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="pinterest" color={color} />
+            ),
+          })}
+        />
+
+        <BottomTab.Screen
+          name="Search"
+          component={SearchScreen}
+          options={{
+            title: "Search",
+            headerShown: false,
+            tabBarShowLabel: false,
+            tabBarIconStyle: { width: 40, marginHorizontal: 5 },
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="search" color={color} />
+            ),
+          }}
+        />
+        <BottomTab.Screen
+          name="Account"
+          component={
+            authSession.user ? AuthUserAccountScreen : UnAuthUserAccountScreen
+          }
+          options={{
+            headerShown: false,
+            title: "Account",
+            headerTitleStyle: { display: "none" },
+            tabBarShowLabel: false,
+            tabBarIconStyle: { width: 40, marginHorizontal: 5 },
+            tabBarIcon: ({ color }) => <TabBarIcon name="user" color={color} />,
+          }}
+        />
+      </BottomTab.Navigator>
+    </>
   );
 }
 

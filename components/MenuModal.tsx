@@ -1,6 +1,12 @@
 import React from "react";
 import Layout from "../constants/Layout";
-import { Modal, Pressable, ViewStyle, LayoutChangeEvent } from "react-native";
+import {
+  Modal,
+  Pressable,
+  ScrollView,
+  ViewStyle,
+  LayoutChangeEvent,
+} from "react-native";
 
 import {
   PanGestureHandler,
@@ -11,6 +17,7 @@ import Animated, {
   useAnimatedGestureHandler,
   useSharedValue,
   withSpring,
+  withTiming,
 } from "react-native-reanimated";
 import { View, Text } from "./Themed";
 import Colors from "../constants/Colors";
@@ -24,8 +31,8 @@ export type Props = Modal["props"] & {
   onOuterClick?: () => void;
   children?: ReactNode;
   closeRatio?: number;
+  openRatio?: number;
   title?: string;
-  expandEnable?: boolean;
 };
 
 export default function MenuModal({
@@ -36,7 +43,7 @@ export default function MenuModal({
   title,
   closeRatio,
   onDismiss,
-  expandEnable,
+  openRatio,
   visible,
   ...modalProps
 }: Props) {
@@ -44,7 +51,11 @@ export default function MenuModal({
   const [modalHeight, setModalHeight] = React.useState(0);
 
   const SCREEN_HEIGHT = Layout.window.height;
-  const MAX_MODAL_TOP = SCREEN_HEIGHT - modalHeight;
+  const INITIAL_HEIGHT = openRatio
+    ? SCREEN_HEIGHT * openRatio
+    : SCREEN_HEIGHT / 2;
+  const MAX_TRANSITION_Y = -SCREEN_HEIGHT * 0.95;
+  const MIN_TRANSITION_Y = -SCREEN_HEIGHT * (closeRatio || 0.2);
   const absoluteY = useSharedValue(0);
   const translateY = useSharedValue(0);
   const handleLayout = (event: LayoutChangeEvent) => {
@@ -54,104 +65,115 @@ export default function MenuModal({
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, ctx) => {},
     onActive: (event, ctx) => {
-      if (expandEnable === false && event.absoluteY < MAX_MODAL_TOP) {
-        return;
-      }
-      if (event.absoluteY < SCREEN_HEIGHT * 0.05) return;
-      if (event.absoluteY > SCREEN_HEIGHT * (closeRatio || 0.85)) {
-        absoluteY.value = SCREEN_HEIGHT;
-        translateY.value = event.translationY;
-        onDismiss && onDismiss();
+      if (event.translationY - INITIAL_HEIGHT < MAX_TRANSITION_Y) return;
+
+      if (event.translationY - INITIAL_HEIGHT < MIN_TRANSITION_Y) {
+        absoluteY.value = event.absoluteY;
+
+        translateY.value = event.translationY - INITIAL_HEIGHT;
 
         return;
       }
-      absoluteY.value = event.absoluteY;
+      absoluteY.value = SCREEN_HEIGHT;
+
+      onDismiss && onDismiss();
     },
     onEnd: (_) => {},
   });
   const modalAnimatedStyles = useAnimatedStyle(() => {
-    if (!absoluteY.value) return {};
+    if (absoluteY.value === 0) {
+      return {
+        transform: [{ translateY: withTiming(withSpring(-INITIAL_HEIGHT)) }],
+      };
+    }
     if (absoluteY.value === SCREEN_HEIGHT) {
       absoluteY.value = 0;
+      translateY.value = 0;
       return {
-        transform: [{ translateY: withSpring(translateY.value) }],
+        transform: [{ translateY: withTiming(0) }],
       };
     }
     return {
-      top: withSpring(absoluteY.value),
+      transform: [{ translateY: withSpring(translateY.value) }],
     };
-  }, [modalHeight, SCREEN_HEIGHT]);
+  }, [modalHeight, SCREEN_HEIGHT, visible]);
 
   return (
-    <GestureHandlerRootView>
-      <Modal
-        transparent={true}
-        visible={visible}
-        animationType="slide"
-        {...modalProps}
+    <ScrollView
+      scrollEnabled={!visible}
+      nestedScrollEnabled={!visible}
+      style={{
+        flex: 1,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        zIndex: visible ? 2000 : -10,
+        backgroundColor: "transparent",
+        display: visible ? "flex" : "none",
+      }}
+    >
+      <Pressable
+        style={{
+          position: "relative",
+          top: 0,
+          bottom: 0,
+          left: 0,
+          right: 0,
+        }}
       >
-        <Pressable
-          onPress={(e) => onDismiss && onDismiss()}
-          style={{
-            height: "100%",
-            width: "100%",
-            position: "absolute",
-            top: 0,
-            left: 0,
-          }}
-        >
-          <PanGestureHandler onGestureEvent={gestureHandler}>
-            <Animated.View
-              onLayout={handleLayout}
-              style={[
-                {
-                  width: "100%",
-                  height: "auto",
-                  position: "absolute",
-                  bottom: 0,
-                  backgroundColor: Colors[theme].background,
-                  borderTopColor: Colors.lightGray,
-                  borderTopWidth: 1,
-                  borderTopRightRadius: 20,
-                  borderTopLeftRadius: 20,
-                  minHeight: "20%",
-                  overflow: "hidden",
-                },
-                menuStyles,
-                modalAnimatedStyles,
-              ]}
-            >
-              <View
+        <PanGestureHandler onGestureEvent={gestureHandler}>
+          <Animated.View
+            onLayout={handleLayout}
+            style={[
+              {
+                width: "100%",
+                height: SCREEN_HEIGHT,
+                position: "relative",
+                bottom: -SCREEN_HEIGHT,
+                backgroundColor: Colors[theme].background,
+                borderTopColor: Colors.lightGray,
+                borderTopWidth: 1,
+                borderTopRightRadius: 20,
+                borderTopLeftRadius: 20,
+                minHeight: "20%",
+                overflow: "hidden",
+              },
+              menuStyles,
+              visible && modalAnimatedStyles,
+            ]}
+          >
+            <View
+              style={{
+                width: 60,
+                height: 4,
+                backgroundColor: "#8080805c",
+                alignSelf: "center",
+                marginVertical: 15,
+                borderRadius: 2,
+              }}
+            />
+
+            {title && (
+              <Text
                 style={{
-                  width: 60,
-                  height: 4,
-                  backgroundColor: "#8080805c",
-                  alignSelf: "center",
-                  marginVertical: 15,
-                  borderRadius: 2,
+                  textAlign: "center",
+
+                  textTransform: "capitalize",
+                  fontWeight: "700",
+
+                  letterSpacing: 0.5,
+                  fontSize: 13,
                 }}
-              />
-
-              {title && (
-                <Text
-                  style={{
-                    textAlign: "center",
-
-                    textTransform: "capitalize",
-                    fontWeight: "700",
-
-                    letterSpacing: 0.5,
-                    fontSize: 13,
-                  }}
-                >
-                  {title}
-                </Text>
-              )}
-              {children}
-            </Animated.View>
-          </PanGestureHandler>
-        </Pressable>
-      </Modal>
-    </GestureHandlerRootView>
+              >
+                {title}
+              </Text>
+            )}
+            {children}
+          </Animated.View>
+        </PanGestureHandler>
+      </Pressable>
+    </ScrollView>
   );
 }

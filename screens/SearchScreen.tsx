@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { RouteProp } from "@react-navigation/native";
 import { ScreenParamList } from "../types";
@@ -198,8 +198,13 @@ const styles = StyleSheet.create({
     flex: 1,
 
     paddingHorizontal: 6,
-    paddingTop: 28,
+    paddingTop: 6,
     paddingBottom: 40,
+    ...Platform.select({
+      android: {
+        paddingTop: 28,
+      },
+    }),
   },
   tagList: {
     maxHeight: "auto",

@@ -6,6 +6,10 @@ import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { store } from "./store";
+import {
+
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -16,7 +20,9 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <Provider store={store}>
-          <Navigation colorScheme={colorScheme} />
+          <GestureHandlerRootView style={{flex:1}}>
+            <Navigation colorScheme={colorScheme} />
+          </GestureHandlerRootView>
         </Provider>
 
         <StatusBar backgroundColor="#fff" />

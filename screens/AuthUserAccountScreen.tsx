@@ -20,22 +20,17 @@ import { useGetUserProfileQuery } from "../store/services";
 import PinsMasonry from "../components/PinsMasonry";
 import UserProfileSkeleton from "../components/skeletons/UserProfileSkeleton";
 import PinBoardMasonrySkeleton from "../components/skeletons/PinBoardMasonrySkeleton";
-import AddToProfileModal, { Action } from "../components/AddToProfileModal";
+import { openModal } from "../store/slices/modals";
 export default function AccountScreen({
   navigation,
 }: {
   navigation: NativeStackNavigationProp<ScreenParamList, "Account">;
 }) {
-  const [isAddModalOpen, setIsAddModalOpen] = React.useState(false);
-
-  const openAddModal = () => {
-    setIsAddModalOpen(true);
-  };
-  const closeAddModal = () => {
-    setIsAddModalOpen(false);
-  };
   const dispatch = useAppDispatch();
   const searchState = useAppSelector((store) => store.search);
+  const openAddModal = () => {
+    dispatch(openModal("addToProfile"));
+  };
 
   const handleSearchChange = (search: string) => {
     dispatch(setSearchQuery(search));
@@ -45,132 +40,125 @@ export default function AccountScreen({
       query: searchState.searchQuery,
     });
   };
-  const handleAddToProfileActions = (actionType: Action) => {
-    closeAddModal();
-    if (actionType === "add board") return navigation.navigate("CreateBoard");
-  };
 
   const { data, isLoading } = useGetUserProfileQuery();
 
   return (
-    <HeaderLayout
-      headerContent={
-        <>
-          <SearchBar
-            onSearch={() => handleSearchSubmit()}
-            onSubmitEditing={() => handleSearchSubmit()}
-            onClear={() => handleSearchChange("")}
-            value={searchState.searchQuery}
-            onChangeText={(currentValue) => handleSearchChange(currentValue)}
-            outlined={true}
-            rounded={true}
-            style={{ width: "100%", maxWidth: "70%" }}
-          />
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-            }}
-          >
-            <IconButton
-              icon={<Entypo size={24} name="plus" />}
-              onPress={() => openAddModal()}
-            />
-
-            <IconButton
-              icon={<Ionicons size={19} name="settings-sharp" />}
-              style={{ paddingBottom: 0 }}
-            />
-          </View>
-        </>
-      }
-    >
-      <AddToProfileModal
-        visible={isAddModalOpen}
-        onDismiss={() => closeAddModal()}
-        onSelectedAction={handleAddToProfileActions}
-      />
-      <View style={styles.container}>
-        {isLoading && (
+    <>
+      <HeaderLayout
+        headerContent={
           <>
-            <UserProfileSkeleton />
-            <View style={{ marginTop: 42 }} />
-            <PinBoardMasonrySkeleton />
-          </>
-        )}
-        {!isLoading && data && (
-          <>
-            <View style={styles.userData}>
-              <View style={styles.userAvatar}>
-                <Text style={styles.nameInitial}>{data.full_name[0]}</Text>
-              </View>
-              <Text style={styles.user_name}>{data.full_name}</Text>
-              <Text>{data.email}</Text>
+            <SearchBar
+              onSearch={() => handleSearchSubmit()}
+              onSubmitEditing={() => handleSearchSubmit()}
+              onClear={() => handleSearchChange("")}
+              value={searchState.searchQuery}
+              onChangeText={(currentValue) => handleSearchChange(currentValue)}
+              outlined={true}
+              rounded={true}
+              style={{ width: "100%", maxWidth: "70%" }}
+            />
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <IconButton
+                icon={<Entypo size={24} name="plus" />}
+                onPress={() => openAddModal()}
+              />
 
-              <Text style={styles.followers}>
-                {data.followersCount} Followers • Following to{" "}
-                {data.followingCount}
-              </Text>
-
-              <Button
-                text="Share"
-                type="secondary"
-                rounded={true}
-                style={{
-                  marginBottom: 14,
-                  marginHorizontal: "auto",
-                  alignSelf: "center",
-                }}
+              <IconButton
+                icon={<Ionicons size={19} name="settings-sharp" />}
+                style={{ paddingBottom: 0 }}
               />
             </View>
-            <Tabs
-              containerStyle={{
-                marginVertical: 28,
-              }}
-              defaultKey="stored"
-              tabs={[
-                {
-                  label: "Created",
-                  key: "created",
-                  content: data.created_pins.length ? (
-                    <PinsMasonry data={data.created_pins} />
-                  ) : (
-                    <Text
-                      style={{
-                        fontWeight: "700",
-                        fontSize: 16,
-                        textAlign: "center",
-                        marginVertical: 42,
-                      }}
-                    >
-                      No pin created yet
-                    </Text>
-                  ),
-                },
-                {
-                  label: "Stored",
-                  key: "stored",
-                  content: data.pin_boards.length ? (
-                    <PinBoardsMasonry data={boards} />
-                  ) : (
-                    <Text
-                      style={{
-                        fontWeight: "700",
-                        fontSize: 16,
-                        textAlign: "center",
-                        marginVertical: 42,
-                      }}
-                    >
-                      No pin stored yet
-                    </Text>
-                  ),
-                },
-              ]}
-            />
           </>
-        )}
-      </View>
-    </HeaderLayout>
+        }
+      >
+        <View style={styles.container}>
+          {isLoading && (
+            <>
+              <UserProfileSkeleton />
+              <View style={{ marginTop: 42 }} />
+              <PinBoardMasonrySkeleton />
+            </>
+          )}
+          {!isLoading && data && (
+            <>
+              <View style={styles.userData}>
+                <View style={styles.userAvatar}>
+                  <Text style={styles.nameInitial}>{data.full_name[0]}</Text>
+                </View>
+                <Text style={styles.user_name}>{data.full_name}</Text>
+                <Text>{data.email}</Text>
+
+                <Text style={styles.followers}>
+                  {data.followersCount} Followers • Following to{" "}
+                  {data.followingCount}
+                </Text>
+
+                <Button
+                  text="Share"
+                  type="secondary"
+                  rounded={true}
+                  style={{
+                    marginBottom: 14,
+                    marginHorizontal: "auto",
+                    alignSelf: "center",
+                  }}
+                />
+              </View>
+              <Tabs
+                containerStyle={{
+                  marginVertical: 28,
+                }}
+                defaultKey="stored"
+                tabs={[
+                  {
+                    label: "Created",
+                    key: "created",
+                    content: data.created_pins.length ? (
+                      <PinsMasonry data={data.created_pins} />
+                    ) : (
+                      <Text
+                        style={{
+                          fontWeight: "700",
+                          fontSize: 16,
+                          textAlign: "center",
+                          marginVertical: 42,
+                        }}
+                      >
+                        No pin created yet
+                      </Text>
+                    ),
+                  },
+                  {
+                    label: "Stored",
+                    key: "stored",
+                    content: data.pin_boards.length ? (
+                      <PinBoardsMasonry data={boards} />
+                    ) : (
+                      <Text
+                        style={{
+                          fontWeight: "700",
+                          fontSize: 16,
+                          textAlign: "center",
+                          marginVertical: 42,
+                        }}
+                      >
+                        No pin stored yet
+                      </Text>
+                    ),
+                  },
+                ]}
+              />
+            </>
+          )}
+        </View>
+      </HeaderLayout>
+    </>
   );
 }
 

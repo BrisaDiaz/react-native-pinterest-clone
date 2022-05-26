@@ -57,7 +57,10 @@ export default function AccountScreen({
 
         <View style={styles.markPrivacySection}>
           <Text style={styles.privacyText}>Mark board as private</Text>
-          <Switch onChange={(value) => setPrivacy(value)} />
+          <Switch
+            onChange={(value) => setPrivacy(value)}
+            style={{ marginLeft: "auto" }}
+          />
         </View>
       </View>
     </HeaderLayout>
@@ -74,7 +77,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     width: "100%",
-    maxWidth: "400px",
+
     paddingVertical: 14,
   },
   privacyText: { fontSize: 15 },

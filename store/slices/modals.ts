@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Pin } from "../../types";
 
-type ModalName = "pinStorage" | "pinOptions";
+type ModalName = "pinStorage" | "pinOptions" | "addToProfile";
 export interface State {
   pin: null | Pin;
   modals: {
@@ -9,6 +9,9 @@ export interface State {
       isVisible: boolean;
     };
     pinOptions: {
+      isVisible: boolean;
+    };
+    addToProfile: {
       isVisible: boolean;
     };
   };
@@ -20,6 +23,9 @@ const initialState: State = {
       isVisible: false,
     },
     pinOptions: {
+      isVisible: false,
+    },
+    addToProfile: {
       isVisible: false,
     },
   },
