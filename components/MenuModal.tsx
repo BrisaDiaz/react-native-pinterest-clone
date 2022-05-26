@@ -10,7 +10,7 @@ import {
 
 import {
   PanGestureHandler,
-  GestureHandlerRootView,
+
 } from "react-native-gesture-handler";
 import Animated, {
   useAnimatedStyle,
@@ -18,6 +18,8 @@ import Animated, {
   useSharedValue,
   withSpring,
   withTiming,
+  runOnJS,
+  withSequence,
 } from "react-native-reanimated";
 import { View, Text } from "./Themed";
 import Colors from "../constants/Colors";
@@ -61,7 +63,9 @@ export default function MenuModal({
   const handleLayout = (event: LayoutChangeEvent) => {
     setModalHeight(event.nativeEvent.layout.height);
   };
-
+  const closeModal = () => {
+    onDismiss && onDismiss();
+  };
   const gestureHandler = useAnimatedGestureHandler({
     onStart: (_, ctx) => {},
     onActive: (event, ctx) => {
@@ -76,16 +80,13 @@ export default function MenuModal({
       }
       absoluteY.value = SCREEN_HEIGHT;
 
-      onDismiss && onDismiss();
+      closeModal();
     },
     onEnd: (_) => {},
   });
   const modalAnimatedStyles = useAnimatedStyle(() => {
-    if (absoluteY.value === 0) {
-      return {
-        transform: [{ translateY: withTiming(withSpring(-INITIAL_HEIGHT)) }],
-      };
-    }
+    if (!visible || absoluteY.value === 0) return {};
+
     if (absoluteY.value === SCREEN_HEIGHT) {
       absoluteY.value = 0;
       translateY.value = 0;
@@ -97,7 +98,11 @@ export default function MenuModal({
       transform: [{ translateY: withSpring(translateY.value) }],
     };
   }, [modalHeight, SCREEN_HEIGHT, visible]);
-
+  const slideAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ translateY: withTiming(withSpring(-INITIAL_HEIGHT)) }],
+    };
+  });
   return (
     <ScrollView
       scrollEnabled={!visible}
@@ -110,7 +115,7 @@ export default function MenuModal({
         left: 0,
         right: 0,
         zIndex: visible ? 2000 : -10,
-        backgroundColor: "transparent",
+        backgroundColor: "#fafafa00",
         display: visible ? "flex" : "none",
       }}
     >
@@ -141,7 +146,8 @@ export default function MenuModal({
                 overflow: "hidden",
               },
               menuStyles,
-              visible && modalAnimatedStyles,
+              visible && slideAnimatedStyle,
+              modalAnimatedStyles,
             ]}
           >
             <View
