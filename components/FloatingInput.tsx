@@ -1,4 +1,4 @@
-import { StyleSheet, TextInput } from "react-native";
+import { StyleSheet, TextInput, Platform } from "react-native";
 import React from "react";
 import { Text } from "./Themed";
 
@@ -61,6 +61,6 @@ const styles = StyleSheet.create({
       height: 0,
       width: 0,
     },
-    outlineStyle: "none",
+    ...(Platform.OS === "web" ? { outlineStyle: "none" } : {}),
   },
 });
