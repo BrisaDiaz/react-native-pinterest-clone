@@ -56,7 +56,7 @@ import { setStashedPin, openModal } from "../store/slices/modals";
 
      display: "flex",
 
-     justifyContent: "flex-start",
+ 
      marginBottom: 4,
    },
  });

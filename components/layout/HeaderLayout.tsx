@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import { ViewStyle } from "react-native";
+import { ViewStyle, Platform } from "react-native";
 import useColorScheme from "../../hooks/useColorScheme";
+
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -69,6 +70,12 @@ export default function Header({
             backgroundColor,
             position: "absolute",
             top: 0,
+            ...Platform.select({
+              android: {
+                top: 24,
+              },
+            }),
+
             left: 0,
             zIndex: 10,
             transform: [

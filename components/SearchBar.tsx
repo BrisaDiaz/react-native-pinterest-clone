@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     margin: 2,
     padding: 8,
 
-    paddingHorizontal: 30,
+    paddingHorizontal: 40,
     borderRadius: 4,
     fontWeight: "600",
   },
@@ -109,12 +109,12 @@ const styles = StyleSheet.create({
   rounded: { borderRadius: 30 },
   searchIcon: {
     position: "absolute",
-    transform: [{ translateX: 12 }, { translateY: 12 }],
+    transform: [{ translateX: 16 }, { translateY: 12 }],
   },
   clearIcons: {
     position: "absolute",
     right: 0,
-    transform: [{ translateX: -12 }, { translateY: 10 }],
+    transform: [{ translateX: -16 }, { translateY: 12 }],
   },
   spinner: {
     position: "absolute",

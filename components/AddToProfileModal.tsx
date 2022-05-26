@@ -28,7 +28,7 @@ export default function AddToProfileModal({
     },
   ];
   return (
-    <MenuModal closeButtonVisible={true} title="Add to profile" {...props}>
+    <MenuModal title="Add to profile" {...props}>
       <View style={styles.container}>
         {OPTIONS.map((option) => (
           <View key={option.title}>

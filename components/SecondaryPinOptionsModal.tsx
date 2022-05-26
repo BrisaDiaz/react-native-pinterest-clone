@@ -1,6 +1,6 @@
 import { TouchableHighlight } from "react-native";
 import Colors from "../constants/Colors";
-import { Pin } from "../types";
+
 import MenuModal, { Props } from "./MenuModal";
 import { View, Text } from "./Themed";
 export type Action = "download" | "hide" | "report";
@@ -21,7 +21,7 @@ export default function SecondaryPinOptionsModal({
     },
   ];
   return (
-    <MenuModal closeButtonVisible={true} title="options" {...props}>
+    <MenuModal title="options" {...props}>
       <View style={{ paddingHorizontal: 8.5, paddingBottom: 14 }}>
         {PIN_MENU_ACTIONS.map((action) => (
           <TouchableHighlight

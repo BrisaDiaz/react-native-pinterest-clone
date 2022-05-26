@@ -8,7 +8,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName } from 'react-native';
+import { ColorSchemeName, Platform } from "react-native";
 
 import Colors from "../constants/Colors";
 
@@ -61,8 +61,8 @@ function RootNavigator() {
       screenOptions={() => ({
         headerStyle: {
           backgroundColor: Colors[theme].background,
-          borderBottomColor: "transparent !important",
-          borderWith: "0px !important",
+          borderBottomColor: "transparent ",
+          borderWith: "0px ",
         },
       })}
     >
@@ -123,25 +123,32 @@ function BottomTabNavigator() {
         return {
           tabBarActiveTintColor: Colors.primary,
           tabBarStyle: {
-            flex: 1,
             flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
+
             borderColor: "transparent",
-            height: 45,
-            marginVertical: 14,
-            marginHorizontal: "auto",
 
-            maxWidth: 180,
+            width: "100%",
 
-            borderRadius: 30,
+            ...Platform.select({
+              android: {
+                position: "relative",
+                margin: 0,
+              },
+              default: {
+                position: "absolute",
+                shadowColor: "#171717",
+                shadowOffset: { width: -2, height: 4 },
+                shadowOpacity: 0.2,
+                shadowRadius: 3,
+                borderWidth: 0,
+                borderRadius: 30,
+                alignSelf: "center",
+                maxWidth: 180,
 
-            position: "absolute",
-            shadowColor: "#171717",
-            shadowOffset: { width: -2, height: 4 },
-            shadowOpacity: 0.2,
-            shadowRadius: 3,
-            borderWidth: 0,
+                marginVertical: 14,
+                marginHorizontal: "auto",
+              },
+            }),
           },
         };
       }}

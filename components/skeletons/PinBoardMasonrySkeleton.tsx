@@ -28,7 +28,7 @@ export default function PinsBoardMasonrySkeleton({
         {
           width: "100%",
           marginRight: -GAP,
-          justifyContent: "flex-start",
+         
         } as ViewStyle
       }
       numColumns={COLUMNS_NUM}

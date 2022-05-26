@@ -37,7 +37,10 @@ export default function Tabs({
       <ScrollView
         horizontal={true}
         showsHorizontalScrollIndicator={false}
-        style={[{ width: "100%" }, tabButtonsContainerStyle]}
+        style={[
+          { alignSelf: "center", marginHorizontal: "auto" },
+          tabButtonsContainerStyle,
+        ]}
       >
         {tabs.map((tab) => (
           <TouchableHighlight

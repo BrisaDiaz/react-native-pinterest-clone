@@ -5,6 +5,7 @@ import Colors from "../constants/Colors";
 import { MaterialCommunityIcons, Ionicons, Feather } from "@expo/vector-icons";
 import useColorScheme from "../hooks/useColorScheme";
 import { ReactNode } from "react";
+
 export type Action =
   | "share by whatsapp"
   | "store"
@@ -77,7 +78,7 @@ export default function PinOptionsModal(
     },
   ];
   return (
-    <MenuModal closeButtonVisible={true} title="options" {...props}>
+    <MenuModal title="options" {...props}>
       <View
         style={{
           paddingHorizontal: 7,
@@ -110,12 +111,14 @@ export default function PinOptionsModal(
                   backgroundColor: "transparent",
                 }}
               >
-                <Text style={{ fontWeight: "700" }}>{action.label}</Text>
-                {action.description && (
-                  <Text style={{ fontSize: 12, opacity: 0.85 }}>
-                    {action.description}
-                  </Text>
-                )}
+                <>
+                  <Text style={{ fontWeight: "700" }}>{action.label}</Text>
+                  {action.description && (
+                    <Text style={{ fontSize: 12, opacity: 0.85 }}>
+                      {action.description}
+                    </Text>
+                  )}
+                </>
               </View>
             </>
           </TouchableHighlight>

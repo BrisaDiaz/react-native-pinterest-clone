@@ -65,7 +65,6 @@ function PinsMasonry({ data }: { data: Pin[] }) {
       </View>
       <PinOptionsModal
         visible={isPinOptionsModalOpen}
-        closeButtonVisible={true}
         closeButtonProps={{ onPress: togglePinOptionsModal }}
         title="options"
         onSelectedAction={handlePinActions}

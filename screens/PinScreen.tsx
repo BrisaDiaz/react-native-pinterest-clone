@@ -2,7 +2,7 @@ import { MaterialCommunityIcons, Feather, Entypo } from "@expo/vector-icons";
 import React from "react";
 
 
-import { StyleSheet, Image, Linking, Alert, Share } from "react-native";
+import { StyleSheet, Image, Linking, Alert, Platform } from "react-native";
 import Colors from "../constants/Colors";
 import { View, Text } from "../components/Themed";
 import Button from "../components/Button";
@@ -45,9 +45,13 @@ export default function PinDetails({
     triggerGetSimilar,
     { data: similarPins, isLoading: isLoadingSimilar },
   ] = useLazyGetPinsByTagsQuery();
-  const togglePinOptionsModal = () => {
-    setIsPinOptionsModalOpen(!isPinOptionsModalOpen);
+  const openPinOptionsModal = () => {
+    setIsPinOptionsModalOpen(true);
   };
+  const closePinOptionsModal = () => {
+    setIsPinOptionsModalOpen(false);
+  };
+
   const dispatch = useAppDispatch();
   const authState = useAppSelector((store) => store.auth);
   const handleStorePin = () => {
@@ -142,7 +146,7 @@ export default function PinDetails({
               iconPosition="left"
               type="secondary"
               backgroundColor="transparent"
-              onPress={togglePinOptionsModal}
+              onPress={openPinOptionsModal}
               Icon={
                 <Feather
                   name="more-horizontal"
@@ -232,7 +236,7 @@ export default function PinDetails({
           !isLoadingSimilar && <PinsMasonry data={similarPins} />}
         <SecondaryPinOptionsModal
           visible={isPinOptionsModalOpen}
-          closeButtonProps={{ onPress: togglePinOptionsModal }}
+          onDismiss={closePinOptionsModal}
           onSelectedAction={handlePinOptions}
         />
       </View>
@@ -243,8 +247,14 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 6,
-    paddingBottom: 42,
-    paddingTop: 70,
+    paddingBottom: 24,
+    paddingTop: 55,
+    ...Platform.select({
+      android: {
+        paddingTop: 85,
+        paddingBottom: 24,
+      },
+    }),
   },
   pinInfo: { paddingHorizontal: 10 },
   pin: {

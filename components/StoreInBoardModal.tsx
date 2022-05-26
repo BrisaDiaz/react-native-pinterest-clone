@@ -23,7 +23,7 @@ export default function StoreInBoardModal({
     onCreateBoard && onCreateBoard();
   };
   return (
-    <MenuModal title="Store in board" closeButtonVisible={true} {...props}>
+    <MenuModal title="Store in board" {...props}>
       {data && (
         <>
           <View style={styles.container}>

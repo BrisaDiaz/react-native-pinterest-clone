@@ -16,6 +16,7 @@ export default function useFileManager() {
         await MediaLibrary.requestPermissionsAsync();
       return requestPermissionsResponse;
     }
+    return accessPrivileges;
   };
 
   const saveExpoFile = async (fileUri: string) => {
