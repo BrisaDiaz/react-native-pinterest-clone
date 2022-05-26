@@ -85,7 +85,7 @@ const Carrousel = ({
           {
             marginTop: "1rem",
             maxWidth: "fit-content",
-            gap: spacing || 0,
+            marginLeft: -spacing || 0,
           } as ViewStyle,
           flatListAnimatedStyle,
         ]}
@@ -96,7 +96,7 @@ const Carrousel = ({
             flexDirection: "row",
             width: "100%",
             justifyContent: "center",
-            gap: 6,
+
             marginVertical: "0.5rem",
           } as ViewStyle,
         ]}

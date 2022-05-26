@@ -41,6 +41,8 @@ export default function Home({
       data={item}
       style={{
         marginBottom: 6,
+        marginLeft: 6,
+
         flex: 1,
         marginHorizontal: "auto",
         maxWidth: `${100 / TOPICS_COLUMNS_NUM}%`,
@@ -109,7 +111,7 @@ export default function Home({
             width: "100%",
             justifyContent: "center",
             display: "flex",
-            gap: 6,
+            marginLeft: -6,
           } as ViewStyle
         }
         data={

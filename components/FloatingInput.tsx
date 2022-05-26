@@ -53,6 +53,6 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 20,
     fontWeight: "700",
-    outlineColor: "transparent",
+
   },
 });

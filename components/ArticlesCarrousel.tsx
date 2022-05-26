@@ -36,6 +36,7 @@ export default function ArticlesCarrousel({
                 maxWidth: 380,
                 aspectRatio: 1.4,
                 borderRadius: 12,
+                marginLeft: 6,
 
                 overflow: "hidden",
               },

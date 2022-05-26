@@ -22,6 +22,7 @@ import { setStashedPin, openModal } from "../store/slices/modals";
        style={{
          width: "100%",
          maxWidth: `${100 / COLUMN_NUM}%`,
+         marginLeft: 6,
        }}
        data={item}
        onMenuClick={handleOpenPinOptionsModal}
@@ -43,18 +44,18 @@ import { setStashedPin, openModal } from "../store/slices/modals";
    );
  }
  export default React.memo(PinsMasonry);
-const styles = StyleSheet.create({
-  masonry: {
-    width: "100%",
-    marginBottom: "1.5rem",
-  },
+ const styles = StyleSheet.create({
+   masonry: {
+     width: "100%",
+     marginBottom: "1.5rem",
+   },
 
-  masonryColumnWrapper: {
-    width: "100%",
+   masonryColumnWrapper: {
+     width: "100%",
 
-    display: "flex",
-    gap: 6,
-    justifyContent: "flex-start",
-    marginBottom: 4,
-  },
-});
+     display: "flex",
+     marginLeft: -6,
+     justifyContent: "flex-start",
+     marginBottom: 4,
+   },
+ });

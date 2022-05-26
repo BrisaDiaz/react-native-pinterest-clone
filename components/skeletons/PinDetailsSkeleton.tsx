@@ -34,10 +34,10 @@ const styles = StyleSheet.create({
   authorInfo: {
     flexDirection: "row",
     alignItems: "center",
-    gap: 6,
+ 
     marginVertical: 6,
   },
-  avatar: { width: 30, aspectRatio: 1, borderRadius: 100 },
+  avatar: { width: 30, aspectRatio: 1, borderRadius: 100 ,marginRight:6},
   userName: {
     height: 14,
     width: 100,
