@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
     flex: 1,
     ...Platform.select({
       android: {
-        paddingBottom: 24,
+        paddingBottom: 42,
       },
     }),
   },

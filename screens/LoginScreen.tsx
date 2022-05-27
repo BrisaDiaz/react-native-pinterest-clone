@@ -21,7 +21,7 @@ export default function AccountScreen({
     dispatch(setGuestUser());
   };
   React.useEffect(() => {
-    if (authState.user) return navigation.navigate("Account");
+    if (authState.user) return navigation.goBack();
   }, [authState]);
 
   return (

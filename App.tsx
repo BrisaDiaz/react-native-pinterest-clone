@@ -1,15 +1,13 @@
-import { StatusBar } from 'expo-status-bar';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import "react-native-gesture-handler";
+import { StatusBar } from "expo-status-bar";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Provider } from "react-redux";
-import { View } from "./components/Themed";
+
 import useCachedResources from "./hooks/useCachedResources";
 import useColorScheme from "./hooks/useColorScheme";
 import Navigation from "./navigation";
 import { store } from "./store";
-import {
-
-  GestureHandlerRootView,
-} from "react-native-gesture-handler";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function App() {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
@@ -20,7 +18,7 @@ export default function App() {
     return (
       <SafeAreaProvider>
         <Provider store={store}>
-          <GestureHandlerRootView style={{flex:1}}>
+          <GestureHandlerRootView style={{ flex: 1 }}>
             <Navigation colorScheme={colorScheme} />
           </GestureHandlerRootView>
         </Provider>
