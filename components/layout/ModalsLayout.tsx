@@ -6,8 +6,13 @@ import PinOptionsModal, {
 import AddToProfileModal, {
   Action as AddToProfileAction,
 } from "../AddToProfileModal";
+import SecondaryPinOptionsModal from "../SecondaryPinOptionsModal";
 import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
-import { closeModal, openModal } from "../../store/slices/modals";
+import {
+  closeModal,
+  openModal,
+  closeAllModals,
+} from "../../store/slices/modals";
 import { useLinkProps } from "@react-navigation/native";
 import useFileManager from "../../hooks/useFileManager";
 
@@ -27,16 +32,15 @@ export default function ModalsLayout({
 
   const handlePinOptionActions = async (actionType: PinOptionsAction) => {
     const stashedPin = modalState.pin;
+    dispatch(closeAllModals(null));
+
     if (!stashedPin) return;
     try {
       if (!authState.user) {
-        dispatch(closeModal("pinOptions"));
         redirectToLogin();
         return;
       }
       if (actionType === "store") {
-        dispatch(closeModal("pinOptions"));
-        dispatch(openModal("pinStorage"));
         return;
       }
       if (actionType === "download") {
@@ -78,6 +82,11 @@ export default function ModalsLayout({
         visible={modalState.modals.pinOptions.isVisible}
         onSelectedAction={handlePinOptionActions}
         onDismiss={() => dispatch(closeModal("pinOptions"))}
+      />
+      <SecondaryPinOptionsModal
+        visible={modalState.modals.partialPinOptions.isVisible}
+        onSelectedAction={handlePinOptionActions}
+        onDismiss={() => dispatch(closeModal("partialPinOptions"))}
       />
       <AddToProfileModal
         visible={modalState.modals.addToProfile.isVisible}

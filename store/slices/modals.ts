@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { Pin } from "../../types";
 
-type ModalName = "pinStorage" | "pinOptions" | "addToProfile";
+
 export interface State {
   pin: null | Pin;
   modals: {
@@ -11,11 +11,15 @@ export interface State {
     pinOptions: {
       isVisible: boolean;
     };
+    partialPinOptions: {
+      isVisible: boolean;
+    };
     addToProfile: {
       isVisible: boolean;
     };
   };
 }
+
 const initialState: State = {
   pin: null,
   modals: {
@@ -25,11 +29,16 @@ const initialState: State = {
     pinOptions: {
       isVisible: false,
     },
+    partialPinOptions: {
+      isVisible: false,
+    },
     addToProfile: {
       isVisible: false,
     },
   },
 };
+
+type ModalName = keyof typeof initialState.modals;
 
 export const modalsSlice = createSlice({
   name: "auth",
@@ -47,7 +56,10 @@ export const modalsSlice = createSlice({
     closeModal: (state: State, action: { payload: ModalName }) => {
       state.modals[action.payload] = { isVisible: false };
     },
+    closeAllModals: (state: State, action: { payload: null }) => {
+      state.modals = initialState.modals;
+    },
   },
 });
-export const { setStashedPin, removePin, closeModal, openModal } =
+export const { setStashedPin, removePin, closeModal, openModal, closeAllModals } =
   modalsSlice.actions;

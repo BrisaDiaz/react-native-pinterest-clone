@@ -22,9 +22,7 @@ import ModalsLayout from "../components/layout/ModalsLayout";
 import GoBackButton from "../components/GoBackButton";
 import { useAppDispatch, useAppSelector } from "../hooks/useStore";
 import { openModal, setStashedPin } from "../store/slices/modals";
-import SecondaryPinOptionsModal, {
-  Action,
-} from "../components/SecondaryPinOptionsModal";
+
 import useFileManager from "../hooks/useFileManager";
 export default function PinDetails({
   navigation,
@@ -46,10 +44,7 @@ export default function PinDetails({
     { data: similarPins, isLoading: isLoadingSimilar },
   ] = useLazyGetPinsByTagsQuery();
   const openPinOptionsModal = () => {
-    setIsPinOptionsModalOpen(true);
-  };
-  const closePinOptionsModal = () => {
-    setIsPinOptionsModalOpen(false);
+    dispatch(openModal("partialPinOptions"));
   };
 
   const dispatch = useAppDispatch();
@@ -99,17 +94,7 @@ export default function PinDetails({
       console.log(error);
     }
   };
-  const onDownload = async () => {
-    if (!pin) return;
-    try {
-      await save(pin.pin);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const handlePinOptions = (actionType: Action) => {
-    if (actionType === "download") return onDownload();
-  };
+
   return (
     <ModalsLayout>
       <HeaderLayout
@@ -234,11 +219,6 @@ export default function PinDetails({
             !isLoadingPin &&
             isPinImageLoaded &&
             !isLoadingSimilar && <PinsMasonry data={similarPins} />}
-          <SecondaryPinOptionsModal
-            visible={isPinOptionsModalOpen}
-            onDismiss={closePinOptionsModal}
-            onSelectedAction={handlePinOptions}
-          />
         </View>
       </HeaderLayout>
     </ModalsLayout>
