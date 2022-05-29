@@ -56,53 +56,63 @@ export default function MenuModal({
   const INITIAL_HEIGHT = openRatio
     ? SCREEN_HEIGHT * openRatio
     : SCREEN_HEIGHT / 2;
-  const MAX_TRANSITION_Y = -SCREEN_HEIGHT * 0.95;
-  const MIN_TRANSITION_Y = -SCREEN_HEIGHT * (closeRatio || 0.2);
+  const MAX_TRANSITION_Y = -SCREEN_HEIGHT * 0.8;
+  const MIN_TRANSITION_Y = -SCREEN_HEIGHT * (closeRatio || 0.3);
   const absoluteY = useSharedValue(0);
   const translateY = useSharedValue(0);
 
-
-    const handleLayout = (event: LayoutChangeEvent) => {
-      setModalHeight(event.nativeEvent.layout.height);
-    };
-    const closeModal = () => {
-      onDismiss && onDismiss();
-    };
-    const gestureHandler = useAnimatedGestureHandler({
-      onStart: (_, ctx) => {},
-      onActive: (event, ctx) => {
-        if (event.translationY - INITIAL_HEIGHT < MAX_TRANSITION_Y) return;
-
-        if (event.translationY - INITIAL_HEIGHT < MIN_TRANSITION_Y) {
-          absoluteY.value = event.absoluteY;
-
-          translateY.value = event.translationY - INITIAL_HEIGHT;
-
-          return;
-        }
-
-        absoluteY.value = SCREEN_HEIGHT;
-      },
-      onEnd: (_) => {},
-    });
-    const modalAnimatedStyles = useAnimatedStyle(() => {
-      if (!visible || absoluteY.value === 0)
-        return {
-          transform: [{ translateY: withTiming(withSpring(-INITIAL_HEIGHT)) }],
-        };
-
-      if (absoluteY.value === SCREEN_HEIGHT) {
-        absoluteY.value = 0;
-        translateY.value = 0;
-        return {
-          transform: [{ translateY: withTiming(0, {}, runOnJS(closeModal)) }],
-        };
+  const handleLayout = (event: LayoutChangeEvent) => {
+    setModalHeight(event.nativeEvent.layout.height);
+  };
+  const closeModal = () => {
+    onDismiss && onDismiss();
+  };
+  const gestureHandler = useAnimatedGestureHandler({
+    onStart: (_, ctx) => {},
+    onActive: (event, ctx) => {
+      if (event.translationY - INITIAL_HEIGHT < MAX_TRANSITION_Y) {
+        translateY.value = -SCREEN_HEIGHT;
+        return;
       }
 
+      if (event.translationY - INITIAL_HEIGHT < MIN_TRANSITION_Y) {
+        absoluteY.value = event.absoluteY;
+
+        translateY.value = event.translationY - INITIAL_HEIGHT;
+
+        return;
+      }
+
+      absoluteY.value = SCREEN_HEIGHT;
+    },
+    onEnd: (_) => {},
+  });
+  const modalAnimatedStyles = useAnimatedStyle(() => {
+    if (!visible || absoluteY.value === 0)
       return {
-        transform: [{ translateY: withSpring(translateY.value) }],
+        transform: [
+          {
+            translateY: withTiming(
+              withSpring(-INITIAL_HEIGHT, { damping: 50 }),
+            ),
+          },
+        ],
       };
-    }, [modalHeight, SCREEN_HEIGHT, visible]);
+
+    if (absoluteY.value === SCREEN_HEIGHT) {
+      absoluteY.value = 0;
+      translateY.value = 0;
+      return {
+        transform: [{ translateY: withTiming(0, {}, runOnJS(closeModal)) }],
+      };
+    }
+
+    return {
+      transform: [
+        { translateY: withSpring(translateY.value, { damping: 50 }) },
+      ],
+    };
+  }, [modalHeight, SCREEN_HEIGHT, visible]);
 
     return (
       <ScrollView
