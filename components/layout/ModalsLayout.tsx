@@ -10,7 +10,7 @@ import SecondaryPinOptionsModal from "../SecondaryPinOptionsModal";
 import { useAppSelector, useAppDispatch } from "../../hooks/useStore";
 import {
   closeModal,
-  openModal,
+
   closeAllModals,
 } from "../../store/slices/modals";
 import { useLinkProps } from "@react-navigation/native";

@@ -1,7 +1,7 @@
 import * as MediaLibrary from "expo-media-library";
 import * as FileSystem from "expo-file-system";
 import * as Sharing from "expo-sharing";
-
+import * as ImagePicker from "expo-image-picker";
 export default function useFileManager() {
   const downloadExpoFile = async (uri: string, fileName: string) => {
     let fileUri = FileSystem.documentDirectory + fileName;
@@ -32,6 +32,20 @@ export default function useFileManager() {
   const shareExpoFile = async (fileUri: string) => {
     await Sharing.shareAsync(fileUri);
   };
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      return result;
+    }
+    return null;
+  };
+
   const share = async (uri: string) => {
     const result = await downloadExpoFile(uri, Date.now() + ".jpg");
     console.log(result);
@@ -42,5 +56,5 @@ export default function useFileManager() {
     const saveResult = await saveExpoFile(result.uri);
     return saveResult;
   };
-  return { save, share };
+  return { save, share, pickImage };
 }
