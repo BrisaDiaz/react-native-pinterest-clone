@@ -5,14 +5,14 @@ const tintColorDark = "#fff";
 
 export default {
   primary: primary,
-  error: "rgb(220 38 38)",
-  warning: "rgb(249 115 22)",
-  info: "rgb(59 130 246)",
-  success: "rgb(101 163 13)",
+  error: "#dc2626",
+  warning: "#f97316",
+  info: "#3b82f6",
+  success: "#65a30d",
   lightGray: "#b2b2b236",
   darkGray: "#606060",
   focus: "#2196f3",
-
+  transparent: "#fafafa00",
   gray,
   light: {
     text: "#000",

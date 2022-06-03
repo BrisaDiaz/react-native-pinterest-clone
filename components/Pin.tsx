@@ -38,11 +38,11 @@ export default function PinComponent({
         <Image
           resizeMode="cover"
           style={[
-            styles.pin,
+            styles.image,
             { aspectRatio: dynamicHeight ? getRndInter(7, 10) / 10 : 1 },
           ]}
           source={{
-            uri: data.pin,
+            uri: data.image,
           }}
         />
         <View style={styles.footer}>
@@ -70,7 +70,7 @@ export default function PinComponent({
 }
 const styles = StyleSheet.create({
   container: { width: "100%", flex: 1 },
-  pin: {
+  image: {
     width: "100%",
     minWidth: "100%",
     backgroundColor: Colors.gray,

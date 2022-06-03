@@ -1,9 +1,9 @@
 import {
   createApi,
   fetchBaseQuery,
-  FetchBaseQueryError,
+
 } from "@reduxjs/toolkit/query/react";
-import { tapGestureHandlerProps } from "react-native-gesture-handler/lib/typescript/handlers/TapGestureHandler";
+
 import {
   relatedPins,
   userProfile,

@@ -50,7 +50,7 @@ export default function AccountScreen({
     >
       <View style={styles.container}>
         <FloatingInput
-          label=" Name of the board"
+          label="Name of the board"
           placeholder="Add"
           onChangeText={handleBoardNameChange}
         />

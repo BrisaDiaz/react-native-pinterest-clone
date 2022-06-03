@@ -6,7 +6,7 @@ export default function PinDetailsSkeleton() {
   const { loadingStyle } = useLoadingStyle();
   return (
     <View style={[styles.container]}>
-      <Animated.View style={[styles.pin, loadingStyle]} />
+      <Animated.View style={[styles.image, loadingStyle]} />
       <View style={[styles.authorInfo]}>
         <Animated.View style={[styles.avatar, loadingStyle]} />
         <Animated.View style={[styles.userName, loadingStyle]} />
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
 
-  pin: {
+  image: {
     width: "100%",
 
     aspectRatio: 0.8,
@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 6,
   },
-  avatar: { width: 30, aspectRatio: 1, borderRadius: 100 ,marginRight:6},
+  avatar: { width: 30, aspectRatio: 1, borderRadius: 100, marginRight: 6 },
   userName: {
     height: 14,
     width: 100,

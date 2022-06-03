@@ -3,7 +3,8 @@ export const pin = {
   title: "Los ‘scrunchies’ gigantes son la tendencia que arrasa esta primavera",
   description:
     "El accesorio de tu infancia está de vuelta pero ahora en tamaño XL, ¡ajá! Nos referimos a los scrunchies, coleteros o donas, que fueron los protagonistas de los peinados en los 90, y nos alegramos que hayan regresado para llenar de estilo esta primavera 2020. Con un accesorio así no necesitas p ",
-  pin: "https://i.pinimg.com/564x/6d/02/ff/6d02fffca6b7ce15fcaed132a3728e79.jpg",
+  image:
+    "https://i.pinimg.com/564x/6d/02/ff/6d02fffca6b7ce15fcaed132a3728e79.jpg",
   tags: ["hairstyles", "long hair hairstyles", "trending hairstyles"],
   source_link:
     "https://www.okchicas.com/moda/accesorios/coleteros-lazo-son-nueva-tendencia/",
@@ -21,10 +22,12 @@ export const pin = {
 export const relatedPins = [
   {
     id: 1,
-    pin: "https://i.pinimg.com/564x/d4/84/1c/d4841cde566d555cdb80628877ff1647.jpg",
+    image:
+      "https://i.pinimg.com/564x/d4/84/1c/d4841cde566d555cdb80628877ff1647.jpg",
     title: "19 Hairstyles for you to wear your buns",
     tags: ["hairstyle", "loose hair", "elegant", "with bun"],
-
+    allow_comments: false,
+    alt: "",
     author: {
       id: 2,
       user_name: "okchicas",
@@ -34,13 +37,16 @@ export const relatedPins = [
   },
   {
     id: 2,
-    pin: "https://i.pinimg.com/236x/d9/3d/c6/d93dc615a57d9ece0664c7e9ab6599d4.jpg",
+    image:
+      "https://i.pinimg.com/236x/d9/3d/c6/d93dc615a57d9ece0664c7e9ab6599d4.jpg",
     title: "Pearls in the hair, the trend that will make you look more elegant",
     tags: ["hairstyle", "easy", "elegant", "loose hair"],
     description:
       "There are so many ways to fix our hair that sometimes we don't even know which option to choose. In addition, there is an increasing variety of accessories that enhance our hairstyle and make us stand out: headbands, eye-catching garters, clips, brooches, in short! One of the options that has become fashionable lately is to use pearls",
     source_link:
       "https://www.okchicas.com/belleza/cabello/peinados-perlas-cabello-elegante/",
+    allow_comments: false,
+    alt: "",
     author: {
       id: 2,
       user_name: "okchicas",
@@ -50,13 +56,16 @@ export const relatedPins = [
   },
   {
     id: 3,
-    pin: "https://i.pinimg.com/236x/c9/30/6b/c9306be2ff456e2e1a2e8ed78e8fb435.jpg",
+    image:
+      "https://i.pinimg.com/236x/c9/30/6b/c9306be2ff456e2e1a2e8ed78e8fb435.jpg",
     title: "16 Cutest Back-to-School Hairstyle Ideas for Girls",
     tags: ["hairstyle", "elegant", "collected", "with scarves"],
     description:
       "Here are super cute back-to-school hairstyles for girls from elementary to high school age! Moms & girls will find inspiring ideas & tutorials to check out",
     source_link:
       "https://www.outfittrends.com/cutest-back-to-school-hairstyle/",
+    allow_comments: false,
+    alt: "",
     author: {
       id: 3,
       user_name: "topstyletrendss",
@@ -66,11 +75,14 @@ export const relatedPins = [
   },
   {
     id: 4,
-    pin: "https://i.pinimg.com/236x/8b/42/4e/8b424eff71af2785f02fa9815e7df0e9.jpg",
+    image:
+      "https://i.pinimg.com/236x/8b/42/4e/8b424eff71af2785f02fa9815e7df0e9.jpg",
     title: "Mother Of The Bride Hairstyles: Elegant Ideas [2022 Guide]",
     tags: ["hairstyle", "collected", "easy"],
     description:
       "The most elegant mother of the bride hairstyles! Complete guide to help find that perfect wedding hairstyle - updos, short, curly & more",
+    allow_comments: false,
+    alt: "",
     author: {
       id: 4,
       user_name: "weddingforward",
@@ -80,8 +92,10 @@ export const relatedPins = [
   },
   {
     id: 5,
-    pin: "https://i.pinimg.com/564x/48/58/7b/48587b9f53470de5e6779e35cc7d01fc.jpg",
-
+    image:
+      "https://i.pinimg.com/564x/48/58/7b/48587b9f53470de5e6779e35cc7d01fc.jpg",
+    allow_comments: false,
+    alt: "",
     tags: ["hairstyle", "easy", "with scarves"],
     title: "Acconciature stile anni '60",
     author: {
@@ -93,9 +107,12 @@ export const relatedPins = [
   },
   {
     id: 6,
-    pin: "https://i.pinimg.com/564x/9c/d8/99/9cd899e84f6811c2450ef0c1a71e882d.jpg",
+    image:
+      "https://i.pinimg.com/564x/9c/d8/99/9cd899e84f6811c2450ef0c1a71e882d.jpg",
     title: "VSCO Girl Hairstyles You'll Want To Copy",
     tags: ["hairstyle", "easy", "with scarves"],
+    allow_comments: false,
+    alt: "",
     source_link:
       "https://www.kimifashion.com/2020/03/peinados-bonitos-y-faciles.html",
     author: {
@@ -108,11 +125,13 @@ export const relatedPins = [
 
   {
     id: 7,
-    pin: "https://i.pinimg.com/564x/4a/1e/2a/4a1e2a67784fe704929eae0c8c4c3bba.jpg",
+    image:
+      "https://i.pinimg.com/564x/4a/1e/2a/4a1e2a67784fe704929eae0c8c4c3bba.jpg",
     title: "Every Major Hair Look From Fashion Week SS19",
     description: "Updos, down dos and everything in between",
     tags: ["hairstyle", "loose hair", "easy", "with braids"],
-
+    allow_comments: false,
+    alt: "",
     author: {
       id: 7,
       user_name: "elle",
@@ -122,12 +141,14 @@ export const relatedPins = [
   },
   {
     id: 8,
-    pin: "https://i.pinimg.com/564x/06/52/0c/06520ce301e9d1815decd5affb1b420f.jpg",
+    image:
+      "https://i.pinimg.com/564x/06/52/0c/06520ce301e9d1815decd5affb1b420f.jpg",
     title: "38 Easy Retro & Vintage Hairstyles to Try This Year",
     description:
       "Pining after Marilyn Monroe’s luscious curls or Bettie Page’s full bangs? Then you’re in luck, because today we have a list of totally sexy vintage hairstyles that are perfect for the modern woman.",
     tags: ["hairstyle", "loose hair", "easy", "short hair"],
-
+    allow_comments: false,
+    alt: "",
     author: {
       id: 1,
       user_name: "latesthair",
@@ -248,6 +269,7 @@ export const boards = [
     id: 5,
     name: "books quotes",
     private: true,
+
     pinsCount: 268,
     updatedAt: getMaxTimeUnit("Mon May 16 2022 18:09:55 GMT-0300"),
     thumbnails: [

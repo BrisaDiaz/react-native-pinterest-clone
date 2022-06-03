@@ -4,15 +4,15 @@ import { FlatList, View } from "./Themed";
 import { StyleSheet } from "react-native";
 import { Pin } from "../types";
 import Layout from "../constants/Layout";
-import PinOptionsModal, { Action } from "./PinOptionsModal";
-import distributeItemsByNum from "../utils/distributeItemsByNum";
 
+import distributeItemsByNum from "../utils/distributeItemsByNum";
+import { useAppDispatch } from "../hooks/useStore";
+import { openModal, setStashedPin } from "../store/slices/modals";
 function PinsMasonry({ data }: { data: Pin[] }) {
-  const [selectedPin, setSelectedPin] = React.useState<Pin | null>(null);
-  const [isPinOptionsModalOpen, setIsPinOptionsModalOpen] =
-    React.useState(false);
-  const defaultPinsmaxWidth = 200;
-  const calcWith = Math.ceil(Layout.window.width / defaultPinsmaxWidth);
+  const dispatch = useAppDispatch();
+
+  const MAX_WIDTH = 200;
+  const calcWith = Math.ceil(Layout.window.width / MAX_WIDTH);
   const DEFAULT_COL_NUM = calcWith > 1 ? calcWith : 2;
   const SPACING = 6;
   const PINS_WITH =
@@ -24,20 +24,15 @@ function PinsMasonry({ data }: { data: Pin[] }) {
   }, [data]);
 
   const handleOpenPinOptionsModal = (pin: Pin) => {
-    togglePinOptionsModal();
-    setSelectedPin(pin);
+    dispatch(openModal("pinOptions"));
+    dispatch(setStashedPin(pin));
   };
-  const handlePinActions = (selectedAction: Action) => {
-    togglePinOptionsModal();
-  };
-  const togglePinOptionsModal = () => {
-    setIsPinOptionsModalOpen(!isPinOptionsModalOpen);
-  };
+
   const renderItem = ({ item }: { item: Pin }) => (
     <PinComponent
       key={item.id}
       data={item}
-      onMenuClick={handleOpenPinOptionsModal}
+      onMenuClick={() => handleOpenPinOptionsModal(item)}
       style={{ width: PINS_WITH - SPACING }}
       dynamicHeight={true}
     />
@@ -63,12 +58,6 @@ function PinsMasonry({ data }: { data: Pin[] }) {
           />
         ))}
       </View>
-      <PinOptionsModal
-        visible={isPinOptionsModalOpen}
-        closeButtonProps={{ onPress: togglePinOptionsModal }}
-        title="options"
-        onSelectedAction={handlePinActions}
-      />
     </>
   );
 }

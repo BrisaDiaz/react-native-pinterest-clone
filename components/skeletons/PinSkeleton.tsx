@@ -15,7 +15,7 @@ export default function PinComponent({ dynamicHeight, style }: Props) {
       <View style={[styles.container]}>
         <Animated.View
           style={[
-            styles.pin,
+            styles.image,
             { aspectRatio: dynamicHeight ? getRndInter(7, 10) / 10 : 1 },
             loadingStyle,
             style,
@@ -27,7 +27,7 @@ export default function PinComponent({ dynamicHeight, style }: Props) {
 }
 const styles = StyleSheet.create({
   container: { width: "100%", flex: 1 },
-  pin: {
+  image: {
     width: "100%",
     resizeMode: "contain",
 

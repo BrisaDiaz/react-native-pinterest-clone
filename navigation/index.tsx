@@ -20,7 +20,8 @@ import AuthUserAccountScreen from "../screens/AuthUserAccountScreen";
 import LoginScreen from "../screens/LoginScreen";
 import SearchScreen from "../screens/SearchScreen";
 import PinScreen from "../screens/PinScreen";
-import IconButton from "../components/IconButton";
+import CreatePinScreen from "../screens/CreatePinScreen";
+
 import Home from "../screens/Home";
 import ModalsLayout from "../components/layout/ModalsLayout";
 import { useAppSelector } from "../hooks/useStore";
@@ -31,7 +32,6 @@ import {
   RootTabScreenProps,
 } from "../types";
 import LinkingConfiguration from "./LinkingConfiguration";
-import { Logs } from "expo";
 
 export default function Navigation({
   colorScheme,
@@ -93,6 +93,15 @@ function RootNavigator() {
       <Stack.Screen
         name="CreateBoard"
         component={CreateBoardScreen}
+        options={{
+          headerShown: false,
+          headerBackButtonMenuEnabled: false,
+          headerTitle: "",
+        }}
+      />
+      <Stack.Screen
+        name="CreatePin"
+        component={CreatePinScreen}
         options={{
           headerShown: false,
           headerBackButtonMenuEnabled: false,

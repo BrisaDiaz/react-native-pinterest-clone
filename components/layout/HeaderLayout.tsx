@@ -17,7 +17,6 @@ export default function Header({
 }: {
   headerContent?: ReactNode;
   headerContainerStyle?: ViewStyle;
-
   children?: ReactNode;
 }) {
   const lastContentOffset = useSharedValue(0);

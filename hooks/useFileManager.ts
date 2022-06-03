@@ -48,7 +48,7 @@ export default function useFileManager() {
 
   const share = async (uri: string) => {
     const result = await downloadExpoFile(uri, Date.now() + ".jpg");
-    console.log(result);
+
     await shareExpoFile(result.uri);
   };
   const save = async (uri: string) => {

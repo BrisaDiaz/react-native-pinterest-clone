@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, Platform } from "react-native";
 import { Text } from "../components/Themed";
 import Button from "../components/Button";
 import { View } from "../components/Themed";
@@ -21,6 +21,7 @@ import PinsMasonry from "../components/PinsMasonry";
 import UserProfileSkeleton from "../components/skeletons/UserProfileSkeleton";
 import PinBoardMasonrySkeleton from "../components/skeletons/PinBoardMasonrySkeleton";
 import { openModal } from "../store/slices/modals";
+
 export default function AccountScreen({
   navigation,
 }: {
@@ -95,8 +96,8 @@ export default function AccountScreen({
                 <Text>{data.email}</Text>
 
                 <Text style={styles.followers}>
-                  {data.followersCount} Followers • Following to{" "}
-                  {data.followingCount}
+                  {`${data.followersCount} Followers • Following to ${data.followingCount}`}
+              
                 </Text>
 
                 <Button
@@ -167,7 +168,13 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 120,
     paddingHorizontal: 6,
-    paddingBottom: 20,
+
+    ...Platform.select({
+      android: { paddingBottom: 20 },
+      default: {
+        paddingBottom: 60,
+      },
+    }),
   },
   userData: { alignItems: "center" },
   userAvatar: {

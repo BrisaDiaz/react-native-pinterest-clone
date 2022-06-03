@@ -160,6 +160,7 @@ export default function MenuModal({
 
                 modalAnimatedStyles,
               ]}
+              {...modalProps}
             >
               <View
                 style={{

@@ -44,11 +44,11 @@ export default function ModalsLayout({
         return;
       }
       if (actionType === "download") {
-        await save(stashedPin.pin);
+        await save(stashedPin.image);
         return;
       }
       if (actionType === "send") {
-        await share(stashedPin.pin);
+        await share(stashedPin.image);
         return;
       }
     } catch (error) {
@@ -59,6 +59,9 @@ export default function ModalsLayout({
   const { onPress: redirectToCreateBoardScreen } = useLinkProps({
     to: { screen: "CreateBoard" },
   });
+  const { onPress: redirectToCreatePinScreen } = useLinkProps({
+    to: { screen: "CreatePin" },
+  });
   const handleCreateModal = () => {
     dispatch(closeModal("pinStorage"));
     redirectToCreateBoardScreen();
@@ -68,6 +71,7 @@ export default function ModalsLayout({
     if (actionType === "add board") {
       return redirectToCreateBoardScreen();
     }
+    redirectToCreatePinScreen();
   };
   return (
     <>

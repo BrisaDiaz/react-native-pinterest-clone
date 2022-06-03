@@ -61,7 +61,7 @@ export default function PinDetails({
     if (pin) {
       setIsPinImageLoaded(false);
 
-      Image.getSize(pin.pin, (width, height) => {
+      Image.getSize(pin.image, (width, height) => {
         setImageAspectRatio(width / height);
         setIsPinImageLoaded(true);
       });
@@ -89,7 +89,7 @@ export default function PinDetails({
     if (!pin) return;
 
     try {
-      await share(pin.pin);
+      await share(pin.image);
     } catch (error) {
       console.log(error);
     }
@@ -165,9 +165,9 @@ export default function PinDetails({
               <View style={styles.pinInfo}>
                 <Image
                   resizeMode="cover"
-                  style={[styles.pin, { aspectRatio: imageAspectRatio }]}
+                  style={[styles.image, { aspectRatio: imageAspectRatio }]}
                   source={{
-                    uri: pin?.pin,
+                    uri: pin?.image,
                   }}
                 />
                 <View style={styles.authorInfo}>
@@ -238,7 +238,7 @@ const styles = StyleSheet.create({
     }),
   },
   pinInfo: { paddingHorizontal: 10 },
-  pin: {
+  image: {
     width: "100%",
     resizeMode: "contain",
     flex: 1,

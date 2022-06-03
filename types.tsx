@@ -19,6 +19,7 @@ export type RootStackParamList = {
   NotFound: undefined;
   Login: undefined;
   CreateBoard: undefined;
+  CreatePin: undefined;
   Pin: { id: number };
 };
 
@@ -40,12 +41,14 @@ export type RootTabScreenProps<Screen extends keyof RootTabParamList> =
 export type ScreenParamList = RootStackParamList & RootTabParamList;
 export interface Pin {
   id: number;
-  pin: string;
+  image: string;
   title?: string;
   tags: string[];
+  alt: string;
+  allow_comments: boolean;
   description?: string;
   source_link?: string;
-  collection?: { id: number; name: string };
+  board?: { id: number; name: string };
   author?: {
     id: number;
     user_name: string;

@@ -6,17 +6,18 @@ import { StyleSheet, TouchableHighlight, Image } from "react-native";
 import IconButton from "./IconButton";
 import { Entypo, FontAwesome } from "@expo/vector-icons";
 import Colors from "../constants/Colors";
+import { PinBoard } from "../types";
 export default function StoreInBoardModal({
   onStore,
   onCreateBoard,
   ...props
 }: MenuModalProps & {
-  onStore?: (boardId: number) => void;
+  onStore?: (board: PinBoard) => void;
   onCreateBoard?: () => void;
 }) {
   const { data } = useGetUserProfileQuery();
-  const handleStoreInBoard = (boardId: number) => {
-    onStore && onStore(boardId);
+  const handleStoreInBoard = (board: PinBoard) => {
+    onStore && onStore(board);
   };
 
   const handleCreateBoard = () => {
@@ -38,7 +39,7 @@ export default function StoreInBoardModal({
                   key={board.id}
                   style={styles.board}
                   underlayColor={Colors.lightGray}
-                  onPress={() => handleStoreInBoard(board.id)}
+                  onPress={() => handleStoreInBoard(board)}
                 >
                   <>
                     <Image
