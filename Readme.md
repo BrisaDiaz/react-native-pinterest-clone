@@ -8,7 +8,6 @@
 ![image](https://res.cloudinary.com/myproyects/image/upload/v1653603176/proyects/mobile_20_lpjyzy.webp)
 ![image](https://res.cloudinary.com/myproyects/image/upload/v1653603175/proyects/mobile_22_smc6pb.webp)
 ![image](https://res.cloudinary.com/myproyects/image/upload/v1653603179/proyects/mobile_23_frwn8b.webp)
-![image](https://res.cloudinary.com/myproyects/image/upload/v1653603175/proyects/mobile_22_smc6pb.webp)
 ![image](https://res.cloudinary.com/myproyects/image/upload/v1653603181/proyects/mobile_25_lcznz6.webp)
 ![image](https://res.cloudinary.com/myproyects/image/upload/v1653425002/proyects/mobile_16_oyn6ec.webp)
 ![image](https://res.cloudinary.com/myproyects/image/upload/v1654298647/proyects/mobile_2_qiicrc.webp)
